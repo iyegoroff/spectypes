@@ -9,9 +9,9 @@ export const tuple: <Specs extends readonly Spec[]>(
   ...specs: Specs & {
     readonly [Index in keyof Specs]: Specs[Index] extends Spec
       ? HasTag<Specs[Index], 'optional'> extends true
-        ? JsonspecError<'optional', 'tuple'>
+        ? SpectypesError<'optional', 'tuple'>
         : HasTag<Specs[Index], 'filter'> extends true
-        ? JsonspecError<'filter', 'tuple'>
+        ? SpectypesError<'filter', 'tuple'>
         : Specs[Index]
       : never
   }

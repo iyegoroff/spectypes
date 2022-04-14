@@ -7,8 +7,8 @@ import { error } from './util'
  */
 export const validator: <ItemSpec extends Spec>(
   spec: HasTag<ItemSpec, 'filter'> extends true
-    ? JsonspecError<'filter', 'validator'>
+    ? SpectypesError<'filter', 'validator'>
     : ItemSpec extends Spec<readonly string[], 'transformer', unknown>
-    ? { readonly "jsonspec error: transformer can't be wrapped with 'validator'": never }
+    ? { readonly "spectypes error: transformer can't be wrapped with 'validator'": never }
     : ItemSpec
 ) => Spec<SpecTag<ItemSpec>, 'validator', SpecSuccess<ItemSpec>> = error

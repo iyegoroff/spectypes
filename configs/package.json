@@ -1,6 +1,6 @@
 {
-  "name": "jsonspec-configs",
+  "name": "spectypes-configs",
   "version": "0.0.0",
   "private": true,
-  "description": "jsonspec internals"
+  "description": "spectypes internals"
 }

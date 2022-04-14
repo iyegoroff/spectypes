@@ -1,5 +1,5 @@
 {
-  "name": "jsonspec",
+  "name": "spectypes",
   "version": "0.0.12",
   "private": false,
   "description": "Fast, compiled, eval-free data validator/transformer",
@@ -19,9 +19,9 @@
   },
   "scripts": {
     "update-version": "npm version",
-    "build:dts": "tsc -p node_modules/jsonspec-configs/tsconfig.dts.json",
-    "build:esm": "tsc -p node_modules/jsonspec-configs/tsconfig.esm.json",
-    "build:cjs": "tsc -p node_modules/jsonspec-configs/tsconfig.cjs.json",
+    "build:dts": "tsc -p node_modules/spectypes-configs/tsconfig.dts.json",
+    "build:esm": "tsc -p node_modules/spectypes-configs/tsconfig.esm.json",
+    "build:cjs": "tsc -p node_modules/spectypes-configs/tsconfig.cjs.json",
     "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:esm && npm run build:cjs"
   },
   "keywords": [
@@ -33,16 +33,16 @@
     "src"
   ],
   "bugs": {
-    "url": "https://github.com/iyegoroff/jsonspec/issues"
+    "url": "https://github.com/iyegoroff/spectypes/issues"
   },
-  "homepage": "https://github.com/iyegoroff/jsonspec#readme",
+  "homepage": "https://github.com/iyegoroff/spectypes#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iyegoroff/jsonspec.git"
+    "url": "git+https://github.com/iyegoroff/spectypes.git"
   },
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "jsonspec-configs": "workspace:*"
+    "spectypes-configs": "workspace:*"
   }
 }

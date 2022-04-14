@@ -1,7 +1,7 @@
 import { error } from './util'
 
-type JsonspecRecordKeyError<T extends string> = JsonspecError<T, 'record', ' key'>
-type JsonspecRecordItemError<T extends string> = JsonspecError<T, 'record', ' item'>
+type SpectypesRecordKeyError<T extends string> = SpectypesError<T, 'record', ' key'>
+type SpectypesRecordItemError<T extends string> = SpectypesError<T, 'record', ' item'>
 
 export const record: {
   /**
@@ -12,36 +12,36 @@ export const record: {
    */
   <KeySpec extends Spec, ItemSpec extends Spec>(
     keySpec: HasTag<KeySpec, 'optional'> extends true
-      ? JsonspecRecordKeyError<'optional'>
+      ? SpectypesRecordKeyError<'optional'>
       : HasTag<KeySpec, 'unknown'> extends true
-      ? JsonspecRecordKeyError<'unknown'>
+      ? SpectypesRecordKeyError<'unknown'>
       : HasTag<KeySpec, 'nullish'> extends true
-      ? JsonspecRecordKeyError<'nullish'>
+      ? SpectypesRecordKeyError<'nullish'>
       : HasTag<KeySpec, 'lazy'> extends true
-      ? JsonspecRecordKeyError<'lazy'>
+      ? SpectypesRecordKeyError<'lazy'>
       : HasTag<KeySpec, 'array'> extends true
-      ? JsonspecRecordKeyError<'array'>
+      ? SpectypesRecordKeyError<'array'>
       : HasTag<KeySpec, 'tuple'> extends true
-      ? JsonspecRecordKeyError<'tuple'>
+      ? SpectypesRecordKeyError<'tuple'>
       : HasTag<KeySpec, 'object'> extends true
-      ? JsonspecRecordKeyError<'object'>
+      ? SpectypesRecordKeyError<'object'>
       : HasTag<KeySpec, 'record'> extends true
-      ? JsonspecRecordKeyError<'record'>
+      ? SpectypesRecordKeyError<'record'>
       : HasTag<KeySpec, 'merge'> extends true
-      ? JsonspecRecordKeyError<'merge'>
+      ? SpectypesRecordKeyError<'merge'>
       : HasTag<KeySpec, 'struct'> extends true
-      ? JsonspecRecordKeyError<'struct'>
+      ? SpectypesRecordKeyError<'struct'>
       : HasTag<KeySpec, 'number'> extends true
-      ? JsonspecRecordKeyError<'number'>
+      ? SpectypesRecordKeyError<'number'>
       : HasTag<KeySpec, 'boolean'> extends true
-      ? JsonspecRecordKeyError<'boolean'>
+      ? SpectypesRecordKeyError<'boolean'>
       : HasTag<KeySpec, 'non-string-literal'> extends true
-      ? JsonspecRecordKeyError<'non string literal'>
+      ? SpectypesRecordKeyError<'non string literal'>
       : KeySpec extends Spec<readonly string[], string, number | string>
       ? KeySpec
-      : { readonly "jsonspec error: only number or string 'record' key types allowed": never },
+      : { readonly "spectypes error: only number or string 'record' key types allowed": never },
     itemSpec: HasTag<ItemSpec, 'optional'> extends true
-      ? JsonspecRecordItemError<'optional'>
+      ? SpectypesRecordItemError<'optional'>
       : ItemSpec
   ): SpecSuccess<KeySpec> extends number | string
     ? Spec<
@@ -56,7 +56,7 @@ export const record: {
    * @param itemSpec Spec to validate each item of a record.
    */
   <ItemSpec extends Spec>(
-    itemSpec: HasTag<ItemSpec, 'optional'> extends JsonspecRecordItemError<'optional'>
+    itemSpec: HasTag<ItemSpec, 'optional'> extends SpectypesRecordItemError<'optional'>
       ? never
       : ItemSpec
   ): Spec<['record'], SpecKind<ItemSpec>, { readonly [key in string]?: SpecSuccess<ItemSpec> }>

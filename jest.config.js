@@ -1,4 +1,4 @@
-const projects = [/*'packages/jsonspec',*/ 'packages/babel-plugin-jsonspec']
+const projects = [/*'packages/spectypes',*/ 'packages/babel-plugin-spectypes']
 
 const config = {
   moduleFileExtensions: ['js', 'ts'],
@@ -6,7 +6,7 @@ const config = {
   testPathIgnorePatterns: ['blueprint-templates'],
   testRegex: '\\.spec\\.ts$',
   transform: {
-    '^.+\\.[t|j]s$': process.env.ci ? 'ts-jest' : '@swc/jest'
+    '^.+\\.[t|j]s$': process.env.CI ? 'ts-jest' : '@swc/jest'
   }
 }
 

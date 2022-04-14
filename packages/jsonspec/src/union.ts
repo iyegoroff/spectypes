@@ -9,13 +9,13 @@ export const union: <Specs extends readonly Spec[]>(
   ...specs: Specs & {
     readonly [Index in keyof Specs]: Specs[Index] extends Spec
       ? HasTag<Specs[Index], 'optional'> extends true
-        ? JsonspecError<'optional', 'union'>
+        ? SpectypesError<'optional', 'union'>
         : HasTag<Specs[Index], 'filter'> extends true
-        ? JsonspecError<'filter', 'union'>
+        ? SpectypesError<'filter', 'union'>
         : HasTag<Specs[Index], 'unknown'> extends true
-        ? JsonspecError<'unknown', 'union'>
+        ? SpectypesError<'unknown', 'union'>
         : HasTag<Specs[Index], 'union'> extends true
-        ? JsonspecError<'union', 'union'>
+        ? SpectypesError<'union', 'union'>
         : Specs[Index]
       : never
   }

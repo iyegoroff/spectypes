@@ -1,5 +1,5 @@
-type JsonspecError<X extends string, Y extends string, Suf extends string = ''> = {
-  readonly [key in `jsonspec error: '${X}' can't appear directly inside '${Y}'${Suf}`]: never
+type SpectypesError<X extends string, Y extends string, Suf extends string = ''> = {
+  readonly [key in `spectypes error: '${X}' can't appear directly inside '${Y}'${Suf}`]: never
 }
 
 type SuccessResult<Value> = {

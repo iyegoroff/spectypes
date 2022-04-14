@@ -11,9 +11,9 @@ export const limit: <
   Constraint extends (value: SpecSuccess<ItemSpec>) => boolean
 >(
   spec: HasTag<ItemSpec, 'optional'> extends true
-    ? JsonspecError<'optional', 'limit'>
+    ? SpectypesError<'optional', 'limit'>
     : HasTag<ItemSpec, 'filter'> extends true
-    ? JsonspecError<'filter', 'limit'>
+    ? SpectypesError<'filter', 'limit'>
     : ItemSpec,
   constraint: Constraint
 ) => Spec<

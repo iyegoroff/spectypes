@@ -5,5 +5,5 @@ type DeepWritable<T> = PrettyType<{ -readonly [P in keyof T]: DeepWritable<T[P]>
 
 /** Creates an empty validator that removes `readonly` modifiers from the result of validation */
 export const writable: <ItemSpec extends Spec>(
-  spec: HasTag<ItemSpec, 'filter'> extends true ? JsonspecError<'filter', 'writable'> : ItemSpec
+  spec: HasTag<ItemSpec, 'filter'> extends true ? SpectypesError<'filter', 'writable'> : ItemSpec
 ) => Spec<SpecTag<ItemSpec>, SpecKind<ItemSpec>, DeepWritable<SpecSuccess<ItemSpec>>> = error

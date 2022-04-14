@@ -8,9 +8,9 @@ import { error } from './util'
  */
 export const map: <ItemSpec extends Spec, To>(
   spec: HasTag<ItemSpec, 'optional'> extends true
-    ? JsonspecError<'optional', 'map'>
+    ? SpectypesError<'optional', 'map'>
     : HasTag<ItemSpec, 'filter'> extends true
-    ? JsonspecError<'filter', 'map'>
+    ? SpectypesError<'filter', 'map'>
     : ItemSpec,
   transform: (form: SpecSuccess<ItemSpec>) => To
 ) => Spec<['map', ...SpecTag<ItemSpec>], 'transformer', To> = error

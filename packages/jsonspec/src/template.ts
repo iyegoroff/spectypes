@@ -10,7 +10,7 @@ type Template<Specs extends readonly Spec[]> = Specs extends readonly [infer Fir
     : ''
   : ''
 
-type JsonspecTemplateError<T extends string> = JsonspecError<T, 'template'>
+type SpectypesTemplateError<T extends string> = SpectypesError<T, 'template'>
 
 /**
  * Creates a template string validator spec.
@@ -21,33 +21,33 @@ export const template: <Specs extends readonly Spec[]>(
   ...specs: Specs & {
     readonly [Index in keyof Specs]: Specs[Index] extends Spec
       ? HasTag<Specs[Index], 'optional'> extends true
-        ? JsonspecTemplateError<'optional'>
+        ? SpectypesTemplateError<'optional'>
         : HasTag<Specs[Index], 'filter'> extends true
-        ? JsonspecTemplateError<'filter'>
+        ? SpectypesTemplateError<'filter'>
         : HasTag<Specs[Index], 'unknown'> extends true
-        ? JsonspecTemplateError<'unknown'>
+        ? SpectypesTemplateError<'unknown'>
         : HasTag<Specs[Index], 'nullish'> extends true
-        ? JsonspecTemplateError<'nullish'>
+        ? SpectypesTemplateError<'nullish'>
         : HasTag<Specs[Index], 'lazy'> extends true
-        ? JsonspecTemplateError<'lazy'>
+        ? SpectypesTemplateError<'lazy'>
         : HasTag<Specs[Index], 'array'> extends true
-        ? JsonspecTemplateError<'array'>
+        ? SpectypesTemplateError<'array'>
         : HasTag<Specs[Index], 'tuple'> extends true
-        ? JsonspecTemplateError<'tuple'>
+        ? SpectypesTemplateError<'tuple'>
         : HasTag<Specs[Index], 'merge'> extends true
-        ? JsonspecTemplateError<'merge'>
+        ? SpectypesTemplateError<'merge'>
         : HasTag<Specs[Index], 'object'> extends true
-        ? JsonspecTemplateError<'object'>
+        ? SpectypesTemplateError<'object'>
         : HasTag<Specs[Index], 'record'> extends true
-        ? JsonspecTemplateError<'record'>
+        ? SpectypesTemplateError<'record'>
         : HasTag<Specs[Index], 'struct'> extends true
-        ? JsonspecTemplateError<'struct'>
+        ? SpectypesTemplateError<'struct'>
         : HasTag<Specs[Index], 'template'> extends true
-        ? JsonspecTemplateError<'template'>
+        ? SpectypesTemplateError<'template'>
         : HasTag<Specs[Index], 'limit'> extends true
-        ? JsonspecTemplateError<'limit'>
+        ? SpectypesTemplateError<'limit'>
         : HasTag<Specs[Index], 'map'> extends true
-        ? JsonspecTemplateError<'map'>
+        ? SpectypesTemplateError<'map'>
         : Specs[Index]
       : never
   }

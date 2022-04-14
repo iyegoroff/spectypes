@@ -7,5 +7,5 @@ import { error } from './util'
  * @param spec Function that returns a spec
  */
 export const lazy: <ItemSpec extends Spec>(
-  spec: HasTag<ItemSpec, 'filter'> extends true ? JsonspecError<'filter', 'lazy'> : () => ItemSpec
+  spec: HasTag<ItemSpec, 'filter'> extends true ? SpectypesError<'filter', 'lazy'> : () => ItemSpec
 ) => Spec<['lazy'], SpecKind<ItemSpec>, SpecSuccess<ItemSpec>> = error

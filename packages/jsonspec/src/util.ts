@@ -13,5 +13,5 @@ export const booleanTest = '(?:true|false)'
 export const bannedKeys = Object.getOwnPropertyNames(Object.prototype)
 
 export const error = () => {
-  throw new Error(`jsonspec validators have to be processed with 'babel-plugin-jsonspec'`)
+  throw new Error(`spectypes validators have to be processed with 'babel-plugin-spectypes'`)
 }

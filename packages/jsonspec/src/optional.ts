@@ -9,9 +9,9 @@ import { error } from './util'
  */
 export const optional: <ItemSpec extends Spec>(
   spec: HasTag<ItemSpec, 'optional'> extends true
-    ? JsonspecError<'optional', 'optional'>
+    ? SpectypesError<'optional', 'optional'>
     : HasTag<ItemSpec, 'filter'> extends true
-    ? JsonspecError<'filter', 'optional'>
+    ? SpectypesError<'filter', 'optional'>
     : ItemSpec
 ) => Spec<
   ['optional', ...SpecTag<ItemSpec>],
