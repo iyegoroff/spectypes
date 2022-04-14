@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+build-native
+build-web
+coverage
+*.js
+*.css.d.ts
+blueprint-templates
+temp.js
