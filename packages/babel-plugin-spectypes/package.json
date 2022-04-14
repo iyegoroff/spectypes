@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-spectypes",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "private": false,
   "description": "Babel plugin that compiles spectypes validators",
   "sideEffects": false,
