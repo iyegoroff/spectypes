@@ -9,5 +9,3 @@
 [![npm](https://img.shields.io/npm/l/spectypes.svg?t=1495378566925)](https://www.npmjs.com/package/spectypes)
 
 Fast, compiled, eval-free data validator/transformer
-
-[![publish](https://github.com/iyegoroff/spectypes/workflows/publish/badge.svg)](https://github.com/iyegoroff/spectypes/actions/workflows/publish.yml)
