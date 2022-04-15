@@ -2106,7 +2106,15 @@ describe('transform - random specs', () => {
 //   test('temp', () => {
 //     console.log(
 //       String(
-//         generateCheck(['object', { foo: ['union', [['string'], ['boolean']]], bar: ['number'] }])
+//         generateCheck([
+//           'object',
+//           {
+//             foo: ['unknown'],
+//             bar: ['literal', ['identifier', 'undefined']],
+//             bat: ['nullish'],
+//             t: ['optional', ['number']]
+//           }
+//         ])
 //       )
 //     )
 //     expect(1).toEqual(1)
