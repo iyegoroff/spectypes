@@ -36,7 +36,7 @@ const check = value => {
       });
     }
 
-    for (const key of Object.keys(value)) {
+    for (const key in value) {
       if (!(key === 'x' || key === 'y' || key === 'z')) {
         (err = err || []).push({
           issue: 'excess key - ' + key,

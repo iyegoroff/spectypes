@@ -36,7 +36,7 @@ const check = value => {
 
     result.x = value_x;
 
-    for (const key of Object.keys(value)) {
+    for (const key in value) {
       if (!(key === 'x')) {
         const value_key = value[key];
 

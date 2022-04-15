@@ -124,7 +124,7 @@ const persons = value => {
                 unmatched_index_properties_index_index_properties = true;
               }
 
-              for (const key_index_properties_index_index_properties of Object.keys(value_index_properties_index_index_properties)) {
+              for (const key_index_properties_index_index_properties in value_index_properties_index_index_properties) {
                 if (!(key_index_properties_index_index_properties === 'tag' || key_index_properties_index_index_properties === 'address')) {
                   unmatched_index_properties_index_index_properties = true;
                 }
@@ -149,7 +149,7 @@ const persons = value => {
                   unmatched_index_properties_index_index_properties = true;
                 }
 
-                for (const key_index_properties_index_index_properties of Object.keys(value_index_properties_index_index_properties)) {
+                for (const key_index_properties_index_index_properties in value_index_properties_index_index_properties) {
                   if (!(key_index_properties_index_index_properties === 'tag' || key_index_properties_index_index_properties === 'model')) {
                     unmatched_index_properties_index_index_properties = true;
                   }
@@ -182,7 +182,7 @@ const persons = value => {
                   });
                 }
 
-                for (const key_index_properties_index_index_properties of Object.keys(value_index_properties_index_index_properties)) {
+                for (const key_index_properties_index_index_properties in value_index_properties_index_index_properties) {
                   if (!(key_index_properties_index_index_properties === 'tag' || key_index_properties_index_index_properties === 'address')) {
                     (err = err || []).push({
                       issue: 'union case #0 mismatch: excess key - ' + key_index_properties_index_index_properties,
@@ -216,7 +216,7 @@ const persons = value => {
                   });
                 }
 
-                for (const key_index_properties_index_index_properties of Object.keys(value_index_properties_index_index_properties)) {
+                for (const key_index_properties_index_index_properties in value_index_properties_index_index_properties) {
                   if (!(key_index_properties_index_index_properties === 'tag' || key_index_properties_index_index_properties === 'model')) {
                     (err = err || []).push({
                       issue: 'union case #1 mismatch: excess key - ' + key_index_properties_index_index_properties,
@@ -229,7 +229,7 @@ const persons = value => {
           }
         }
 
-        for (const key_index of Object.keys(value_index)) {
+        for (const key_index in value_index) {
           if (!(key_index === 'name' || key_index === 'age' || key_index === 'hobby' || key_index === 'properties')) {
             (err = err || []).push({
               issue: 'excess key - ' + key_index,

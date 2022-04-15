@@ -39,7 +39,7 @@ const person = value => {
       }
     }
 
-    for (const key of Object.keys(value)) {
+    for (const key in value) {
       if (!(key === 'name' || key === 'likes')) {
         (err = err || []).push({
           issue: 'excess key - ' + key,

@@ -20,7 +20,7 @@ const check = value => {
       }
     }
 
-    for (const key of Object.keys(value)) {
+    for (const key in value) {
       const value_key = value[key];
 
       if (typeof value_key !== 'boolean') {

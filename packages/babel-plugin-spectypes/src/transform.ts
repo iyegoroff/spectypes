@@ -88,7 +88,7 @@ const errorName = createName('error')
 
 const filterName = (name: string) => `filter${name}`
 
-const forIn = (key: string, val: string) => `for (const ${key} of Object.keys(${val}))`
+const forIn = (key: string, val: string) => `for (const ${key} in ${val})`
 
 const initResult = (path: Path, assign: string, skipResult: boolean | undefined) =>
   skipResult ?? false ? '' : `${resultName(path)} = ${assign};`

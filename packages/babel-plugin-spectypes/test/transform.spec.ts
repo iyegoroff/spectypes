@@ -2013,7 +2013,7 @@ describe('transform - failure', () => {
   })
 })
 
-describe('transform - random specs', () => {
+describe.skip('transform - random specs', () => {
   const amount = isCI ? 350 : 100
   const depth = isCI ? 5 : 3
 
@@ -2104,7 +2104,11 @@ describe('transform - random specs', () => {
 
 // describe.only('temp', () => {
 //   test('temp', () => {
-//     console.log(String(generateCheck(['array', ['number']])))
+//     console.log(
+//       String(
+//         generateCheck(['object', { foo: ['union', [['string'], ['boolean']]], bar: ['number'] }])
+//       )
+//     )
 //     expect(1).toEqual(1)
 //   })
 // })
