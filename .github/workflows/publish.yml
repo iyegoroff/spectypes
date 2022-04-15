@@ -14,6 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
+      - run: cp README.md packages/spectypes
+      - run: cp README.md packages/babel-plugin-spectypes
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
       - run: sudo npm i -g pnpm@6.24.2
       - run: pnpm i --frozen-lockfile
