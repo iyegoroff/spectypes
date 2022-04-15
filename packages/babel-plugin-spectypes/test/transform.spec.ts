@@ -2013,7 +2013,7 @@ describe('transform - failure', () => {
   })
 })
 
-describe.skip('transform - random specs', () => {
+describe('transform - random specs', () => {
   const amount = isCI ? 350 : 100
   const depth = isCI ? 5 : 3
 
