@@ -1,3 +1,4 @@
+import { HasTag, PrettyType, Spec, SpecKind, SpecSuccess, SpecTag, SpectypesError } from './types'
 import { error } from './util'
 
 // source: https://stackoverflow.com/questions/42999983/typescript-removing-readonly-modifier/43001581#43001581

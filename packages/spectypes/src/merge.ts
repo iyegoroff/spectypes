@@ -1,3 +1,4 @@
+import { InferKind, PrettyType, Spec, SpecSuccess } from './types'
 import { error } from './util'
 
 export const merge: {

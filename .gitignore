@@ -76,3 +76,4 @@ dist
 .vscode
 
 test.js
+build

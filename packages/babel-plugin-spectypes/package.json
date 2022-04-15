@@ -4,25 +4,13 @@
   "private": false,
   "description": "Babel plugin that compiles spectypes validators",
   "sideEffects": false,
-  "main": "src/index.ts",
-  "publishConfig": {
-    "main": "./dist/cjs/index.js",
-    "module": "./dist/esm/index.js",
-    "types": "./dist/dts/index.d.ts",
-    "exports": {
-      ".": {
-        "require": "./dist/cjs/index.js",
-        "import": "./dist/esm/index.js"
-      },
-      "./package.json": "./package.json"
-    }
-  },
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/dts/index.d.ts",
   "scripts": {
     "update-version": "npm version",
     "build:dts": "tsc -p node_modules/spectypes-configs/tsconfig.dts.json",
-    "build:esm": "tsc -p node_modules/spectypes-configs/tsconfig.esm.json",
     "build:cjs": "tsc -p node_modules/spectypes-configs/tsconfig.cjs.json",
-    "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:esm && npm run build:cjs"
+    "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:cjs"
   },
   "keywords": [
     "babel-plugin",

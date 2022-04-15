@@ -2104,31 +2104,7 @@ describe('transform - random specs', () => {
 
 // describe.only('temp', () => {
 //   test('temp', () => {
-//     console.log(
-//       String(
-//         generateCheck([
-//           'object',
-//           {
-//             // foo: ['unknown'],
-//             // bar: ['literal', ['identifier', 'undefined']],
-//             // bat: ['nullish'],
-//             // op: ['optional', ['nullish']],
-//             gop: [
-//               'map',
-//               [
-//                 'union',
-//                 [
-//                   ['literal', ['identifier', 'undefined']],
-//                   ['literal', ['null']]
-//                 ]
-//               ],
-//               ['function', 'x => undefined']
-//             ]
-//             // t: ['optional', ['number']]
-//           }
-//         ])
-//       )
-//     )
+//     console.log(String(generateCheck(['objectRecord', { x: ['number'] }, ['string'], ['unknown']])))
 //     expect(1).toEqual(1)
 //   })
 // })

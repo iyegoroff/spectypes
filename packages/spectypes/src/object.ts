@@ -1,3 +1,4 @@
+import { HasTag, ObjectValue, Spec, SpecKind, SpectypesError } from './types'
 import { error } from './util'
 
 type InferKindObject<Specs extends Record<string, Spec>> = 'transformer' extends {

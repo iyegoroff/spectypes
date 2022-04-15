@@ -1,3 +1,4 @@
+import { HasTag, ObjectValue, Spec, SpectypesError } from './types'
 import { error } from './util'
 /**
  * Creates an object transformer spec.

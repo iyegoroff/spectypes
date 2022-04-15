@@ -1,0 +1,24 @@
+{
+  "name": "spectypes-benchmark",
+  "version": "0.0.18",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "type-check": "tsc -p ./src --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build": "rm -rf ./build && npm run type-check && npm run build:js",
+    "build:js": "babel src --out-dir build --extensions \".ts,.tsx\""
+  },
+  "dependencies": {
+    "ajv": "^8.11.0",
+    "benchmark": "^2.1.4",
+    "spectypes": "workspace:*"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/benchmark": "^2.1.1",
+    "babel-plugin-spectypes": "workspace:*"
+  }
+}

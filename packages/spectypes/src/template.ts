@@ -1,3 +1,4 @@
+import { HasTag, LiteralBase, Spec, SpecSuccess, SpectypesError } from './types'
 import { error } from './util'
 
 type Template<Specs extends readonly Spec[]> = Specs extends readonly [infer First, ...infer Rest]

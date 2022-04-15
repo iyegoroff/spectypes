@@ -1,3 +1,4 @@
+import { HasTag, InferKind, Spec, SpecKind, SpecSuccess, SpectypesError } from './types'
 import { error } from './util'
 
 type SpectypesRecordKeyError<T extends string> = SpectypesError<T, 'record', ' key'>

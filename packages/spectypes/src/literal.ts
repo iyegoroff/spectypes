@@ -1,3 +1,4 @@
+import { LiteralBase, Spec } from './types'
 import { error } from './util'
 
 /**

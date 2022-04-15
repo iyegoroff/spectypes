@@ -1,3 +1,4 @@
+import { HasTag, Spec, SpecKind, SpecSuccess, SpecTag, SpectypesError } from './types'
 import { error } from './util'
 
 /**
