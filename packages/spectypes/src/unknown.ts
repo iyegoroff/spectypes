@@ -1,5 +1,5 @@
 import { Spec } from './types'
-import { error } from './util'
+import { error } from './error'
 
 /**
  * Empty validator spec. When `unknown` is used as a property validator

@@ -1,5 +1,5 @@
 import { LiteralBase, Spec } from './types'
-import { error } from './util'
+import { error } from './error'
 
 /**
  * Creates a literal validator spec. When `literal(undefined)` is used as a property validator

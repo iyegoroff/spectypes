@@ -1,5 +1,5 @@
 import { HasTag, Spec, SpecSuccess, SpecTag, SpectypesError } from './types'
-import { error } from './util'
+import { error } from './error'
 
 /**
  * Creates a spec that transforms the result of successful validation.

@@ -313,6 +313,28 @@ describe('transform - success', () => {
     )
   })
 
+  test('record(unknown)', () => {
+    const check = generateCheck(['record', ['string'], ['unknown']])
+
+    fc.assert(
+      fc.property(fc.dictionary(fc.string(), fc.anything()), (val) => {
+        expect(check(val)).toEqual(Result.success(val))
+      }),
+      { numRuns }
+    )
+  })
+
+  test('merge(object({}, record(unknown))', () => {
+    const check = generateCheck(['objectRecord', {}, ['string'], ['unknown']])
+
+    fc.assert(
+      fc.property(fc.dictionary(fc.string(), fc.anything()), (val) => {
+        expect(check(val)).toEqual(Result.success(val))
+      }),
+      { numRuns }
+    )
+  })
+
   test('object({ x: unknown, y: number })', () => {
     const check = generateCheck(['object', { x: ['unknown'], y: ['number'] }])
 

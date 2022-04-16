@@ -1,5 +1,5 @@
 import { HasTag, InferKind, Spec, SpecSuccess, SpectypesError } from './types'
-import { error } from './util'
+import { error } from './error'
 
 /**
  * Creates a tuple validator spec.

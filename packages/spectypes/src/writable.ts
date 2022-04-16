@@ -1,5 +1,5 @@
 import { HasTag, PrettyType, Spec, SpecKind, SpecSuccess, SpecTag, SpectypesError } from './types'
-import { error } from './util'
+import { error } from './error'
 
 // source: https://stackoverflow.com/questions/42999983/typescript-removing-readonly-modifier/43001581#43001581
 type DeepWritable<T> = PrettyType<{ -readonly [P in keyof T]: DeepWritable<T[P]> }>

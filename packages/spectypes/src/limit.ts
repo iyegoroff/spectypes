@@ -1,5 +1,5 @@
 import { HasTag, Spec, SpecKind, SpecSuccess, SpecTag, SpectypesError } from './types'
-import { error } from './util'
+import { error } from './error'
 
 /**
  * Creates a spec with custom constraint.

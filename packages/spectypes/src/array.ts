@@ -1,5 +1,5 @@
 import { HasTag, Spec, SpecKind, SpecSuccess, SpectypesError } from './types'
-import { error } from './util'
+import { error } from './error'
 
 /**
  * Creates an array validator spec.

@@ -1,5 +1,5 @@
 import { Spec } from './types'
-import { error } from './util'
+import { error } from './error'
 
 /**
  * Transformer spec, that accepts `undefined` and `null` values and maps them to `undefined`.

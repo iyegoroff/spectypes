@@ -1,5 +1,5 @@
 import { HasTag, Spec, SpecSuccess, SpecTag, SpectypesError } from './types'
-import { error } from './util'
+import { error } from './error'
 
 /**
  * Can be used only as an argument for `array` and `record` to create filtered transformer specs.

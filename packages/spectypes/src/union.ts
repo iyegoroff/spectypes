@@ -1,5 +1,5 @@
 import { HasTag, InferKind, Spec, SpecsTags, SpecSuccess, SpectypesError } from './types'
-import { error } from './util'
+import { error } from './error'
 
 /**
  * Creates a union validator spec.

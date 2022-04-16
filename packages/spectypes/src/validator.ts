@@ -1,5 +1,5 @@
 import { HasTag, Spec, SpecSuccess, SpecTag, SpectypesError } from './types'
-import { error } from './util'
+import { error } from './error'
 
 /**
  * Spec that tells babel plugin to generate a wrapper for an external validator spec.

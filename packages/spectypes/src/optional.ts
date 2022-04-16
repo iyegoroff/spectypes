@@ -1,5 +1,5 @@
 import { HasTag, Spec, SpecKind, SpecSuccess, SpecTag, SpectypesError } from './types'
-import { error } from './util'
+import { error } from './error'
 
 /**
  * Creates an optional object property validator spec. Can be used only inside 'object' and 'struct'

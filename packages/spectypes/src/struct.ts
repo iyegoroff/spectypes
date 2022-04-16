@@ -1,5 +1,5 @@
 import { HasTag, ObjectValue, Spec, SpectypesError } from './types'
-import { error } from './util'
+import { error } from './error'
 /**
  * Creates an object transformer spec.
  * All properties of validated object that are not present in `specs` param will be removed from
