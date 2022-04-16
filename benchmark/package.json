@@ -12,6 +12,7 @@
   "dependencies": {
     "ajv": "^8.11.0",
     "benchmark": "^2.1.4",
+    "merge-anything": "^5.0.2",
     "spectypes": "workspace:*"
   },
   "devDependencies": {

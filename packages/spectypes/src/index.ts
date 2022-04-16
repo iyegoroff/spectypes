@@ -1,4 +1,5 @@
 export { bannedKeys, escapeRegexp, numberTest, stringTest, booleanTest } from './util'
+export { SpecSuccess as Spectype } from './types'
 export * from './array'
 export * from './boolean'
 export * from './filter'

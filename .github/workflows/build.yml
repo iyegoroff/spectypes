@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: sudo npm i -g pnpm@6.24.2
-      - run: pnpm i
+      - run: pnpm i --frozen-lockfile
       - run: pnpm build -r
       - run: pnpm lint
       - run: pnpm t
