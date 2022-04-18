@@ -43,14 +43,15 @@ export default function plugin({ types: t }: typeof babelCore): babelCore.Plugin
         }
 
         for (const decl of path.node.declarations) {
-          const spec = t.isIdentifier(decl.init)
-            ? decl.init.name
-            : t.isCallExpression(decl.init) && t.isIdentifier(decl.init.callee)
-            ? decl.init.callee.name
+          const declInit = t.isSequenceExpression(decl.init) ? decl.init.expressions[1] : decl.init
+          const spec = t.isIdentifier(declInit)
+            ? declInit.name
+            : t.isCallExpression(declInit) && t.isIdentifier(declInit.callee)
+            ? declInit.callee.name
             : ''
 
-          if (spec in specNames && isDefined(decl.init) && t.isIdentifier(decl.id)) {
-            const parsed = parse(decl.init, { specNames })
+          if (spec in specNames && isDefined(declInit) && t.isIdentifier(decl.id)) {
+            const parsed = parse(declInit, { specNames })
 
             if (parsed.tag === 'success') {
               const transformed = transform(parsed.success, {
@@ -69,7 +70,12 @@ export default function plugin({ types: t }: typeof babelCore): babelCore.Plugin
                 }
               })
 
-              decl.init = parseExpression(transformed)
+              const result = parseExpression(transformed)
+              if (t.isSequenceExpression(decl.init)) {
+                decl.init.expressions[1] = result
+              } else {
+                decl.init = result
+              }
             } else {
               throw path.buildCodeFrameError(parsed.failure)
             }

@@ -6,13 +6,21 @@ import { error } from './error'
  * Filtering happens after each item or key validation.
  *
  * @param spec Spec to validate each item or key of a collection
- * @param transform Filter predicate
+ * @param predicate Filter predicate
  */
-export const filter: <ItemSpec extends Spec>(
+export const filter: <
+  ItemSpec extends Spec,
+  Predicate extends (value: SpecSuccess<ItemSpec>) => boolean
+>(
   spec: HasTag<ItemSpec, 'optional'> extends true
     ? SpectypesError<'optional', 'filter'>
     : HasTag<ItemSpec, 'filter'> extends true
     ? SpectypesError<'filter', 'filter'>
     : ItemSpec,
-  transform: (form: SpecSuccess<ItemSpec>) => boolean
-) => Spec<['filter', ...SpecTag<ItemSpec>], 'transformer', SpecSuccess<ItemSpec>> = error
+  predicate: Predicate
+) => Spec<
+  ['filter', ...SpecTag<ItemSpec>],
+  'transformer',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Predicate extends (value: any) => value is infer U ? U : SpecSuccess<ItemSpec>
+> = error

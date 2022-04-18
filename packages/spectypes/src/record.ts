@@ -48,7 +48,7 @@ export const record: {
     ? Spec<
         ['record'],
         InferKind<readonly [KeySpec, ItemSpec]>,
-        { readonly [key in SpecSuccess<KeySpec>]?: SpecSuccess<ItemSpec> }
+        { readonly [key in SpecSuccess<KeySpec>]: SpecSuccess<ItemSpec> }
       >
     : never
   /**
@@ -60,5 +60,5 @@ export const record: {
     itemSpec: HasTag<ItemSpec, 'optional'> extends SpectypesRecordItemError<'optional'>
       ? never
       : ItemSpec
-  ): Spec<['record'], SpecKind<ItemSpec>, { readonly [key in string]?: SpecSuccess<ItemSpec> }>
+  ): Spec<['record'], SpecKind<ItemSpec>, { readonly [key in string]: SpecSuccess<ItemSpec> }>
 } = error

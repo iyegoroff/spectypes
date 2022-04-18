@@ -51,7 +51,7 @@
     "string-hash": "^1.1.3",
     "ts-assert-unreachable": "^0.0.9",
     "ts-is-record": "^2.0.3",
-    "ts-micro-dict": "^8.0.3",
+    "ts-micro-dict": "^8.1.5",
     "ts-tiny-invariant": "^1.0.5"
   },
   "dependencies": {
