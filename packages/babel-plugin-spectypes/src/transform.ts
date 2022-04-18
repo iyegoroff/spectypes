@@ -24,7 +24,9 @@ import {
   TupleArraySpec,
   TupleSpec,
   UnionSpec,
-  UnknownSpec
+  UnknownSpec,
+  UnsafeObjectRecordSpec,
+  UnsafeRecordSpec
 } from './spec'
 
 type Key = readonly ['idx' | 'dot', string]
@@ -85,6 +87,10 @@ const unmatchedName = createName('unmatched')
 const unmatchedKeyName = createName('unmatchedkey')
 
 const errorName = createName('error')
+
+const checkPrototypeKeys = (js: string, val: string, error: string) => {
+  return `for (let i = 0; i < ${js}.bannedKeys.length; i++){const ban = ${js}.bannedKeys[i]; if (Object.prototype.hasOwnProperty.call(${val},ban)) {${error}}}`
+}
 
 const filterName = (name: string) => `filter${name}`
 
@@ -461,7 +467,7 @@ const objectTransform = (
 }
 
 const recordTransform = (
-  spec: RecordSpec,
+  spec: RecordSpec | UnsafeRecordSpec,
   {
     error,
     path,
@@ -475,7 +481,7 @@ const recordTransform = (
   }: TransformConfig,
   context: TransformContext
 ) => {
-  const [, keySpec, valueSpec] = spec
+  const [name, keySpec, valueSpec] = spec
   const { spectypesImport: js } = context
   const val = valueName(path)
   const key = keyName(path)
@@ -488,11 +494,20 @@ const recordTransform = (
     mut ? initResult(path, '{}', skipResult) : ''
   }if (typeof ${val} !== 'object' || Array.isArray(${val}) || ${val} === null) {${
     error ?? defaultError(`'${issuePrefix ?? ''}not an object'`, path, limitErrorNames)
-  }} else {for (let i = 0; i < ${js}.bannedKeys.length; i++){const ban = ${js}.bannedKeys[i];
-  if (Object.prototype.hasOwnProperty.call(${val},ban)) {${
-    error ??
-    defaultError(`"${issuePrefix ?? ''}includes banned '" + ban + "' key"`, path, limitErrorNames)
-  }}}${
+  }} else {${
+    name === 'record'
+      ? checkPrototypeKeys(
+          js,
+          val,
+          error ??
+            defaultError(
+              `"${issuePrefix ?? ''}includes banned '" + ban + "' key"`,
+              path,
+              limitErrorNames
+            )
+        )
+      : ''
+  }${
     noRecordCheck
       ? ''
       : `${forIn(key, val)} {${
@@ -540,7 +555,7 @@ const recordTransform = (
 }
 
 const objectRecordTransform = (
-  spec: ObjectRecordSpec,
+  spec: ObjectRecordSpec | UnsafeObjectRecordSpec,
   {
     error,
     path,
@@ -554,7 +569,7 @@ const objectRecordTransform = (
   }: TransformConfig,
   context: TransformContext
 ) => {
-  const [, objectSpec, keySpec, valueSpec] = spec
+  const [name, objectSpec, keySpec, valueSpec] = spec
   const { spectypesImport: js } = context
   const val = valueName(path)
   const key = keyName(path)
@@ -568,11 +583,20 @@ const objectRecordTransform = (
     mut ? initResult(path, '{}', skipResult) : ''
   }if (typeof ${val} !== 'object' || Array.isArray(${val}) || ${val} === null) {${
     error ?? defaultError(`'${issuePrefix ?? ''}not an object'`, path, limitErrorNames)
-  }} else {for (let i = 0; i < ${js}.bannedKeys.length; i++){const ban = ${js}.bannedKeys[i];
-  if (Object.prototype.hasOwnProperty.call(${val},ban)) {${
-    error ??
-    defaultError(`"${issuePrefix ?? ''}includes banned '" + ban + "' key"`, path, limitErrorNames)
-  }}}${Object.entries(objectSpec)
+  }} else {${
+    name === 'objectRecord'
+      ? checkPrototypeKeys(
+          js,
+          val,
+          error ??
+            defaultError(
+              `"${issuePrefix ?? ''}includes banned '" + ban + "' key"`,
+              path,
+              limitErrorNames
+            )
+        )
+      : ''
+  }${Object.entries(objectSpec)
     .map(
       ([subKey, subSpec]) =>
         `${transformStep(
@@ -996,9 +1020,11 @@ const transformStep = (spec: Spec, config: TransformConfig, context: TransformCo
       return externalTransform(spec, config, context)
 
     case 'objectRecord':
+    case 'UNSAFE_objectRecord':
       return objectRecordTransform(spec, config, context)
 
     case 'record':
+    case 'UNSAFE_record':
       return recordTransform(spec, config, context)
 
     case 'array':

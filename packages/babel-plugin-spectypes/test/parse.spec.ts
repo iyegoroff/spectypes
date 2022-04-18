@@ -34,7 +34,9 @@ const names = [
   'validator',
   'transformer',
   'merge',
-  'filter'
+  'filter',
+  'UNSAFE_record',
+  'UNSAFE_objectRecord'
 ] as const
 
 const specNames = names.reduce<Record<string, SpecName>>((map, name) => {
@@ -150,10 +152,21 @@ describe('parse', () => {
 
   fixtureSuccessTest('record', ['record', ['string'], ['boolean']])
 
+  fixtureSuccessTest('unsafe-record', ['UNSAFE_record', ['string'], ['boolean']])
+
   fixtureSuccessTest('record-without-key', ['record', ['string'], ['boolean']])
 
   fixtureSuccessTest('merge-record', [
     'objectRecord',
+    { x: ['number'] },
+    ['string'],
+    ['boolean'],
+    undefined,
+    undefined
+  ])
+
+  fixtureSuccessTest('merge-unsafe-record', [
+    'UNSAFE_objectRecord',
     { x: ['number'] },
     ['string'],
     ['boolean'],

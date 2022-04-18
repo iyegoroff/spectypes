@@ -36,6 +36,13 @@ export type RecordSpec = readonly [
   (Identifier | ArrowFunction)?,
   (Identifier | ArrowFunction)?
 ]
+export type UnsafeRecordSpec = readonly [
+  'UNSAFE_record',
+  Spec,
+  Spec,
+  (Identifier | ArrowFunction)?,
+  (Identifier | ArrowFunction)?
+]
 export type LimitSpec = readonly ['limit', Spec, Identifier | ArrowFunction]
 export type MapSpec = readonly ['map', Spec, Identifier | ArrowFunction]
 export type FilterSpec = readonly ['filter', Spec, Identifier | ArrowFunction]
@@ -47,6 +54,14 @@ export type TupleArraySpec = readonly [
 ]
 export type ObjectRecordSpec = readonly [
   'objectRecord',
+  Record<string, Spec>,
+  Spec,
+  Spec,
+  (Identifier | ArrowFunction)?,
+  (Identifier | ArrowFunction)?
+]
+export type UnsafeObjectRecordSpec = readonly [
+  'UNSAFE_objectRecord',
   Record<string, Spec>,
   Spec,
   Spec,
@@ -82,6 +97,8 @@ export type Spec =
   | WritableSpec
   | ValidatorSpec
   | TransformerSpec
+  | UnsafeRecordSpec
+  | UnsafeObjectRecordSpec
 
 export type SpecName = Spec[0] | 'merge' | 'filter'
 
@@ -119,7 +136,9 @@ export const isSpecName = (name: string): name is Spec[0] =>
   name === 'validator' ||
   name === 'transformer' ||
   name === 'merge' ||
-  name === 'filter'
+  name === 'filter' ||
+  name === 'UNSAFE_record' ||
+  name === 'UNSAFE_objectRecord'
 
 export const isMutating = (spec: Spec): boolean => {
   switch (spec[0]) {
@@ -152,6 +171,7 @@ export const isMutating = (spec: Spec): boolean => {
       return Object.values(spec[1]).some(isMutating)
 
     case 'record':
+    case 'UNSAFE_record':
       return isMutating(spec[1]) || isMutating(spec[2]) || isDefined(spec[3]) || isDefined(spec[4])
 
     case 'tuple':
@@ -162,6 +182,7 @@ export const isMutating = (spec: Spec): boolean => {
       return spec[1].some(isMutating) || isMutating(spec[2]) || isDefined(spec[3])
 
     case 'objectRecord':
+    case 'UNSAFE_objectRecord':
       return (
         Object.values(spec[1]).some(isMutating) ||
         isMutating(spec[2]) ||

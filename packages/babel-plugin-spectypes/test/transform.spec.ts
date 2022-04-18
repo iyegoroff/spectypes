@@ -324,6 +324,43 @@ describe('transform - success', () => {
     )
   })
 
+  test("UNSAFE_record(literal('toString'), unknown)", () => {
+    const check = generateCheck(['UNSAFE_record', ['literal', ['string', 'toString']], ['unknown']])
+
+    fc.assert(
+      fc.property(
+        fc
+          .dictionary(fc.constant('toString'), fc.anything())
+          .filter((rec) => Object.keys(rec).length > 0),
+        (val) => {
+          expect(check(val)).toEqual(Result.success(val))
+        }
+      ),
+      { numRuns }
+    )
+  })
+
+  test("UNSAFE_objectRecord({}, literal('toString'), unknown)", () => {
+    const check = generateCheck([
+      'UNSAFE_objectRecord',
+      {},
+      ['literal', ['string', 'toString']],
+      ['unknown']
+    ])
+
+    fc.assert(
+      fc.property(
+        fc
+          .dictionary(fc.constant('toString'), fc.anything())
+          .filter((rec) => Object.keys(rec).length > 0),
+        (val) => {
+          expect(check(val)).toEqual(Result.success(val))
+        }
+      ),
+      { numRuns }
+    )
+  })
+
   test('merge(object({}, record(unknown))', () => {
     const check = generateCheck(['objectRecord', {}, ['string'], ['unknown']])
 
@@ -1301,6 +1338,53 @@ describe('transform - failure', () => {
                   path: []
                 }
               ]
+            })
+          )
+        }
+      ),
+      { numRuns }
+    )
+  })
+
+  test("record(literal('toString')), unknown)", () => {
+    const check = generateCheck(['record', ['literal', ['string', 'toString']], ['unknown']])
+
+    fc.assert(
+      fc.property(
+        fc
+          .dictionary(fc.constant('toString'), fc.anything())
+          .filter((rec) => Object.keys(rec).length > 0),
+        (val) => {
+          expect(check(val)).toEqual(
+            Result.failure({
+              value: val,
+              errors: [{ issue: "includes banned 'toString' key", path: [] }]
+            })
+          )
+        }
+      ),
+      { numRuns }
+    )
+  })
+
+  test("objectRecord({}, literal('toString')), unknown)", () => {
+    const check = generateCheck([
+      'objectRecord',
+      {},
+      ['literal', ['string', 'toString']],
+      ['unknown']
+    ])
+
+    fc.assert(
+      fc.property(
+        fc
+          .dictionary(fc.constant('toString'), fc.anything())
+          .filter((rec) => Object.keys(rec).length > 0),
+        (val) => {
+          expect(check(val)).toEqual(
+            Result.failure({
+              value: val,
+              errors: [{ issue: "includes banned 'toString' key", path: [] }]
             })
           )
         }

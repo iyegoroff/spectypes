@@ -4,10 +4,11 @@ import { error } from './error'
 type SpectypesRecordKeyError<T extends string> = SpectypesError<T, 'record', ' key'>
 type SpectypesRecordItemError<T extends string> = SpectypesError<T, 'record', ' item'>
 
-export const record: {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const UNSAFE_record: {
   /**
-   * Creates a record validator spec. This validator is protected from prototype pollution and
-   * validation will fail if validated object contains properties that override `Object.proptotype` methods.
+   * Creates a record validator spec. Unlike `record` this validator is not protected from prototype
+   * pollution and objects containing properties that override Object.prototype methods are valid.
    *
    * @param keySpec Spec to validate each key of a record. Validates a string and can be transformed to string or number
    * @param itemSpec Spec to validate each item of a record.
@@ -53,9 +54,9 @@ export const record: {
       >
     : never
   /**
-   * Creates a record validation spec. Record keys will not be validated. This validator is protected
-   * from prototype pollution and validation will fail if validated object contains properties that
-   * override `Object.proptotype` methods.
+   * Creates a record validation spec. Record keys will not be validated. Unlike `record` this
+   * validator is not protected from prototype pollution and objects containing properties that
+   * override Object.prototype methods are valid.
    *
    * @param itemSpec Spec to validate each item of a record.
    */

@@ -99,9 +99,9 @@ const parseMerge = (expression: t.CallExpression, context: ParseContext) => {
           Result.flatMap(([spec0, spec1]) =>
             spec0[0] === 'tuple' && spec1[0] === 'array'
               ? Result.success(['tupleArray', spec0[1], spec1[1], spec1[2]] as const)
-              : spec0[0] === 'object' && spec1[0] === 'record'
+              : spec0[0] === 'object' && (spec1[0] === 'record' || spec1[0] === 'UNSAFE_record')
               ? Result.success([
-                  'objectRecord',
+                  `${spec1[0] === 'record' ? '' : 'UNSAFE_'}objectRecord`,
                   spec0[1],
                   spec1[1],
                   spec1[2],
@@ -320,6 +320,7 @@ const parseLiteral = (expression: t.CallExpression) => {
 }
 
 const parseRecord = (
+  name: 'record' | 'UNSAFE_record',
   expression: t.CallExpression,
   keyRejects: readonly SpecName[],
   itemRejects: readonly SpecName[],
@@ -329,7 +330,7 @@ const parseRecord = (
 
   if (!t.isExpression(arg0)) {
     return Result.failure(
-      `${pref}first argument of the 'record' spec that ${locInfo(
+      `${pref}first argument of the '${name}' spec that ${locInfo(
         expression
       )} should be an expression`
     )
@@ -338,17 +339,17 @@ const parseRecord = (
   if (t.isExpression(arg1)) {
     const keyName = identifier(arg0)
     if (includes(keyRejects, keyName)) {
-      return fail(keyName, 'record', ' key')
+      return fail(keyName, name, ' key')
     }
 
     const itemName = identifier(arg1)
     if (includes(itemRejects, itemName)) {
-      return fail(itemName, 'record', ' item')
+      return fail(itemName, name, ' item')
     }
   } else {
     const itemName = identifier(arg0)
     if (includes(itemRejects, itemName)) {
-      return fail(itemName, 'record', ' item')
+      return fail(itemName, name, ' item')
     }
   }
 
@@ -357,29 +358,29 @@ const parseRecord = (
       ? isFilter(arg1)
         ? Result.map(
             ([[, keySpec, keyFilter], [, valSpec, valFilter]]) =>
-              ['record', keySpec, valSpec, keyFilter, valFilter] as const,
+              [name, keySpec, valSpec, keyFilter, valFilter] as const,
             Result.combine(parseFilter(arg0, keyRejects, context), parseFilter(arg1, [], context))
           )
         : Result.map(
-            ([[, keySpec, keyFilter], valSpec]) => ['record', keySpec, valSpec, keyFilter] as const,
+            ([[, keySpec, keyFilter], valSpec]) => [name, keySpec, valSpec, keyFilter] as const,
             Result.combine(parseFilter(arg0, keyRejects, context), parseStep(arg1, [], context))
           )
       : isFilter(arg1)
       ? Result.map(
           ([keySpec, [, valSpec, valFilter]]) =>
-            ['record', keySpec, valSpec, undefined, valFilter] as const,
+            [name, keySpec, valSpec, undefined, valFilter] as const,
           Result.combine(parseStep(arg0, keyRejects, context), parseFilter(arg1, [], context))
         )
       : Result.map(
-          (specs) => ['record', ...specs] as const,
+          (specs) => [name, ...specs] as const,
           Result.combine(parseStep(arg0, keyRejects, context), parseStep(arg1, [], context))
         )
     : isFilter(arg0)
     ? Result.map(
-        ([, spec, filter]) => ['record', ['string'], spec, undefined, filter] as const,
+        ([, spec, filter]) => [name, ['string'], spec, undefined, filter] as const,
         parseFilter(arg0, [], context)
       )
-    : Result.map((spec) => ['record', ['string'], spec] as const, parseStep(arg0, [], context))
+    : Result.map((spec) => [name, ['string'], spec] as const, parseStep(arg0, [], context))
 }
 
 const parseLazy = (
@@ -485,7 +486,9 @@ const parseStep = (
         return parseUnaryObject('struct', expression, [...rejects, 'filter'], context)
 
       case 'record':
+      case 'UNSAFE_record':
         return parseRecord(
+          specName,
           expression,
           [
             ...rejects,
@@ -497,6 +500,7 @@ const parseStep = (
             'tuple',
             'object',
             'record',
+            'UNSAFE_record',
             'merge',
             'struct',
             'number',
@@ -524,6 +528,7 @@ const parseStep = (
             'merge',
             'object',
             'record',
+            'UNSAFE_record',
             'struct',
             'template',
             'limit',
