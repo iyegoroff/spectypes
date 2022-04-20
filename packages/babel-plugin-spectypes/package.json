@@ -32,7 +32,8 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "@babel/core": "*"
+    "@babel/core": "*",
+    "spectypes": "workspace:*"
   },
   "devDependencies": {
     "@babel/parser": "^7.17.3",

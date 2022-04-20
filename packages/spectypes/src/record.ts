@@ -49,7 +49,9 @@ export const record: {
     ? Spec<
         ['record'],
         InferKind<readonly [KeySpec, ItemSpec]>,
-        { readonly [key in SpecSuccess<KeySpec>]: SpecSuccess<ItemSpec> }
+        HasTag<KeySpec, 'union'> extends true
+          ? { readonly [key in SpecSuccess<KeySpec>]?: SpecSuccess<ItemSpec> }
+          : { readonly [key in SpecSuccess<KeySpec>]: SpecSuccess<ItemSpec> }
       >
     : never
   /**

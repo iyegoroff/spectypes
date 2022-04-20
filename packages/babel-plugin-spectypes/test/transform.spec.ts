@@ -2208,9 +2208,9 @@ describe('transform - random specs', () => {
   }
 })
 
-// describe.only('temp', () => {
-//   test('temp', () => {
-//     console.log(String(generateCheck(['objectRecord', { x: ['number'] }, ['string'], ['unknown']])))
-//     expect(1).toEqual(1)
-//   })
-// })
+describe.only('temp', () => {
+  test('temp', () => {
+    console.log(String(generateCheck(['map', ['number'], ['function', 'x => -1']])))
+    expect(1).toEqual(1)
+  })
+})

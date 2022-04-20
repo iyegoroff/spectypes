@@ -1,4 +1,4 @@
-import * as _js from 'spectypes';
+import * as _spectypes from 'spectypes';
 
 const _limit = x => x > 1;
 

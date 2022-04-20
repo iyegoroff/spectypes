@@ -1,4 +1,4 @@
-import * as _js from 'spectypes';
+import * as _spectypes from 'spectypes';
 
 const check = value => {
   let err, result;

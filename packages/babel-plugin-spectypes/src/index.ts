@@ -29,7 +29,7 @@ export default function plugin({ types: t }: typeof babelCore): babelCore.Plugin
           }
 
           if (!isDefined(state.spectypesImport)) {
-            state.spectypesImport = path.scope.generateUidIdentifier('js')
+            state.spectypesImport = path.scope.generateUidIdentifier('spectypes')
             path.node.specifiers = [t.importNamespaceSpecifier(state.spectypesImport)]
           } else {
             path.remove()

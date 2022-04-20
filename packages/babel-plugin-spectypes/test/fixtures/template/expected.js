@@ -1,6 +1,6 @@
-import * as _js from 'spectypes';
+import * as _spectypes from 'spectypes';
 
-const _template = new RegExp('^' + _js.escape('test') + _js.stringTest + _js.numberTest + _js.booleanTest + '$');
+const _template = new RegExp('^' + _spectypes.escape('test') + _spectypes.stringTest + _spectypes.numberTest + _spectypes.booleanTest + '$');
 
 const check = value => {
   let err;

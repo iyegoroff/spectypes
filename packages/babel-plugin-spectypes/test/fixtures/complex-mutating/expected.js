@@ -1,4 +1,4 @@
-import * as _js from 'spectypes';
+import * as _spectypes from 'spectypes';
 
 const _limit = prod => prod.contents === undefined || prod.price === prod.contents.reduce((sum, p) => sum + p.price, 0);
 
@@ -6,7 +6,7 @@ const _map = name => name.toUpperCase();
 
 const _limit2 = price => price > 0;
 
-const _template = new RegExp('^' + _js.stringTest + _js.escape('-') + _js.stringTest + _js.escape('-') + _js.numberTest + '$');
+const _template = new RegExp('^' + _spectypes.stringTest + _spectypes.escape('-') + _spectypes.stringTest + _spectypes.escape('-') + _spectypes.numberTest + '$');
 
 const product = value => {
   let err, result;

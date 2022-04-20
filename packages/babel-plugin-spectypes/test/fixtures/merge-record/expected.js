@@ -1,4 +1,4 @@
-import * as _js from 'spectypes';
+import * as _spectypes from 'spectypes';
 
 const check = value => {
   let err;
@@ -9,8 +9,8 @@ const check = value => {
       path: []
     });
   } else {
-    for (let i = 0; i < _js.bannedKeys.length; i++) {
-      const ban = _js.bannedKeys[i];
+    for (let i = 0; i < _spectypes.bannedKeys.length; i++) {
+      const ban = _spectypes.bannedKeys[i];
 
       if (Object.prototype.hasOwnProperty.call(value, ban)) {
         (err = err || []).push({
