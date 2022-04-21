@@ -14,18 +14,11 @@ jobs:
       - run: pnpm t
       - uses: codecov/codecov-action@v2
       - run: pnpm type-coverage
-      - name: persist to workspace
-        uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v3
         with:
           name: packages
           path: packages/*/dist/*
-      - name: setup git
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
-      - name: benchmark
-        run: |
-          cd benchmark
-          pnpm report
-          git commit -am "benchmark report [skip ci]"
-          git push
+      - uses: actions/upload-artifact@v3
+        with:
+          name: benchmark
+          path: benchmark/build/*
