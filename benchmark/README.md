@@ -3,11 +3,11 @@
 > node ./build/index.js
 
 object validation:</br>
-ajv x 11,642,722 ops/sec ±1.25% (86 runs sampled)</br>
-spectypes x 14,785,821 ops/sec ±1.03% (88 runs sampled)</br>
+ajv x 12,450,770 ops/sec ±0.32% (91 runs sampled)</br>
+spectypes x 15,382,363 ops/sec ±0.36% (91 runs sampled)</br>
 Fastest is spectypes</br>
 
 array of unions validation:</br>
-ajv x 205,478 ops/sec ±2.23% (87 runs sampled)</br>
-spectypes x 656,255 ops/sec ±1.01% (87 runs sampled)</br>
+ajv x 172,203 ops/sec ±2.08% (83 runs sampled)</br>
+spectypes x 708,964 ops/sec ±0.15% (98 runs sampled)</br>
 Fastest is spectypes</br>
