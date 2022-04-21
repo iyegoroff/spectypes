@@ -16,10 +16,11 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: packages
+          path: packages
       - uses: actions/download-artifact@v3
         with:
           name: benchmark
-          path: benchmark/build/index.js
+          path: benchmark/build
       - run: ls -R
       - run: cp README.md packages/spectypes
       - run: cp README.md packages/babel-plugin-spectypes
