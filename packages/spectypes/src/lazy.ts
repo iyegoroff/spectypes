@@ -11,4 +11,8 @@ export const lazy: <ItemSpec extends Spec = SomeSpec>(
   spec: HasTag<ItemSpec, 'filter'> extends true ? SpectypesError<'filter', 'lazy'> : () => ItemSpec
 ) => Spec<['lazy'], SpecKind<ItemSpec>, SpecSuccess<ItemSpec>> = error
 
-export type LazySpec<Item, Kind extends 'validator' | 'transformer'> = Spec<['lazy'], Kind, Item>
+type LazySpec<Item, Kind extends 'validator' | 'transformer'> = Spec<['lazy'], Kind, Item>
+
+export type LazyValidatorSpec<Item> = LazySpec<Item, 'validator'>
+
+export type LazyTransformerSpec<Item> = LazySpec<Item, 'transformer'>

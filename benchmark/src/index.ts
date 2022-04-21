@@ -1,5 +1,6 @@
 import { Event, Suite } from 'benchmark'
 import Ajv from 'ajv'
+// import Validator from 'fastest-validator'
 import { array, boolean, number, object, string, union } from 'spectypes'
 
 const obj = Object.freeze({
@@ -83,6 +84,30 @@ const ajvObjectSchema = {
 
 const ajvObject = ajv.compile(ajvObjectSchema)
 
+// const v = new Validator()
+// const validatorObjectSchema = {
+//   $$strict: true,
+//   number: 'number',
+//   negNumber: 'number',
+//   maxNumber: 'number',
+//   string: 'string',
+//   longString: 'string',
+//   boolean: 'boolean',
+//   deeplyNested: {
+//     type: 'object',
+//     strict: true,
+//     props: {
+//       foo: 'string',
+//       num: 'number',
+//       bool: 'boolean'
+//     }
+//   }
+// }
+
+// const validatorObject = v.compile(validatorObjectSchema)
+
+// console.log(validatorObject(obj))
+
 const spectypesArrayUnion = array(union(string, number, boolean))
 
 const ajvArrayUnionShema = {
@@ -131,6 +156,12 @@ objectValidation
       throw new Error(JSON.stringify(ajvObject.errors))
     }
   })
+  // .add('fastest-validator', () => {
+  //   void validatorObject(obj)
+  //   // if (checked !== true) {
+  //   //   throw new Error(JSON.stringify(checked))
+  //   // }
+  // })
   .add('spectypes', () => {
     const checked = spectypesObject(obj)
     if (checked.tag === 'failure') {

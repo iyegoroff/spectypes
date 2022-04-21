@@ -107,6 +107,8 @@ const check = (value) => {
 
 </details>
 
+---
+
 ## Reference
 
 Primitive validators
@@ -190,6 +192,8 @@ const check = (value) => {
 
 </details>
 
+---
+
 #### literal
 
 Creates a literal validator spec. `literal`can validate strings, numbers, booleans, undefined and null. `literal(undefined)` is treated [specially](#special-cases) when used as a property validator inside `object` or `struct`.
@@ -236,6 +240,8 @@ const check = (value) => {
 ```
 
 </details>
+
+---
 
 #### nullish
 
@@ -290,6 +296,8 @@ const check = (value) => {
 
 </details>
 
+---
+
 #### number
 
 Validates a number value.
@@ -336,6 +344,8 @@ const check = (value) => {
 ```
 
 </details>
+
+---
 
 #### string
 
@@ -384,6 +394,8 @@ const check = (value) => {
 
 </details>
 
+---
+
 #### unknown
 
 Empty validator spec. `unknown` is treated [specially](#special-cases) when used as a property validator inside `object` or `struct`.
@@ -415,6 +427,8 @@ const check = (value) => {
 
 </details>
 
+---
+
 ### Complex validators
 
 #### array
@@ -422,6 +436,8 @@ const check = (value) => {
 Creates an array validator spec. Takes a spec to validate each item of an array.
 
 See [example](#example)
+
+---
 
 #### filter
 
@@ -503,6 +519,8 @@ expect(check(['hello', 'test', 'world'])).toEqual({
 })
 ```
 
+---
+
 #### limit
 
 Creates a spec with custom constraint. Takes a basis spec and a function to perform additinal validation.
@@ -569,6 +587,21 @@ const check = (value) => {
 
 </details>
 
+Type predicate will be taken into account if provided
+
+```ts
+import { array, string, limit } from 'spectypes'
+
+const check = array(limit(string, (x): x is 'test' => x === 'test'))
+
+expect(check(['test', 'test', 'test'])).toEqual({
+  tag: 'success',
+  success: ['test', 'test', 'test'] // readonly 'test'[]
+})
+```
+
+---
+
 #### map
 
 Creates a spec that transforms the result of successful validation. Takes basis spec and mapping function.
@@ -621,6 +654,8 @@ const check = (value) => {
 ```
 
 </details>
+
+---
 
 #### merge
 
@@ -790,6 +825,8 @@ const check = (value) => {
 
 </details>
 
+---
+
 #### object
 
 Creates an object validator spec. Validation will fail if validated object has a property set different from the one specified. Takes an object with specs to validate object properties. `literal(undefined)`, `nullish` and `unknown` are treated [specially](#special-cases) when used as a property validator inside `object`.
@@ -893,6 +930,8 @@ const check = (value) => {
 
 </details>
 
+---
+
 #### optional
 
 Creates an optional object property validator spec. Can be used only inside `object` and `struct` arguments. Will not produce any validation errors if property equals `undefined` or is not present in the validated object.
@@ -965,6 +1004,8 @@ const check = (value) => {
 ```
 
 </details>
+
+---
 
 #### record
 
@@ -1042,6 +1083,8 @@ const check = (value) => {
 ```
 
 </details>
+
+---
 
 #### struct
 
@@ -1139,6 +1182,8 @@ const check = (value) => {
 
 </details>
 
+---
+
 #### template
 
 Creates a template string validator spec. Takes `number`, `string`, `boolean`, `literal` specs and their` union`s to validate parts of the validated string.
@@ -1199,6 +1244,8 @@ const check = (value) => {
 ```
 
 </details>
+
+---
 
 #### tuple
 
@@ -1298,6 +1345,8 @@ const check = (value) => {
 
 </details>
 
+---
+
 #### union
 
 Creates a union validator spec. Takes specs to validate union cases.
@@ -1390,6 +1439,8 @@ const check = (value) => {
 ```
 
 </details>
+
+---
 
 ### Utilities
 
@@ -1485,6 +1536,8 @@ const check = (value) => {
 ```
 
 </details>
+
+---
 
 #### validator
 
@@ -1582,22 +1635,105 @@ const check = (value) => {
 
 </details>
 
+---
+
 #### lazy
 
-Creates a spec to validate a value with recursive <b>type</b>. But <b>data</b> that recursively references itself is not supported.
+Creates a spec to validate a value with recursive <b>type</b>. But <b>data</b> that recursively references itself is not supported. `LazyTransformerSpec` type should be used when spec contains `struct`, `nullish`,
+`map`, `filter` and `transformer` specs, and `LazyValidatorSpec` otherwise.
 
 ```ts
-import { lazy, string, object, array, validator } from 'spectypes'
+import { lazy, string, object, array, validator, LazyValidatorSpec } from 'spectypes'
 
 type Person = {
   readonly name: string
   readonly likes: readonly Person[]
 }
 
-const person: LazySpec<Person, 'validator'> = lazy(() =>
+const person: LazyValidatorSpec<Person> = lazy(() =>
   object({ name: string, likes: array(validator(person)) })
 )
+
+expect(person({ name: 'Bob', likes: [{ name: 'Alice', likes: [] }] })).toEqual({
+  tag: 'success',
+  { name: 'Bob', likes: [{ name: 'Alice', likes: [] }] }
+})
+
+expect(person({ name: 'Alice', likes: [{ name: 'Bob', likes: 'cats' }] })).toEqual({
+  tag: 'failure',
+  failure: {
+    value: { name: 'Alice', likes: [{ name: 'Bob', likes: 'cats' }] },
+    errors: [{ issue: 'not an array', path: ['likes', 0, 'likes'] }]
+  }
+})
 ```
+
+<details>
+  <summary>Transformed code</summary>
+
+```js
+import * as _spectypes from 'spectypes'
+
+const person = (value) => {
+  let err
+
+  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
+    ;(err = err || []).push({
+      issue: 'not an object',
+      path: []
+    })
+  } else {
+    const value_name = value.name
+
+    if (typeof value_name !== 'string') {
+      ;(err = err || []).push({
+        issue: 'not a string',
+        path: ['name']
+      })
+    }
+
+    const value_likes = value.likes
+
+    if (!Array.isArray(value_likes)) {
+      ;(err = err || []).push({
+        issue: 'not an array',
+        path: ['likes']
+      })
+    } else {
+      for (let index_likes = 0; index_likes < value_likes.length; index_likes++) {
+        const value_likes_index_likes = value_likes[index_likes]
+        const ext_value_likes_index_likes0 = person(value_likes_index_likes)
+
+        if (ext_value_likes_index_likes0.tag === 'failure') {
+          ;(err = err || []).push(
+            ...ext_value_likes_index_likes0.failure.errors.map((fail) => ({
+              issue: '' + fail.issue,
+              path: ['likes', index_likes, ...fail.path]
+            }))
+          )
+        }
+      }
+    }
+
+    for (const key in value) {
+      if (!(key === 'name' || key === 'likes')) {
+        ;(err = err || []).push({
+          issue: 'excess key - ' + key,
+          path: []
+        })
+      }
+    }
+  }
+
+  return err
+    ? { tag: 'failure', failure: { value, errors: err } }
+    : { tag: 'success', success: value }
+}
+```
+
+</details>
+
+---
 
 #### writable
 
@@ -1614,12 +1750,14 @@ expect(check({ x: 1, y: '2', z: true })).toEqual({
 })
 ```
 
+---
+
 #### Spectype
 
 Type to infer `success` value
 
 ```ts
-import { object, number, string, boolean } from 'spectypes'
+import { object, number, string, boolean, Spectype } from 'spectypes'
 
 const check = object({ x: number, y: string, z: boolean })
 
@@ -1630,6 +1768,9 @@ type Value = Spectype<typeof check>
 ## Misc
 
 ### Special cases
+
+- When `literal(undefined)` or `unknown` is used as a property validator inside `object` or `struct` and that property is not present in the validated object the validation will fail.
+- When `nullish` is used as a property validator inside `object` or `struct` and that property is not present in the validated object the result will still contain that property set to `undefined`.
 
 ### Custom validators
 
