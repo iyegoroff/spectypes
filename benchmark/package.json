@@ -7,12 +7,14 @@
     "type-check": "tsc -p ./src --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "build": "rm -rf ./build && npm run type-check && npm run build:js",
-    "build:js": "babel src --out-dir build --extensions \".ts,.tsx\""
+    "build:js": "babel src --out-dir build --extensions \".ts,.tsx\"",
+    "bench": "node ./build/index",
+    "start": "npm run build && npm run bench",
+    "report": "rm -rf ./README.md && npm run bench >> ./README.md"
   },
   "dependencies": {
     "ajv": "^8.11.0",
     "benchmark": "^2.1.4",
-    "merge-anything": "^5.0.2",
     "spectypes": "workspace:*"
   },
   "devDependencies": {

@@ -2119,7 +2119,7 @@ describe('transform - failure', () => {
   })
 })
 
-describe('transform - random specs', () => {
+describe.skip('transform - random specs', () => {
   const amount = isCI ? 350 : 100
   const depth = isCI ? 5 : 3
 
@@ -2208,9 +2208,19 @@ describe('transform - random specs', () => {
   }
 })
 
-describe.only('temp', () => {
-  test('temp', () => {
-    console.log(String(generateCheck(['map', ['number'], ['function', 'x => -1']])))
-    expect(1).toEqual(1)
-  })
-})
+// describe.only('temp', () => {
+//   test('temp', () => {
+//     console.log(
+//       String(
+//         generateCheck(
+//           [
+//             'array',
+//             ['union', [['string'], ['transformer', ['external', ['identifier', 'check1']]]]]
+//           ],
+//           ['map', ['number'], ['function', 'x => -1']]
+//         )
+//       )
+//     )
+//     expect(1).toEqual(1)
+//   })
+// })

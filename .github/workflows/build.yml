@@ -19,3 +19,9 @@ jobs:
         with:
           name: packages
           path: packages/*/dist/*
+      - name: benchmark
+        run: |
+          cd benchmark
+          pnpm report
+          git commit -am "benchmark report [skip ci]"
+          git push
