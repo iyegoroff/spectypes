@@ -1,13 +1,13 @@
 
 > spectypes-benchmark@0.0.18 bench
-> node ./build/index
+> node ./build/index.js
 
 object validation:</br>
-ajv x 12,611,401 ops/sec ±0.24% (90 runs sampled)</br>
-spectypes x 15,619,040 ops/sec ±0.29% (99 runs sampled)</br>
+ajv x 14,595,311 ops/sec ±0.27% (93 runs sampled)</br>
+spectypes x 19,257,741 ops/sec ±0.43% (96 runs sampled)</br>
 Fastest is spectypes</br>
 
 array of unions validation:</br>
-ajv x 206,868 ops/sec ±1.83% (91 runs sampled)</br>
-spectypes x 712,379 ops/sec ±0.26% (97 runs sampled)</br>
+ajv x 239,971 ops/sec ±0.59% (90 runs sampled)</br>
+spectypes x 834,736 ops/sec ±0.23% (96 runs sampled)</br>
 Fastest is spectypes</br>
