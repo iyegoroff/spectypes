@@ -20,7 +20,7 @@ const obj = Object.freeze({
 const arrayUnion = Object.freeze(
   Array(100)
     .fill(0)
-    .map((_, idx) => ['test', 123, false][idx % 3] ?? true)
+    .map((_: number, idx) => ['test', 123, false][idx % 3] ?? true)
 )
 
 const spectypesObject = object({
@@ -116,7 +116,7 @@ arrayUnionValidation
   .on('cycle', (event: Event) => {
     console.log(`${String(event.target)}</br>`)
   })
-  .on('complete', ({ currentTarget }: Event) => {
+  .on('complete', ({ currentTarget }: { currentTarget: unknown }) => {
     if (currentTarget instanceof Suite) {
       console.log(`Fastest is ${String(currentTarget.filter('fastest').map('name')[0])}</br>`)
     }
@@ -143,7 +143,7 @@ objectValidation
   .on('cycle', (event: Event) => {
     console.log(`${String(event.target)}</br>`)
   })
-  .on('complete', ({ currentTarget }: Event) => {
+  .on('complete', ({ currentTarget }: { currentTarget: unknown }) => {
     if (currentTarget instanceof Suite) {
       console.log(`Fastest is ${String(currentTarget.filter('fastest').map('name')[0])}</br>`)
     }
