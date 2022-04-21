@@ -1,4 +1,4 @@
-import { HasTag, Spec, SpecKind, SpecSuccess, SpectypesError } from './types'
+import { HasTag, SomeSpec, Spec, SpecKind, SpecSuccess, SpectypesError } from './types'
 import { error } from './error'
 
 /**
@@ -7,6 +7,6 @@ import { error } from './error'
  *
  * @param spec Function that returns a spec
  */
-export const lazy: <ItemSpec extends Spec>(
+export const lazy: <ItemSpec extends Spec = SomeSpec>(
   spec: HasTag<ItemSpec, 'filter'> extends true ? SpectypesError<'filter', 'lazy'> : () => ItemSpec
 ) => Spec<['lazy'], SpecKind<ItemSpec>, SpecSuccess<ItemSpec>> = error

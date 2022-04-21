@@ -1,4 +1,4 @@
-import { HasTag, Spec, SpecSuccess, SpecTag, SpectypesError } from './types'
+import { HasTag, SomeSpec, Spec, SpecSuccess, SpecTag, SpectypesError } from './types'
 import { error } from './error'
 
 /**
@@ -6,7 +6,7 @@ import { error } from './error'
  *
  * @param spec An external validator spec
  */
-export const validator: <ItemSpec extends Spec>(
+export const validator: <ItemSpec extends Spec = SomeSpec>(
   spec: HasTag<ItemSpec, 'filter'> extends true
     ? SpectypesError<'filter', 'validator'>
     : ItemSpec extends Spec<readonly string[], 'transformer', unknown>

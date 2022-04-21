@@ -1,4 +1,4 @@
-import { HasTag, InferKind, Spec, SpecKind, SpecSuccess, SpectypesError } from './types'
+import { HasTag, InferKind, SomeSpec, Spec, SpecKind, SpecSuccess, SpectypesError } from './types'
 import { error } from './error'
 
 type SpectypesRecordKeyError<T extends string> = SpectypesError<T, 'record', ' key'>
@@ -13,7 +13,7 @@ export const UNSAFE_record: {
    * @param keySpec Spec to validate each key of a record. Validates a string and can be transformed to string or number
    * @param itemSpec Spec to validate each item of a record.
    */
-  <KeySpec extends Spec, ItemSpec extends Spec>(
+  <KeySpec extends Spec = SomeSpec, ItemSpec extends Spec = SomeSpec>(
     keySpec: HasTag<KeySpec, 'optional'> extends true
       ? SpectypesRecordKeyError<'optional'>
       : HasTag<KeySpec, 'unknown'> extends true
@@ -60,7 +60,7 @@ export const UNSAFE_record: {
    *
    * @param itemSpec Spec to validate each item of a record.
    */
-  <ItemSpec extends Spec>(
+  <ItemSpec extends Spec = SomeSpec>(
     itemSpec: HasTag<ItemSpec, 'optional'> extends SpectypesRecordItemError<'optional'>
       ? never
       : ItemSpec

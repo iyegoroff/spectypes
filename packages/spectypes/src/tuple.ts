@@ -1,4 +1,4 @@
-import { HasTag, InferKind, Spec, SpecSuccess, SpectypesError } from './types'
+import { HasTag, InferKind, SomeSpec, Spec, SpecSuccess, SpectypesError } from './types'
 import { error } from './error'
 
 /**
@@ -6,7 +6,7 @@ import { error } from './error'
  *
  * @param specs Specs to validate tuple parts
  */
-export const tuple: <Specs extends readonly Spec[]>(
+export const tuple: <Specs extends readonly Spec[] = readonly SomeSpec[]>(
   ...specs: Specs & {
     readonly [Index in keyof Specs]: Specs[Index] extends Spec
       ? HasTag<Specs[Index], 'optional'> extends true

@@ -1,4 +1,4 @@
-import { HasTag, Spec, SpecKind, SpecSuccess, SpecTag, SpectypesError } from './types'
+import { HasTag, SomeSpec, Spec, SpecKind, SpecSuccess, SpecTag, SpectypesError } from './types'
 import { error } from './error'
 
 /**
@@ -8,8 +8,8 @@ import { error } from './error'
  * @param constraint Function that performs additional validation
  */
 export const limit: <
-  ItemSpec extends Spec,
-  Constraint extends (value: SpecSuccess<ItemSpec>) => boolean
+  Constraint extends (value: SpecSuccess<ItemSpec>) => boolean,
+  ItemSpec extends Spec = SomeSpec
 >(
   spec: HasTag<ItemSpec, 'optional'> extends true
     ? SpectypesError<'optional', 'limit'>

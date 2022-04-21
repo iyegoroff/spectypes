@@ -1,4 +1,4 @@
-import { HasTag, LiteralBase, Spec, SpecSuccess, SpectypesError } from './types'
+import { HasTag, LiteralBase, SomeSpec, Spec, SpecSuccess, SpectypesError } from './types'
 import { error } from './error'
 
 type Template<Specs extends readonly Spec[]> = Specs extends readonly [infer First, ...infer Rest]
@@ -18,7 +18,7 @@ type SpectypesTemplateError<T extends string> = SpectypesError<T, 'template'>
  *
  * @param specs Specs to validate parts of the string. Can be only `number`s, `string`s, `boolean`s, `literal`s or their `union`s
  */
-export const template: <Specs extends readonly Spec[]>(
+export const template: <Specs extends readonly Spec[] = readonly SomeSpec[]>(
   ...specs: Specs & {
     readonly [Index in keyof Specs]: Specs[Index] extends Spec
       ? HasTag<Specs[Index], 'optional'> extends true

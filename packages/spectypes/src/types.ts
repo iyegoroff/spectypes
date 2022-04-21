@@ -110,3 +110,5 @@ export type InferKind<Specs extends readonly Spec[]> = Specs extends readonly [
     ? InferKind<Rest>
     : 'validator'
   : 'validator'
+
+export type SomeSpec = Spec<[''], '', unknown>

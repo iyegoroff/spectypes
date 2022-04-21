@@ -1,4 +1,4 @@
-import { HasTag, Spec, SpecSuccess, SpecTag, SpectypesError } from './types'
+import { HasTag, SomeSpec, Spec, SpecSuccess, SpecTag, SpectypesError } from './types'
 import { error } from './error'
 
 /**
@@ -9,8 +9,8 @@ import { error } from './error'
  * @param predicate Filter predicate
  */
 export const filter: <
-  ItemSpec extends Spec,
-  Predicate extends (value: SpecSuccess<ItemSpec>) => boolean
+  Predicate extends (value: SpecSuccess<ItemSpec>) => boolean,
+  ItemSpec extends Spec = SomeSpec
 >(
   spec: HasTag<ItemSpec, 'optional'> extends true
     ? SpectypesError<'optional', 'filter'>

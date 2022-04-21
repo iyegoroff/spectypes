@@ -1,4 +1,4 @@
-import { HasTag, ObjectValue, Spec, SpecKind, SpectypesError } from './types'
+import { HasTag, ObjectValue, SomeSpec, Spec, SpecKind, SpectypesError } from './types'
 import { error } from './error'
 
 type InferKindObject<Specs extends Record<string, Spec>> = 'transformer' extends {
@@ -14,7 +14,7 @@ type InferKindObject<Specs extends Record<string, Spec>> = 'transformer' extends
  *
  * @param specs Specs to validate object properties
  */
-export const object: <Specs extends Record<string, Spec>>(
+export const object: <Specs extends Record<string, Spec> = Record<string, SomeSpec>>(
   specs: Specs & {
     readonly [Key in keyof Specs]: Specs[Key] extends Spec
       ? HasTag<Specs[Key], 'filter'> extends true

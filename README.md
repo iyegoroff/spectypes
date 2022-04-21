@@ -14,12 +14,12 @@ Fast, compiled, eval-free data validator/transformer
 
 ## Features
 
-- <b>really fast</b>, can be even faster than `ajv`
+- <b>really fast</b>, can be even [faster](/benchmark/README.md) than `ajv`
 - <b>detailed errors</b>, failure will result into explicit error message(s) and path to invalid data
-- <b>extensively tested</b>, each release undergoes more than 900 `fast-check` powered tests
+- <b>extensively tested</b>, each release undergoes more than 900 `fast-check` powered [tests](#how-is-it-tested)
 - <b>precise types</b>, accurately infers all types and provides readable compile-time error messages
 - <b>browser friendly</b>, uses `babel` to compile validators, so no `eval` or `new Function` involved
-- <b>easily extensible</b>, custom validators are created by mixing existing ones
+- <b>easily extensible</b>, [custom validators](#custom-validators) are created by mixing existing ones
 
 ## Getting started
 
@@ -184,7 +184,7 @@ const check = (value) => {
 
 #### literal
 
-Creates a literal validator spec. `literal`can validate strings, numbers, booleans, undefined and null. `literal(undefined)` is treated specially when used as a property validator inside `object` or `struct`.
+Creates a literal validator spec. `literal`can validate strings, numbers, booleans, undefined and null. `literal(undefined)` is treated [specially](#special-cases) when used as a property validator inside `object` or `struct`.
 
 ```ts
 import { literal } from 'spectypes'
@@ -232,7 +232,7 @@ const check = (value) => {
 #### nullish
 
 Transformer spec, that accepts `undefined` and `null` values and maps them to `undefined`.
-`nullish` is treated specially when used as a property validator inside `object` or `struct`.
+`nullish` is treated [specially](#special-cases) when used as a property validator inside `object` or `struct`.
 
 ```ts
 import { nullish } from 'spectypes'
@@ -378,7 +378,7 @@ const check = (value) => {
 
 #### unknown
 
-Empty validator spec. `unknown` is treated specially when used as a property validator inside `object` or `struct`.
+Empty validator spec. `unknown` is treated [specially](#special-cases) when used as a property validator inside `object` or `struct`.
 
 ```ts
 import { unknown } from 'spectypes'
@@ -784,7 +784,7 @@ const check = (value) => {
 
 #### object
 
-Creates an object validator spec. Validation will fail if validated object has a property set different from the one specified. Takes an object with specs to validate object properties. `literal(undefined)`, `nullish` and `unknown` are treated specially when used as a property validator inside `object`.
+Creates an object validator spec. Validation will fail if validated object has a property set different from the one specified. Takes an object with specs to validate object properties. `literal(undefined)`, `nullish` and `unknown` are treated [specially](#special-cases) when used as a property validator inside `object`.
 
 ```ts
 import { object, number, string, boolean } from 'spectypes'
@@ -1037,7 +1037,7 @@ const check = (value) => {
 
 #### struct
 
-Creates an object transformer spec. All properties of validated object that are not present in passed param will be removed from the result of successful validation. Takes an object with specs to validate object properties. `literal(undefined)`, `nullish` and `unknown` are treated specially when used as a property validator inside `struct`.
+Creates an object transformer spec. All properties of validated object that are not present in passed param will be removed from the result of successful validation. Takes an object with specs to validate object properties. `literal(undefined)`, `nullish` and `unknown` are treated [specially](#special-cases) when used as a property validator inside `struct`.
 
 ```ts
 import { struct, number, string, boolean } from 'spectypes'

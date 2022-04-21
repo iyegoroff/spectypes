@@ -1,4 +1,4 @@
-import { HasTag, Spec, SpecSuccess, SpecTag, SpectypesError } from './types'
+import { HasTag, SomeSpec, Spec, SpecSuccess, SpecTag, SpectypesError } from './types'
 import { error } from './error'
 
 /**
@@ -7,7 +7,7 @@ import { error } from './error'
  * @param spec Basis spec
  * @param transform Success mapping function
  */
-export const map: <ItemSpec extends Spec, To>(
+export const map: <To, ItemSpec extends Spec = SomeSpec>(
   spec: HasTag<ItemSpec, 'optional'> extends true
     ? SpectypesError<'optional', 'map'>
     : HasTag<ItemSpec, 'filter'> extends true

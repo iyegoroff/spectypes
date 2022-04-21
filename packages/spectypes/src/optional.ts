@@ -1,4 +1,4 @@
-import { HasTag, Spec, SpecKind, SpecSuccess, SpecTag, SpectypesError } from './types'
+import { HasTag, SomeSpec, Spec, SpecKind, SpecSuccess, SpecTag, SpectypesError } from './types'
 import { error } from './error'
 
 /**
@@ -8,7 +8,7 @@ import { error } from './error'
  *
  * @param spec Non-optional spec
  */
-export const optional: <ItemSpec extends Spec>(
+export const optional: <ItemSpec extends Spec = SomeSpec>(
   spec: HasTag<ItemSpec, 'optional'> extends true
     ? SpectypesError<'optional', 'optional'>
     : HasTag<ItemSpec, 'filter'> extends true

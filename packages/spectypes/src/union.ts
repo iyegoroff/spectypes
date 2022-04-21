@@ -1,4 +1,4 @@
-import { HasTag, InferKind, Spec, SpecsTags, SpecSuccess, SpectypesError } from './types'
+import { HasTag, InferKind, SomeSpec, Spec, SpecsTags, SpecSuccess, SpectypesError } from './types'
 import { error } from './error'
 
 /**
@@ -6,7 +6,7 @@ import { error } from './error'
  *
  * @param specs Specs to validate union cases
  */
-export const union: <Specs extends readonly Spec[]>(
+export const union: <Specs extends readonly Spec[] = readonly SomeSpec[]>(
   ...specs: Specs & {
     readonly [Index in keyof Specs]: Specs[Index] extends Spec
       ? HasTag<Specs[Index], 'optional'> extends true
