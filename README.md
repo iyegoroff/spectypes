@@ -1590,4 +1590,4 @@ Creates a spec to validate a value with recursive <b>type</b>. But <b>data</b> t
 
 ### How is it tested?
 
-Having 100% of the code covered with tests reflects only the coverage of generative code, not the generated one. It says little about the amount of potential bugs in this package. Because of that most of the test cases are randomly generated. When testing validations of valid data it will generate `spectypes` validator and corresponding `fast-check` arbitrary
+Having 100% of the code covered with tests reflects only the coverage of generative code, not the generated one. It says little about the amount of potential bugs in this package. Because of that most of the test cases are randomly generated. When testing [validations of valid data](packages/babel-plugin-spectypes/test/property/create-valid-property.ts) it will generate `spectypes` validator and corresponding `fast-check` arbitrary and then check if

@@ -31,10 +31,14 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
+      - name: Get Branch
+        run: |
+          raw=$(git branch -r --contains ${{ github.ref }})
+          branch=${raw/origin\/}
+          echo ::set-env name=BRANCH::$branch
+      - run: echo ${{ env.BRANCH }}
       - name: benchmark
         run: |
-          git branch -a
-          git checkout main
           cd benchmark
           pnpm report
           git commit -am "benchmark report [skip ci]"
