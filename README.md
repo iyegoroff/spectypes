@@ -1480,6 +1480,100 @@ const check = (value) => {
 
 #### validator
 
+Spec that tells `babel` plugin to generate a wrapper for an external transformer spec. Any spec <b>not</b> containing `struct`, `nullish`, `map`, `filter` and `transformer` specs on successful validation will return validated object. Such spec has to be wrapped with `validator` when used inside another spec.
+
+```ts
+import { array, validator, limit, number } from 'spectypes'
+
+const positive = limit(number, (x) => x >= 0)
+const check = array(validator(positive))
+
+// Incorrect usage !!!
+// const positive = validator(limit(number, (x) => x >= 0))
+// const check = array(positive)
+
+expect(check([0, 1, 2])).toEqual({
+  tag: 'success',
+  success: [0, 1, 2]
+})
+
+expect(check([-1, -2, -3])).toEqual({
+  tag: 'failure',
+  failure: {
+    value: [-1, -2, -3],
+    errors: [
+      { issue: 'does not fit the limit', path: [0] },
+      { issue: 'does not fit the limit', path: [1] },
+      { issue: 'does not fit the limit', path: [2] }
+    ]
+  }
+})
+```
+
+<details>
+  <summary>Transformed code</summary>
+
+```js
+import * as _spectypes from 'spectypes'
+
+const _limit = (x) => x >= 0
+
+const positive = (value) => {
+  let err
+  let error0
+
+  if (typeof value !== 'number') {
+    error0 = true
+    ;(err = err || []).push({
+      issue: 'not a number',
+      path: []
+    })
+  }
+
+  if (!error0 && !_limit(value)) {
+    ;(err = err || []).push({
+      issue: 'does not fit the limit',
+      path: []
+    })
+  }
+
+  return err
+    ? { tag: 'failure', failure: { value, errors: err } }
+    : { tag: 'success', success: value }
+}
+
+const check = (value) => {
+  let err
+
+  if (!Array.isArray(value)) {
+    ;(err = err || []).push({
+      issue: 'not an array',
+      path: []
+    })
+  } else {
+    for (let index = 0; index < value.length; index++) {
+      const value_index = value[index]
+      const ext_value_index0 = positive(value_index)
+
+      if (ext_value_index0.tag === 'failure') {
+        ;(err = err || []).push(
+          ...ext_value_index0.failure.errors.map((fail) => ({
+            issue: '' + fail.issue,
+            path: [index, ...fail.path]
+          }))
+        )
+      }
+    }
+  }
+
+  return err
+    ? { tag: 'failure', failure: { value, errors: err } }
+    : { tag: 'success', success: value }
+}
+```
+
+</details>
+
 #### lazy
 
 Creates a spec to validate a value with recursive <b>type</b>. But <b>data</b> that recursively references itself is not supported.
@@ -1495,3 +1589,5 @@ Creates a spec to validate a value with recursive <b>type</b>. But <b>data</b> t
 ### Custom validators
 
 ### How is it tested?
+
+Having 100% of the code covered with tests says little about the amount of potential bugs in this package, because it reflects only the coverage of generative code, not the generated one
