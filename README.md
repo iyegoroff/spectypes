@@ -109,26 +109,34 @@ const check = (value) => {
 
 ## Reference
 
-- [array](#array)
+Primitive validators
+
 - [boolean](#boolean)
-- [filter](#filter)
-- [lazy](#lazy)
-- [limit](#limit)
 - [literal](#literal)
-- [map](#map)
-- [merge](#merge)
 - [nullish](#nullish)
 - [number](#number)
+- [string](#string)
+- [unknown](#unknown)
+
+Complex validators
+
+- [array](#array)
+- [filter](#filter)
+- [limit](#limit)
+- [map](#map)
+- [merge](#merge)
 - [object](#object)
 - [optional](#optional)
 - [record](#record)
-- [string](#string)
 - [struct](#struct)
 - [template](#template)
-- [transformer](#transformer)
 - [tuple](#tuple)
 - [union](#union)
-- [unknown](#unknown)
+
+Utilities
+
+- [lazy](#lazy)
+- [transformer](#transformer)
 - [validator](#validator)
 - [writable](#writable)
 - [Spectype](#Spectype)
@@ -1578,9 +1586,46 @@ const check = (value) => {
 
 Creates a spec to validate a value with recursive <b>type</b>. But <b>data</b> that recursively references itself is not supported.
 
+```ts
+import { lazy, string, object, array, validator } from 'spectypes'
+
+type Person = {
+  readonly name: string
+  readonly likes: readonly Person[]
+}
+
+const person: LazySpec<Person, 'validator'> = lazy(() =>
+  object({ name: string, likes: array(validator(person)) })
+)
+```
+
 #### writable
 
+Creates an empty validator that removes `readonly` modifiers from the result of validation
+
+```ts
+import { object, number, string, boolean, writable } from 'spectypes'
+
+const check = writable(object({ x: number, y: string, z: boolean }))
+
+expect(check({ x: 1, y: '2', z: true })).toEqual({
+  tag: 'success',
+  success: { x: 1, y: '2', z: true } // { x: number, y: string, z: true }
+})
+```
+
 #### Spectype
+
+Type to infer `success` value
+
+```ts
+import { object, number, string, boolean } from 'spectypes'
+
+const check = object({ x: number, y: string, z: boolean })
+
+// { readonly x: number; readonly y: string; readonly z: boolean }
+type Value = Spectype<typeof check>
+```
 
 ## Misc
 
@@ -1590,4 +1635,4 @@ Creates a spec to validate a value with recursive <b>type</b>. But <b>data</b> t
 
 ### How is it tested?
 
-Having 100% of the code covered with tests reflects only the coverage of generative code, not the generated one. It says little about the amount of potential bugs in this package. Because of that most of the test cases are randomly generated. When testing [validations of valid data](packages/babel-plugin-spectypes/test/property/create-valid-property.ts) it will generate `spectypes` validator and corresponding `fast-check` arbitrary and then check if
+Having 100% of the code covered with tests reflects only the coverage of generative code, not the generated one. It says little about the amount of potential bugs in this package. Because of that most of the test cases are randomly generated. When testing [valid data validation](packages/babel-plugin-spectypes/test/property/create-valid-property.ts) it will generate `spectypes` validator and corresponding `fast-check` arbitrary, then validator will ensure that values provided by arbitrary are valid. When testing [invalid data validation](packages/babel-plugin-spectypes/test/property/create-invalid-property.ts) it will also generate an expected error, then validator will ensure that values provided by arbitrary are invalid and lead to expected error.
