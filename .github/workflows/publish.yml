@@ -32,11 +32,7 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
       - name: Get Branch
-        run: |
-          raw=$(git branch -r --contains ${{ github.ref }})
-          branch=${raw/origin\/}
-          echo ::set-env name=BRANCH::$branch
-      - run: echo ${{ env.BRANCH }}
+        run: git branch -r -l
       - name: benchmark
         run: |
           cd benchmark
