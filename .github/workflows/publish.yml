@@ -26,13 +26,13 @@ jobs:
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
       - run: sudo npm i -g pnpm@6.24.2
       - run: pnpm i --frozen-lockfile
-      - name: setup git
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
-      - name: benchmark
-        run: |
-          pnpm report -r
-          git commit -am "benchmark report [skip ci]"
-          git push origin HEAD:main
+      # - name: setup git
+      #   run: |
+      #     git config user.name "GitHub Actions Bot"
+      #     git config user.email "<>"
+      # - name: benchmark
+      #   run: |
+      #     pnpm report -r
+      #     git commit -am "benchmark report [skip ci]"
+      #     git push origin HEAD:main
       - run: pnpm -r publish --access public --no-git-checks
