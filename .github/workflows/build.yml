@@ -19,6 +19,10 @@ jobs:
         with:
           name: packages
           path: packages/*/dist/*
+      - name: setup git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
       - name: benchmark
         run: |
           cd benchmark
