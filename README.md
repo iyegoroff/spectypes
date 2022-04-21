@@ -14,7 +14,7 @@ Fast, compiled, eval-free data validator/transformer
 
 ## Features
 
-- <b>really fast</b>, can be even [faster](/benchmark/README.md) than `ajv`
+- <b>really fast</b>, can be even [faster](/benchmark) than `ajv`
 - <b>detailed errors</b>, failure will result into explicit error message(s) and path to invalid data
 - <b>extensively tested</b>, each release undergoes more than 900 `fast-check` powered [tests](#how-is-it-tested)
 - <b>precise types</b>, accurately infers all types and provides readable compile-time error messages
@@ -1495,15 +1495,3 @@ Creates a spec to validate a value with recursive <b>type</b>. But <b>data</b> t
 ### Custom validators
 
 ### How is it tested?
-
-```
-
-```
-
-```
-
-```
-
-```
-
-```
