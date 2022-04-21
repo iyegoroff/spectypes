@@ -33,8 +33,9 @@ jobs:
           git config user.email "<>"
       - name: benchmark
         run: |
+          echo ${{ github.ref }}
           cd benchmark
           pnpm report
           git commit -am "benchmark report [skip ci]"
-          git push origin HEAD:origin/main
+          git push origin HEAD:main
       - run: pnpm -r publish --access public --no-git-checks
