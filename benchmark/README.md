@@ -1,4 +1,3 @@
-
 > spectypes-benchmark@0.0.18 bench
 > node ./build/index.js
 
