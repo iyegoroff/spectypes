@@ -21,7 +21,6 @@ jobs:
         with:
           name: benchmark
           path: benchmark/build
-      - run: ls -R
       - run: cp README.md packages/spectypes
       - run: cp README.md packages/babel-plugin-spectypes
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
@@ -33,9 +32,7 @@ jobs:
           git config user.email "<>"
       - name: benchmark
         run: |
-          echo ${{ github.ref }}
-          cd benchmark
-          pnpm report
+          pnpm report -r
           git commit -am "benchmark report [skip ci]"
           git push origin HEAD:main
       - run: pnpm -r publish --access public --no-git-checks
