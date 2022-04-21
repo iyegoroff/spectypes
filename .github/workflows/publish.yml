@@ -31,12 +31,10 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-      - name: Get Branch
-        run: git branch -r -l
       - name: benchmark
         run: |
           cd benchmark
           pnpm report
           git commit -am "benchmark report [skip ci]"
-          git push
+          git push origin HEAD:origin/main
       - run: pnpm -r publish --access public --no-git-checks
