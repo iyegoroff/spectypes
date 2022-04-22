@@ -1541,7 +1541,7 @@ const check = (value) => {
 
 #### validator
 
-Spec that tells `babel` plugin to generate a wrapper for an external transformer spec. Any spec <b>not</b> containing `struct`, `nullish`, `map`, `filter` and `transformer` specs on successful validation will return validated object. Such spec has to be wrapped with `validator` when used inside another spec.
+Spec that tells `babel` plugin to generate a wrapper for an external validator spec. Any spec <b>not</b> containing `struct`, `nullish`, `map`, `filter` and `transformer` specs on successful validation will return validated object. Such spec has to be wrapped with `validator` when used inside another spec.
 
 ```ts
 import { array, validator, limit, number } from 'spectypes'
@@ -1766,6 +1766,8 @@ type Value = Spectype<typeof check>
 ```
 
 ## Misc
+
+### How the plugin finds `spectypes`-related identifiers?
 
 ### Special cases
 
