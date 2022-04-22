@@ -10,26 +10,28 @@ function trim(str: string) {
 describe('index', () => {
   const fixturesDir = path.join(__dirname, 'fixtures')
 
+  const indexTest = (name: string) => {
+    test(`${name.split('-').join(' ')} spec`, () => {
+      const fixtureDir = path.join(fixturesDir, name)
+      const expected = trim(fs.readFileSync(path.join(fixtureDir, 'expected.js')).toString())
+      const actualPath = path.join(fixtureDir, 'actual.js')
+      const actual = trim(
+        transformFileSync(actualPath, { plugins: [plugin], sourceType: 'module' })?.code ?? ''
+      )
+
+      try {
+        expect(actual).toEqual(expected)
+      } catch (e) {
+        console.log(name)
+        console.log(actual)
+        throw e
+      }
+    })
+  }
+
   fs.readdirSync(fixturesDir)
     .filter((name) => !name.endsWith('-error'))
-    .forEach((name) => {
-      test(`${name.split('-').join(' ')} spec`, () => {
-        const fixtureDir = path.join(fixturesDir, name)
-        const expected = trim(fs.readFileSync(path.join(fixtureDir, 'expected.js')).toString())
-        const actualPath = path.join(fixtureDir, 'actual.js')
-        const actual = trim(
-          transformFileSync(actualPath, { plugins: [plugin], sourceType: 'module' })?.code ?? ''
-        )
-
-        try {
-          expect(actual).toEqual(expected)
-        } catch (e) {
-          console.log(name)
-          console.log(actual)
-          throw e
-        }
-      })
-    })
+    .forEach(indexTest)
 
   test(`CodeFrameError exception`, () => {
     const fixtureDir = path.join(fixturesDir, 'array-error')

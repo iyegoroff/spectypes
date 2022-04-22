@@ -10,12 +10,46 @@ type State = babelCore.PluginPass & {
   spectypesImport?: babelCore.types.Identifier
 }
 
+const packageName = 'spectypes'
+
 export default function plugin({ types: t }: typeof babelCore): babelCore.PluginObj<State> {
   return {
-    name: 'spectypes',
+    name: packageName,
     visitor: {
+      VariableDeclarator(path, state) {
+        if (
+          t.isCallExpression(path.node.init) &&
+          t.isIdentifier(path.node.init.callee) &&
+          path.node.init.callee.name === 'require' &&
+          t.isStringLiteral(path.node.init.arguments[0]) &&
+          path.node.init.arguments[0].value === packageName &&
+          t.isObjectPattern(path.node.id) &&
+          path.node.id.properties.every((p): p is babelCore.types.ObjectProperty =>
+            t.isObjectProperty(p)
+          )
+        ) {
+          state.specNames ??= {}
+
+          for (const prop of path.node.id.properties) {
+            if (
+              t.isIdentifier(prop.key) &&
+              t.isIdentifier(prop.value) &&
+              isSpecName(prop.key.name)
+            ) {
+              state.specNames[prop.value.name] = prop.key.name
+            }
+          }
+
+          if (!isDefined(state.spectypesImport)) {
+            state.spectypesImport = path.scope.generateUidIdentifier(packageName)
+            path.node.id = state.spectypesImport
+          } else {
+            path.remove()
+          }
+        }
+      },
       ImportDeclaration(path, state) {
-        if (path.node.source.value === 'spectypes') {
+        if (path.node.source.value === packageName) {
           state.specNames ??= {}
 
           for (const specifier of path.node.specifiers) {
@@ -29,7 +63,7 @@ export default function plugin({ types: t }: typeof babelCore): babelCore.Plugin
           }
 
           if (!isDefined(state.spectypesImport)) {
-            state.spectypesImport = path.scope.generateUidIdentifier('spectypes')
+            state.spectypesImport = path.scope.generateUidIdentifier(packageName)
             path.node.specifiers = [t.importNamespaceSpecifier(state.spectypesImport)]
           } else {
             path.remove()
