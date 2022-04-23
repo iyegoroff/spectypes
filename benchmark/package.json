@@ -1,6 +1,6 @@
 {
   "name": "spectypes-benchmark",
-  "version": "0.0.18",
+  "version": "0.0.0",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -16,7 +16,8 @@
     "ajv": "^8.11.0",
     "benchmark": "^2.1.4",
     "fastest-validator": "^1.12.0",
-    "spectypes": "workspace:*"
+    "spectypes": "workspace:*",
+    "ts-railway": "^5.1.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
