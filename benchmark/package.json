@@ -14,13 +14,14 @@
   },
   "dependencies": {
     "ajv": "^8.11.0",
+    "ajv-formats": "^2.1.1",
     "benchmark": "^2.1.4",
-    "fastest-validator": "^1.12.0",
     "spectypes": "workspace:*",
     "ts-railway": "^5.1.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
     "@types/benchmark": "^2.1.1",

@@ -2,9 +2,9 @@ import { Suite } from 'benchmark'
 import Ajv from 'ajv'
 import { boolean, number, object, string } from 'spectypes'
 import { ajvVersion, spectypesVersion } from './versions'
-import { ajvCase, onComplete, onCycle, onStart, spectypesCase } from './util'
+import { ajvTest, onComplete, onCycle, onStart, spectypesTest } from './util'
 
-const obj = Object.freeze({
+const data = Object.freeze({
   number: 1,
   negNumber: -1,
   maxNumber: Number.MAX_VALUE,
@@ -19,23 +19,9 @@ const obj = Object.freeze({
   }
 })
 
-const spectypesObject = object({
-  number,
-  negNumber: number,
-  maxNumber: number,
-  string,
-  longString: string,
-  boolean,
-  deeplyNested: object({
-    foo: string,
-    num: number,
-    bool: boolean
-  })
-})
+/** -------------------------------------------- ajv -------------------------------------------- */
 
-const ajv = new Ajv()
-const ajvObjectSchema = {
-  $schema: 'http://json-schema.org/draft-07/schema#',
+const ajvSchema = {
   type: 'object',
   properties: {
     number: { type: 'number' },
@@ -59,41 +45,43 @@ const ajvObjectSchema = {
   additionalProperties: false
 }
 
-const ajvObject = ajv.compile(ajvObjectSchema)
+const ajvCheck = new Ajv().compile(ajvSchema)
+
+/** ----------------------------------------- spectypes ----------------------------------------- */
+
+const spectypesCheck = object({
+  number,
+  negNumber: number,
+  maxNumber: number,
+  string,
+  longString: string,
+  boolean,
+  deeplyNested: object({
+    foo: string,
+    num: number,
+    bool: boolean
+  })
+})
+
+/** --------------------------------------------------------------------------------------------- */
+
+const invalidData = [
+  {},
+  123,
+  undefined,
+  [],
+  { ...data, foo: 1 },
+  { ...data, string: 123 },
+  { ...data, deeplyNested: { ...data.deeplyNested, foo: [] } },
+  { ...data, deeplyNested: { ...data.deeplyNested, bar: undefined } }
+] as const
+
+ajvTest(ajvCheck, data, invalidData)
+spectypesTest(spectypesCheck, data, invalidData)
 
 export const nestedObject = new Suite()
-  .add(ajvVersion, ajvCase(ajvObject, obj))
-  // .add('fastest-validator', () => {
-  //   void validatorObject(obj)
-  //   // if (checked !== true) {
-  //   //   throw new Error(JSON.stringify(checked))
-  //   // }
-  // })
-  .add(spectypesVersion, spectypesCase(spectypesObject, obj))
+  .add(ajvVersion, () => ajvCheck(data))
+  .add(spectypesVersion, () => spectypesCheck(data).tag === 'success')
   .on('start', onStart('nested object'))
   .on('cycle', onCycle)
   .on('complete', onComplete)
-
-// const v = new Validator()
-// const validatorObjectSchema = {
-//   $$strict: true,
-//   number: 'number',
-//   negNumber: 'number',
-//   maxNumber: 'number',
-//   string: 'string',
-//   longString: 'string',
-//   boolean: 'boolean',
-//   deeplyNested: {
-//     type: 'object',
-//     strict: true,
-//     props: {
-//       foo: 'string',
-//       num: 'number',
-//       bool: 'boolean'
-//     }
-//   }
-// }
-
-// const validatorObject = v.compile(validatorObjectSchema)
-
-// console.log(validatorObject(obj))

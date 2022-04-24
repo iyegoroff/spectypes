@@ -1,32 +1,38 @@
 import { Suite } from 'benchmark'
 import Ajv from 'ajv'
-// import Validator from 'fastest-validator'
 import { array, boolean, number, string, union } from 'spectypes'
 import { ajvVersion, spectypesVersion } from './versions'
-import { ajvCase, onComplete, onCycle, onStart, spectypesCase } from './util'
+import { ajvTest, onComplete, onCycle, onStart, spectypesTest } from './util'
 
-const arrayUnion = Object.freeze(
+const data = Object.freeze(
   Array(100)
     .fill(0)
     .map((_: number, idx) => ['test', 123, false][idx % 3] ?? true)
 )
 
-const spectypesArrayUnion = array(union(string, number, boolean))
+/** -------------------------------------------- ajv -------------------------------------------- */
 
-const ajvArrayUnionShema = {
-  $schema: 'http://json-schema.org/draft-07/schema#',
+const ajvSchema = {
   type: 'array',
-  items: {
-    anyOf: [{ type: 'string' }, { type: 'number' }, { type: 'boolean' }]
-  }
+  items: { anyOf: [{ type: 'string' }, { type: 'number' }, { type: 'boolean' }] }
 }
 
-const ajv = new Ajv()
-const ajvArrayUnion = ajv.compile(ajvArrayUnionShema)
+const ajvCheck = new Ajv().compile(ajvSchema)
+
+/** ----------------------------------------- spectypes ----------------------------------------- */
+
+const spectypesCheck = array(union(string, number, boolean))
+
+/** --------------------------------------------------------------------------------------------- */
+
+const invalidData = [{}, 123, undefined, [1, true, '23', { foo: 1 }]] as const
+
+ajvTest(ajvCheck, data, invalidData)
+spectypesTest(spectypesCheck, data, invalidData)
 
 export const arrayOfUnions = new Suite()
-  .add(ajvVersion, ajvCase(ajvArrayUnion, arrayUnion))
-  .add(spectypesVersion, spectypesCase(spectypesArrayUnion, arrayUnion))
+  .add(ajvVersion, () => ajvCheck(data))
+  .add(spectypesVersion, () => spectypesCheck(data).tag === 'success')
   .on('start', onStart('array of unions'))
   .on('cycle', onCycle)
   .on('complete', onComplete)

@@ -1,4 +1,5 @@
 import { ValidateFunction } from 'ajv'
+import assert from 'assert'
 import { Event, Suite } from 'benchmark'
 import { Result } from 'ts-railway'
 
@@ -9,28 +10,39 @@ export const onCycle = (event: Event) => {
 export const onComplete = ({ currentTarget }: { currentTarget: unknown }) => {
   if (currentTarget instanceof Suite) {
     console.log(
-      `Fastest is ${String(currentTarget.filter('fastest').map('name')[0]).replace(
+      `Fastest is <b>${String(currentTarget.filter('fastest').map('name')[0]).replace(
         /@.*$/,
         ''
-      )}</br></br>`
+      )}</b>`
     )
+    console.log()
   }
 }
 
 export const onStart = (name: string) => () => {
-  console.log(`${name}:</br>`)
+  console.log(`<b>${name}</b>:</br>`)
 }
 
-export const ajvCase = (check: ValidateFunction, data: unknown) => () => {
-  const checked = check(data)
-  if (!checked) {
-    throw new Error(JSON.stringify(check.errors))
-  }
+export const ajvTest = (
+  check: ValidateFunction,
+  validData: unknown,
+  invalidData: readonly unknown[]
+) => {
+  const message = 'ajv test failed'
+
+  assert(check(validData), `valid ${message}`)
+  invalidData.forEach((data, idx) => assert(!check(data), `invalid #${idx} ${message}`))
 }
 
-export const spectypesCase = (check: (_: unknown) => Result, data: unknown) => () => {
-  const checked = check(data)
-  if (checked.tag === 'failure') {
-    throw new Error(JSON.stringify(checked.failure))
-  }
+export const spectypesTest = (
+  check: (val: unknown) => Result,
+  validData: unknown,
+  invalidData: readonly unknown[]
+) => {
+  const message = 'spectypes test failed'
+
+  assert(check(validData).tag === 'success', `valid ${message}`)
+  invalidData.forEach((data, idx) =>
+    assert(check(data).tag === 'failure', `invalid #${idx} ${message}`)
+  )
 }

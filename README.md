@@ -1767,14 +1767,78 @@ type Value = Spectype<typeof check>
 
 ## Misc
 
-### How the plugin finds `spectypes`-related identifiers?
+### How does the plugin understand what code to transform?
+
+Plugin searches for named imports like `import { ... } from 'spectypes'` or `const { ... } = require('spectypes')`, gets all imported identifiers (aliases also supported). All variable declarations which include these identifiers will be converted into validating functions.
 
 ### Special cases
 
 - When `literal(undefined)` or `unknown` is used as a property validator inside `object` or `struct` and that property is not present in the validated object the validation will fail.
 - When `nullish` is used as a property validator inside `object` or `struct` and that property is not present in the validated object the result will still contain that property set to `undefined`.
 
+### Result handling
+
+Validators return their results as 'success or failure' wrapped values and does not throw any exceptions (other than those thrown by the functions passed to `map`, `limit` or `filter`). This library does not include any functions to process validation results, but a compatible handy package exists - [ts-railway](https://github.com/iyegoroff/ts-railway)
+
 ### Custom validators
+
+There is no specific APIs to create custom validators, usually just `unknown`, `map` and `limit` are enough to create a validator for arbitrary data. For example, lets create a validator that checks if some value is a representation of a date and converts that value to `Date` object:
+
+```ts
+import { unknown, map, limit } from 'spectypes'
+
+const check = map(
+  limit(unknown, (x) => !isNaN(Date.parse(x))),
+  (x) => new Date(x)
+)
+
+const date = new Date('Sun Apr 24 2022 12:51:57')
+
+expect(check('Sun Apr 24 2022 12:51:57')).toEqual({
+  tag: 'success',
+  success: date
+})
+
+expect(check([1, 2, 'abc'])).toEqual({
+  tag: 'failure',
+  failure: {
+    value: [1, 2, 'abc'],
+    errors: [{ issue: 'does not fit the limit', path: [] }]
+  }
+})
+```
+
+<details>
+  <summary>Transformed code</summary>
+
+```js
+import * as _spectypes from 'spectypes'
+
+const _map = (x) => new Date(x)
+
+const _limit = (x) => !isNaN(Date.parse(x))
+
+const check = (value) => {
+  let err, result
+
+  if (!_limit(value)) {
+    ;(err = err || []).push({
+      issue: 'does not fit the limit',
+      path: []
+    })
+  }
+
+  if (!err) {
+    result = _map(value)
+  }
+
+  return err
+    ? { tag: 'failure', failure: { value, errors: err } }
+    : { tag: 'success', success: result }
+}
+```
+
+</details>
 
 ### How is it tested?
 
