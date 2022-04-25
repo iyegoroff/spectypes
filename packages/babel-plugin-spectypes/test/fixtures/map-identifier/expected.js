@@ -9,9 +9,7 @@ const check = value => {
       issue: 'not a number',
       path: []
     });
-  }
-
-  if (!err) {
+  } else {
     result = inc(value);
   }
 

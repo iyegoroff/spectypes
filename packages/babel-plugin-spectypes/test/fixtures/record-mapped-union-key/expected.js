@@ -8,7 +8,7 @@ const check = value => {
   let err, result;
   result = {};
 
-  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
+  if (!(typeof value === 'object' && value !== null && !Array.isArray(value))) {
     (err = err || []).push({
       issue: 'not an object',
       path: []
@@ -42,9 +42,7 @@ const check = value => {
 
         if (key !== 'b') {
           unmatchedkey_key = true;
-        }
-
-        if (!unmatchedkey_key) {
+        } else {
           keyresult_key = _map(key);
         }
       }

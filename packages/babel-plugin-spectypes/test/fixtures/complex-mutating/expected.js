@@ -13,7 +13,7 @@ const product = value => {
   let error0;
   result = {};
 
-  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
+  if (!(typeof value === 'object' && value !== null && !Array.isArray(value))) {
     error0 = true;
     (err = err || []).push({
       issue: 'not an object',
@@ -29,26 +29,20 @@ const product = value => {
         issue: 'not a string',
         path: ['name']
       });
-    }
-
-    if (!err) {
+    } else {
       result_name = _map(value_name);
     }
 
     result.name = result_name;
-    let error_price0;
     const value_price = value.price;
 
     if (typeof value_price !== 'number') {
       error0 = true;
-      error_price0 = true;
       (err = err || []).push({
         issue: 'not a number',
         path: ['price']
       });
-    }
-
-    if (!error_price0 && !_limit2(value_price)) {
+    } else if (!_limit2(value_price)) {
       error0 = true;
       (err = err || []).push({
         issue: 'does not fit the limit',

@@ -14,7 +14,7 @@ const persons = value => {
     for (let index = 0; index < value.length; index++) {
       const value_index = value[index];
 
-      if (typeof value_index !== 'object' || Array.isArray(value_index) || value_index === null) {
+      if (!(typeof value_index === 'object' && value_index !== null && !Array.isArray(value_index))) {
         (err = err || []).push({
           issue: 'not an object',
           path: [index]
@@ -29,18 +29,14 @@ const persons = value => {
           });
         }
 
-        let error_index_age0;
         const value_index_age = value_index.age;
 
         if (typeof value_index_age !== 'number') {
-          error_index_age0 = true;
           (err = err || []).push({
             issue: 'not a number',
             path: [index, 'age']
           });
-        }
-
-        if (!error_index_age0 && !_limit(value_index_age)) {
+        } else if (!_limit(value_index_age)) {
           (err = err || []).push({
             issue: 'does not fit the limit',
             path: [index, 'age']
@@ -50,30 +46,9 @@ const persons = value => {
         const value_index_hobby = value_index.hobby;
 
         if (value_index_hobby !== undefined) {
-          let unmatched_index_hobby;
           const value_index_hobby = value_index.hobby;
 
-          if (value_index_hobby !== 'coding') {
-            unmatched_index_hobby = true;
-          }
-
-          if (unmatched_index_hobby) {
-            unmatched_index_hobby = false;
-
-            if (value_index_hobby !== 'poetry') {
-              unmatched_index_hobby = true;
-            }
-          }
-
-          if (unmatched_index_hobby) {
-            unmatched_index_hobby = false;
-
-            if (value_index_hobby !== 'music') {
-              unmatched_index_hobby = true;
-            }
-          }
-
-          if (unmatched_index_hobby) {
+          if (!(value_index_hobby === 'coding' || value_index_hobby === 'poetry' || value_index_hobby === 'music')) {
             if (value_index_hobby !== 'coding') {
               (err = err || []).push({
                 issue: "union case #0 mismatch: not a '" + 'coding' + "' string literal",
@@ -109,7 +84,7 @@ const persons = value => {
             let unmatched_index_properties_index_index_properties;
             const value_index_properties_index_index_properties = value_index_properties[index_index_properties];
 
-            if (typeof value_index_properties_index_index_properties !== 'object' || Array.isArray(value_index_properties_index_index_properties) || value_index_properties_index_index_properties === null) {
+            if (!(typeof value_index_properties_index_index_properties === 'object' && value_index_properties_index_index_properties !== null && !Array.isArray(value_index_properties_index_index_properties))) {
               unmatched_index_properties_index_index_properties = true;
             } else {
               const value_index_properties_index_index_properties_tag = value_index_properties_index_index_properties.tag;
@@ -134,7 +109,7 @@ const persons = value => {
             if (unmatched_index_properties_index_index_properties) {
               unmatched_index_properties_index_index_properties = false;
 
-              if (typeof value_index_properties_index_index_properties !== 'object' || Array.isArray(value_index_properties_index_index_properties) || value_index_properties_index_index_properties === null) {
+              if (!(typeof value_index_properties_index_index_properties === 'object' && value_index_properties_index_index_properties !== null && !Array.isArray(value_index_properties_index_index_properties))) {
                 unmatched_index_properties_index_index_properties = true;
               } else {
                 const value_index_properties_index_index_properties_tag = value_index_properties_index_index_properties.tag;
@@ -158,7 +133,7 @@ const persons = value => {
             }
 
             if (unmatched_index_properties_index_index_properties) {
-              if (typeof value_index_properties_index_index_properties !== 'object' || Array.isArray(value_index_properties_index_index_properties) || value_index_properties_index_index_properties === null) {
+              if (!(typeof value_index_properties_index_index_properties === 'object' && value_index_properties_index_index_properties !== null && !Array.isArray(value_index_properties_index_index_properties))) {
                 (err = err || []).push({
                   issue: 'union case #0 mismatch: not an object',
                   path: [index, 'properties', index_index_properties]
@@ -192,7 +167,7 @@ const persons = value => {
                 }
               }
 
-              if (typeof value_index_properties_index_index_properties !== 'object' || Array.isArray(value_index_properties_index_index_properties) || value_index_properties_index_index_properties === null) {
+              if (!(typeof value_index_properties_index_index_properties === 'object' && value_index_properties_index_index_properties !== null && !Array.isArray(value_index_properties_index_index_properties))) {
                 (err = err || []).push({
                   issue: 'union case #1 mismatch: not an object',
                   path: [index, 'properties', index_index_properties]

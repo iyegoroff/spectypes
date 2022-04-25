@@ -777,7 +777,7 @@ import * as _spectypes from 'spectypes'
 const check = (value) => {
   let err
 
-  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
+  if (!(typeof value === 'object' && value !== null && !Array.isArray(value))) {
     ;(err = err || []).push({
       issue: 'not an object',
       path: []
@@ -879,7 +879,7 @@ import * as _spectypes from 'spectypes'
 const check = (value) => {
   let err
 
-  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
+  if (!(typeof value === 'object' && value !== null && !Array.isArray(value))) {
     ;(err = err || []).push({
       issue: 'not an object',
       path: []
@@ -975,7 +975,7 @@ const check = (value) => {
   let err, result
   result = {}
 
-  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
+  if (!(typeof value === 'object' && value !== null && !Array.isArray(value))) {
     ;(err = err || []).push({
       issue: 'not an object',
       path: []
@@ -1047,7 +1047,7 @@ import * as _spectypes from 'spectypes'
 const check = (value) => {
   let err
 
-  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
+  if (!(typeof value === 'object' && value !== null && !Array.isArray(value))) {
     ;(err = err || []).push({
       issue: 'not an object',
       path: []
@@ -1136,7 +1136,7 @@ const check = (value) => {
   let err, result
   result = {}
 
-  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
+  if (!(typeof value === 'object' && value !== null && !Array.isArray(value))) {
     ;(err = err || []).push({
       issue: 'not an object',
       path: []
@@ -1677,7 +1677,7 @@ import * as _spectypes from 'spectypes'
 const person = (value) => {
   let err
 
-  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
+  if (!(typeof value === 'object' && value !== null && !Array.isArray(value))) {
     ;(err = err || []).push({
       issue: 'not an object',
       path: []

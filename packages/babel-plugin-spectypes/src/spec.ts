@@ -140,6 +140,44 @@ export const isSpecName = (name: string): name is Spec[0] =>
   name === 'UNSAFE_record' ||
   name === 'UNSAFE_objectRecord'
 
+export const canBeInlined = (spec: Spec): boolean => {
+  switch (spec[0]) {
+    case 'number':
+    case 'string':
+    case 'boolean':
+    case 'literal':
+    case 'template':
+    case 'validator':
+      return true
+
+    case 'limit':
+    case 'writable':
+      return canBeInlined(spec[1])
+
+    case 'tuple':
+      return spec[1].every(canBeInlined)
+
+    default:
+      return false
+  }
+}
+
+export const canAppendElseBlock = (spec: Spec): boolean => {
+  switch (spec[0]) {
+    case 'number':
+    case 'string':
+    case 'boolean':
+    case 'literal':
+    case 'template':
+    case 'validator':
+    case 'limit':
+      return true
+
+    default:
+      return false
+  }
+}
+
 export const isMutating = (spec: Spec): boolean => {
   switch (spec[0]) {
     case 'number':

@@ -694,6 +694,20 @@ describe('transform - success', () => {
     )
   })
 
+  test('union(string, validator(check))', () => {
+    const check = generateCheck(
+      ['union', [['string'], ['validator', ['external', ['identifier', 'check1']]]]],
+      ['number']
+    )
+
+    fc.assert(
+      fc.property(fc.nat(), (val) => {
+        expect(check(val)).toEqual(Result.success(val))
+      }),
+      { numRuns }
+    )
+  })
+
   test('validator(number)', () => {
     const check = generateCheck(['validator', ['external', ['identifier', 'check1']]], ['number'])
 

@@ -12,9 +12,7 @@ const check = value => {
       issue: 'does not fit the limit',
       path: []
     });
-  }
-
-  if (!err) {
+  } else {
     result = _map(value);
   }
 

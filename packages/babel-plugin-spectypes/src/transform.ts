@@ -4,6 +4,8 @@ import {
   ArraySpec,
   ArrowFunction,
   BooleanSpec,
+  canAppendElseBlock,
+  canBeInlined,
   ExternalSpec,
   Identifier,
   isMutating,
@@ -182,6 +184,9 @@ const terminalTransform = (
     error ?? defaultError(`'${issuePrefix ?? ''}not a ${spec[0]}'`, path, limitErrorNames)
   }}${resultPart ?? ''}`
 
+const limitFun = (limit: Identifier | ArrowFunction, context: TransformContext) =>
+  `${limit[0] === 'identifier' ? limit[1] : context.declareGlobal('limit', limit[1])}`
+
 const limitTransform = (spec: LimitSpec, config: TransformConfig, context: TransformContext) => {
   const { path, error, issuePrefix, unionErrorName, resultPart, directValueName, limitErrorNames } =
     config
@@ -189,17 +194,26 @@ const limitTransform = (spec: LimitSpec, config: TransformConfig, context: Trans
   const [, subSpec, limit] = spec
   const isUnknown = subSpec[0] === 'unknown'
   const mut = isMutating(subSpec)
-  const check = `${
-    limit[0] === 'identifier' ? limit[1] : context.declareGlobal('limit', limit[1])
-  }(${directValueName ?? (mut ? resultName : valueName)(path)})`
+  const check = `${limitFun(limit, context)}(${
+    directValueName ?? (mut ? resultName : valueName)(path)
+  })`
+  const shouldAppendElse = canAppendElseBlock(subSpec)
 
   const limitError = addLocal(`${isDefined(directValueName) ? 'key' : ''}${errorName(path)}`)
 
-  return `${isDefined(unionErrorName) || isUnknown ? '' : `let ${limitError};`}${transformStep(
+  return `${
+    isDefined(unionErrorName) || isUnknown || shouldAppendElse ? '' : `let ${limitError};`
+  }${transformStep(
     subSpec,
-    { ...config, resultPart: undefined, limitErrorNames: [...(limitErrorNames ?? []), limitError] },
+    {
+      ...config,
+      resultPart: undefined,
+      limitErrorNames: [...(limitErrorNames ?? []), ...(shouldAppendElse ? [] : [limitError])]
+    },
     context
-  )}if (${isUnknown ? '' : `!${unionErrorName ?? limitError} && `}!${check}) {${
+  )}${shouldAppendElse ? 'else' : ''} if (${
+    isUnknown || shouldAppendElse ? '' : `!${unionErrorName ?? limitError} && `
+  }!${check}) {${
     error ?? defaultError(`'${issuePrefix ?? ''}does not fit the limit'`, path, limitErrorNames)
   }}${resultPart ?? ''}`
 }
@@ -214,6 +228,7 @@ const mapTransform = (spec: MapSpec, config: TransformConfig, context: Transform
     directValueName ?? (mut ? resultName : valueName)(path)
   })`
   const pref = isDefined(directValueName) ? 'key' : ''
+  const shouldAppendElse = canAppendElseBlock(subSpec)
 
   return skipResult ?? false
     ? transformStep(subSpec, config, context)
@@ -221,10 +236,21 @@ const mapTransform = (spec: MapSpec, config: TransformConfig, context: Transform
         subSpec,
         { ...config, resultPart: undefined },
         context
-      )}if (!${unionErrorName ?? 'err'}) {${pref}${resultName(path)} = ${transform};}${
-        resultPart ?? ''
-      }`
+      )}${shouldAppendElse ? 'else' : `if (!${unionErrorName ?? 'err'})`} {${pref}${resultName(
+        path
+      )} = ${transform};}${resultPart ?? ''}`
 }
+
+const makeLiteral = (lit: LiteralSpec[1]) =>
+  lit[0] === 'boolean'
+    ? ([' boolean', String(lit[1])] as const)
+    : lit[0] === 'identifier'
+    ? (['', lit[1]] as const)
+    : lit[0] === 'null'
+    ? (['', 'null'] as const)
+    : lit[0] === 'numeric'
+    ? ([' number', lit[1]] as const)
+    : ([' string', `'${lit[1]}'`] as const)
 
 const literalTransform = (
   spec: LiteralSpec,
@@ -256,16 +282,7 @@ const literalTransform = (
         }}`
       : ''
 
-  const [type, literal] =
-    lit[0] === 'boolean'
-      ? [' boolean', String(lit[1])]
-      : lit[0] === 'identifier'
-      ? ['', lit[1]]
-      : lit[0] === 'null'
-      ? ['', 'null']
-      : lit[0] === 'numeric'
-      ? [' number', lit[1]]
-      : [' string', `'${lit[1]}'`]
+  const [type, literal] = makeLiteral(lit)
 
   return `${assignValue(path, isDefined(directValueName) || skipAssign)}${checkMissing}if (${
     directValueName ?? valueName(path)
@@ -279,17 +296,8 @@ const literalTransform = (
   }}${resultPart ?? ''}`
 }
 
-const templateTransform = (
+const templateName = (
   spec: TemplateSpec,
-  {
-    error,
-    path,
-    issuePrefix,
-    skipAssign,
-    directValueName,
-    resultPart,
-    limitErrorNames
-  }: TransformConfig,
   { spectypesImport: js, declareGlobal }: TransformContext
 ) => {
   const templateIter = (val: TemplateSpec[1][0]): string =>
@@ -311,11 +319,25 @@ const templateTransform = (
       ? 'null'
       : `'${String(val[1][1])}'`
 
-  const templateName = declareGlobal(
+  return declareGlobal(
     'template',
     spec[1].reduce((acc, val) => `${acc} + ${templateIter(val)}`, "new RegExp('^'") + " + '$')"
   )
+}
 
+const templateTransform = (
+  spec: TemplateSpec,
+  {
+    error,
+    path,
+    issuePrefix,
+    skipAssign,
+    directValueName,
+    resultPart,
+    limitErrorNames
+  }: TransformConfig,
+  context: TransformContext
+) => {
   const val = directValueName ?? valueName(path)
 
   return `${assignValue(
@@ -323,7 +345,7 @@ const templateTransform = (
     isDefined(directValueName) || skipAssign
   )}if (typeof ${val} !== 'string') {${
     error ?? defaultError(`'${issuePrefix ?? ''}not a string'`, path, limitErrorNames)
-  }} else if (!${templateName}.test(${val})) {${
+  }} else if (!${templateName(spec, context)}.test(${val})) {${
     error ?? defaultError(`'${issuePrefix ?? ''}template literal mismatch'`, path, limitErrorNames)
   }}${resultPart ?? ''}`
 }
@@ -438,7 +460,7 @@ const objectTransform = (
 
   return `${mut ? declareResult(path, skipDeclareResult) : ''}${assignValue(path, skipAssign)}${
     mut ? initResult(path, '{}', skipResult) : ''
-  }if (typeof ${val} !== 'object' || Array.isArray(${val}) || ${val} === null) {${
+  }if (!(typeof ${val} === 'object' && ${val} !== null && !Array.isArray(${val}))) {${
     error ?? defaultError(`'${issuePrefix ?? ''}not an object'`, path, limitErrorNames)
   }} else {${Object.entries(objectSpec)
     .map(
@@ -492,7 +514,7 @@ const recordTransform = (
 
   return `${mut ? declareResult(path, skipDeclareResult) : ''}${assignValue(path, skipAssign)}${
     mut ? initResult(path, '{}', skipResult) : ''
-  }if (typeof ${val} !== 'object' || Array.isArray(${val}) || ${val} === null) {${
+  }if (!(typeof ${val} === 'object' && ${val} !== null && !Array.isArray(${val}))) {${
     error ?? defaultError(`'${issuePrefix ?? ''}not an object'`, path, limitErrorNames)
   }} else {${
     name === 'record'
@@ -581,7 +603,7 @@ const objectRecordTransform = (
 
   return `${mut ? declareResult(path, skipDeclareResult) : ''}${assignValue(path, skipAssign)}${
     mut ? initResult(path, '{}', skipResult) : ''
-  }if (typeof ${val} !== 'object' || Array.isArray(${val}) || ${val} === null) {${
+  }if (!(typeof ${val} === 'object' && ${val} !== null && !Array.isArray(${val}))) {${
     error ?? defaultError(`'${issuePrefix ?? ''}not an object'`, path, limitErrorNames)
   }} else {${
     name === 'objectRecord'
@@ -684,7 +706,7 @@ const structTransform = (
     path,
     '{}',
     skipResult
-  )}if (typeof ${val} !== 'object' || Array.isArray(${val}) || ${val} === null) {${
+  )}if (!(typeof ${val} === 'object' && ${val} !== null && !Array.isArray(${val}))) {${
     error ?? defaultError(`'${issuePrefix ?? ''}not an object'`, path, limitErrorNames)
   }} else {${Object.entries(structSpec)
     .map(
@@ -915,6 +937,25 @@ const unknownTransform = (
   }${resultPart ?? ''}`
 }
 
+const inlineUnionCheck = (name: string, spec: Spec, context: TransformContext): string =>
+  spec[0] === 'limit'
+    ? `(${inlineUnionCheck(name, spec[1], context)} && ${limitFun(spec[2], context)}(${name}))`
+    : spec[0] === 'literal'
+    ? `${name} === ${makeLiteral(spec[1])[1]}`
+    : spec[0] === 'template'
+    ? `(typeof ${name} === 'string' && ${templateName(spec, context)}.test(${name}))`
+    : spec[0] === 'tuple'
+    ? `(${[
+        `Array.isArray(${name})`,
+        `${name}.length === ${spec[1].length}`,
+        ...spec[1].map((subSpec, idx) => inlineUnionCheck(`${name}[${idx}]`, subSpec, context))
+      ].join(' && ')})`
+    : spec[0] === 'writable'
+    ? inlineUnionCheck(name, spec[1], context)
+    : spec[0] === 'validator' && spec[1][0] === 'external'
+    ? `${spec[1][1][1]}(${name}).tag === 'success'`
+    : `typeof ${name} === '${spec[0]}'`
+
 const unionTransform = (
   spec: UnionSpec,
   {
@@ -933,35 +974,47 @@ const unionTransform = (
   const isDirect = isDefined(directValueName)
   const unmatched = (isDirect ? unmatchedKeyName : unmatchedName)(path)
   const pref = isDirect ? 'key' : ''
+  const val = directValueName ?? valueName(path)
+  const isInlined = subSpecs.every(canBeInlined)
+
+  const secondPassCheck = isInlined
+    ? `!(${subSpecs.map((subSpec) => inlineUnionCheck(val, subSpec, context)).join(' || ')})`
+    : unmatched
+
+  // if (isInlined) {
+  //   console.log(secondPassCheck)
+  // }
 
   return `${
-    mut ? declareResult(path, skipDeclareResult, pref) : ''
-  } ${`let ${unmatched};`}${subSpecs
-    .map(
-      (subSpec, idx) =>
-        `${idx === 0 ? '' : `if (${unmatched}) { ${unmatched} = false;`}${transformStep(
-          subSpec,
-          {
-            path,
-            unionErrorName: unmatched,
-            directValueName,
-            skipDeclareResult: true,
-            skipAssign: idx !== 0,
-            error: `${unmatched} = true;`
-          },
-          context
-        )}${
-          mut && !isMutating(subSpec)
-            ? `if (!${unmatched}) {${pref}${resultName(path)} = ${
-                directValueName ?? valueName(path)
-              }}`
-            : ''
-        }${idx === 0 ? '' : '}'}`
-    )
-    .join('')}${
+    isInlined
+      ? assignValue(path, isDirect)
+      : `${mut ? declareResult(path, skipDeclareResult, pref) : ''} ${`let ${unmatched};`}${subSpecs
+          .map(
+            (subSpec, idx) =>
+              `${idx === 0 ? '' : `if (${unmatched}) { ${unmatched} = false;`}${transformStep(
+                subSpec,
+                {
+                  path,
+                  unionErrorName: unmatched,
+                  directValueName,
+                  skipDeclareResult: true,
+                  skipAssign: idx !== 0,
+                  error: `${unmatched} = true;`
+                },
+                context
+              )}${
+                mut && !isMutating(subSpec)
+                  ? `if (!${unmatched}) {${pref}${resultName(path)} = ${
+                      directValueName ?? valueName(path)
+                    }}`
+                  : ''
+              }${idx === 0 ? '' : '}'}`
+          )
+          .join('')}`
+  }${
     isDefined(unionErrorName)
-      ? `if (${unmatched}) {${unionErrorName} = true;}`
-      : `if (${unmatched}) {${subSpecs
+      ? `if (${secondPassCheck}) {${unionErrorName} = true;}`
+      : `if (${secondPassCheck}) {${subSpecs
           .map((subSpec, idx) =>
             transformStep(
               subSpec,

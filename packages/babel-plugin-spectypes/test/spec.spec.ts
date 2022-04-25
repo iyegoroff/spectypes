@@ -1,4 +1,4 @@
-import { isMutating, isSpecName, isTemplateItemArray } from '../src/spec'
+import { canBeInlined, isMutating, isSpecName, isTemplateItemArray } from '../src/spec'
 
 describe('spec', () => {
   test('isTemplateItem', () => {
@@ -14,6 +14,34 @@ describe('spec', () => {
   test('isSpecName', () => {
     expect(isSpecName('objectRecord')).toBeTruthy()
     expect(isSpecName('external')).toBeFalsy()
+  })
+
+  test('number should be inlined inside union check', () => {
+    expect(canBeInlined(['number'])).toBeTruthy()
+  })
+
+  test('string should be inlined inside union check', () => {
+    expect(canBeInlined(['string'])).toBeTruthy()
+  })
+
+  test('boolean should be inlined inside union check', () => {
+    expect(canBeInlined(['boolean'])).toBeTruthy()
+  })
+
+  test('literal should be inlined inside union check', () => {
+    expect(canBeInlined(['literal', ['null']])).toBeTruthy()
+  })
+
+  test('template should be inlined inside union check', () => {
+    expect(canBeInlined(['template', [['string']]])).toBeTruthy()
+  })
+
+  test('validator should be inlined inside union check', () => {
+    expect(canBeInlined(['validator', ['external', ['identifier', 'foo']]])).toBeTruthy()
+  })
+
+  test('object should not be inlined inside union check', () => {
+    expect(canBeInlined(['object', {}])).toBeFalsy()
   })
 
   test('template should not be mutating', () => {

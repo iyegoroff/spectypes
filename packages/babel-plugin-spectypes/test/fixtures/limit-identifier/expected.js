@@ -3,17 +3,13 @@ import { inc } from './inc';
 
 const check = value => {
   let err;
-  let error0;
 
   if (typeof value !== 'number') {
-    error0 = true;
     (err = err || []).push({
       issue: 'not a number',
       path: []
     });
-  }
-
-  if (!error0 && !inc(value)) {
+  } else if (!inc(value)) {
     (err = err || []).push({
       issue: 'does not fit the limit',
       path: []
