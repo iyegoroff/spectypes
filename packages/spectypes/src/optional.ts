@@ -13,6 +13,8 @@ export const optional: <ItemSpec extends Spec = SomeSpec>(
     ? SpectypesError<'optional', 'optional'>
     : HasTag<ItemSpec, 'filter'> extends true
     ? SpectypesError<'filter', 'optional'>
+    : HasTag<ItemSpec, 'lazy'> extends true
+    ? SpectypesError<'lazy', 'optional'>
     : ItemSpec
 ) => Spec<
   ['optional', ...SpecTag<ItemSpec>],

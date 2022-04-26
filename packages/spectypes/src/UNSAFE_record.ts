@@ -45,6 +45,8 @@ export const UNSAFE_record: {
       : { readonly "spectypes error: only number or string 'record' key types allowed": never },
     itemSpec: HasTag<ItemSpec, 'optional'> extends true
       ? SpectypesRecordItemError<'optional'>
+      : HasTag<ItemSpec, 'lazy'> extends true
+      ? SpectypesRecordItemError<'lazy'>
       : ItemSpec
   ): SpecSuccess<KeySpec> extends number | string
     ? Spec<
@@ -61,8 +63,10 @@ export const UNSAFE_record: {
    * @param itemSpec Spec to validate each item of a record.
    */
   <ItemSpec extends Spec = SomeSpec>(
-    itemSpec: HasTag<ItemSpec, 'optional'> extends SpectypesRecordItemError<'optional'>
-      ? never
+    itemSpec: HasTag<ItemSpec, 'optional'> extends true
+      ? SpectypesRecordItemError<'optional'>
+      : HasTag<ItemSpec, 'lazy'> extends true
+      ? SpectypesRecordItemError<'lazy'>
       : ItemSpec
   ): Spec<['record'], SpecKind<ItemSpec>, { readonly [key in string]: SpecSuccess<ItemSpec> }>
 } = error

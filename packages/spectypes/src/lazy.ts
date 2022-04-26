@@ -8,7 +8,11 @@ import { error } from './error'
  * @param spec Function that returns a spec
  */
 export const lazy: <ItemSpec extends Spec = SomeSpec>(
-  spec: HasTag<ItemSpec, 'filter'> extends true ? SpectypesError<'filter', 'lazy'> : () => ItemSpec
+  spec: HasTag<ItemSpec, 'filter'> extends true
+    ? SpectypesError<'filter', 'lazy'>
+    : HasTag<ItemSpec, 'lazy'> extends true
+    ? SpectypesError<'lazy', 'lazy'>
+    : () => ItemSpec
 ) => Spec<['lazy'], SpecKind<ItemSpec>, SpecSuccess<ItemSpec>> = error
 
 type LazySpec<Item, Kind extends 'validator' | 'transformer'> = Spec<['lazy'], Kind, Item>

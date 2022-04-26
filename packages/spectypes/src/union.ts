@@ -17,6 +17,8 @@ export const union: <Specs extends readonly Spec[] = readonly SomeSpec[]>(
         ? SpectypesError<'unknown', 'union'>
         : HasTag<Specs[Index], 'union'> extends true
         ? SpectypesError<'union', 'union'>
+        : HasTag<Specs[Index], 'lazy'> extends true
+        ? SpectypesError<'lazy', 'union'>
         : Specs[Index]
       : never
   }

@@ -19,6 +19,8 @@ export const object: <Specs extends Record<string, Spec> = Record<string, SomeSp
     readonly [Key in keyof Specs]: Specs[Key] extends Spec
       ? HasTag<Specs[Key], 'filter'> extends true
         ? SpectypesError<'filter', 'object'>
+        : HasTag<Specs[Key], 'lazy'> extends true
+        ? SpectypesError<'lazy', 'object'>
         : Specs[Key]
       : never
   }

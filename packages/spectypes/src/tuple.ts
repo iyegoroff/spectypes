@@ -13,6 +13,8 @@ export const tuple: <Specs extends readonly Spec[] = readonly SomeSpec[]>(
         ? SpectypesError<'optional', 'tuple'>
         : HasTag<Specs[Index], 'filter'> extends true
         ? SpectypesError<'filter', 'tuple'>
+        : HasTag<Specs[Index], 'lazy'> extends true
+        ? SpectypesError<'lazy', 'tuple'>
         : Specs[Index]
       : never
   }

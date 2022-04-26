@@ -12,6 +12,8 @@ export const struct: <Specs extends Record<string, Spec> = Record<string, SomeSp
     readonly [Key in keyof Specs]: Specs[Key] extends Spec
       ? HasTag<Specs[Key], 'filter'> extends true
         ? SpectypesError<'filter', 'struct'>
+        : HasTag<Specs[Key], 'lazy'> extends true
+        ? SpectypesError<'lazy', 'struct'>
         : Specs[Key]
       : never
   }

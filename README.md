@@ -562,17 +562,13 @@ const _limit = (x) => x > 1
 
 const check = (value) => {
   let err
-  let error0
 
   if (typeof value !== 'number') {
-    error0 = true
     ;(err = err || []).push({
       issue: 'not a number',
       path: []
     })
-  }
-
-  if (!error0 && !_limit(value)) {
+  } else if (!_limit(value)) {
     ;(err = err || []).push({
       issue: 'does not fit the limit',
       path: []
@@ -641,9 +637,7 @@ const check = (value) => {
       issue: 'not a number',
       path: []
     })
-  }
-
-  if (!err) {
+  } else {
     result = _map(value)
   }
 
@@ -1488,9 +1482,7 @@ const negated = (value) => {
       issue: 'not a number',
       path: []
     })
-  }
-
-  if (!err) {
+  } else {
     result = _map(value)
   }
 
@@ -1581,17 +1573,13 @@ const _limit = (x) => x >= 0
 
 const positive = (value) => {
   let err
-  let error0
 
   if (typeof value !== 'number') {
-    error0 = true
     ;(err = err || []).push({
       issue: 'not a number',
       path: []
     })
-  }
-
-  if (!error0 && !_limit(value)) {
+  } else if (!_limit(value)) {
     ;(err = err || []).push({
       issue: 'does not fit the limit',
       path: []
@@ -1826,9 +1814,7 @@ const check = (value) => {
       issue: 'does not fit the limit',
       path: []
     })
-  }
-
-  if (!err) {
+  } else {
     result = _map(value)
   }
 

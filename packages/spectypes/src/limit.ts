@@ -15,6 +15,8 @@ export const limit: <
     ? SpectypesError<'optional', 'limit'>
     : HasTag<ItemSpec, 'filter'> extends true
     ? SpectypesError<'filter', 'limit'>
+    : HasTag<ItemSpec, 'lazy'> extends true
+    ? SpectypesError<'lazy', 'limit'>
     : ItemSpec,
   constraint: Constraint
 ) => Spec<

@@ -463,27 +463,37 @@ const parseStep = (
         return parseLiteral(expression)
 
       case 'optional':
-        return parseUnary('optional', expression, [...rejects, 'optional', 'filter'], context)
+        return parseUnary(
+          'optional',
+          expression,
+          [...rejects, 'optional', 'filter', 'lazy'],
+          context
+        )
 
       case 'array':
-        return parseArray(expression, [...rejects, 'optional'], context)
+        return parseArray(expression, [...rejects, 'optional', 'lazy'], context)
 
       case 'tuple':
-        return parseUnaryArray('tuple', expression, [...rejects, 'optional', 'filter'], context)
+        return parseUnaryArray(
+          'tuple',
+          expression,
+          [...rejects, 'optional', 'filter', 'lazy'],
+          context
+        )
 
       case 'union':
         return parseUnaryArray(
           'union',
           expression,
-          [...rejects, 'optional', 'filter', 'unknown', 'union'],
+          [...rejects, 'optional', 'filter', 'unknown', 'union', 'lazy'],
           context
         )
 
       case 'object':
-        return parseUnaryObject('object', expression, [...rejects, 'filter'], context)
+        return parseUnaryObject('object', expression, [...rejects, 'filter', 'lazy'], context)
 
       case 'struct':
-        return parseUnaryObject('struct', expression, [...rejects, 'filter'], context)
+        return parseUnaryObject('struct', expression, [...rejects, 'filter', 'lazy'], context)
 
       case 'record':
       case 'UNSAFE_record':
@@ -506,12 +516,12 @@ const parseStep = (
             'number',
             'boolean'
           ],
-          [...rejects, 'optional'],
+          [...rejects, 'optional', 'lazy'],
           context
         )
 
       case 'lazy':
-        return parseLazy(expression, [...rejects, 'filter'], context)
+        return parseLazy(expression, [...rejects, 'filter', 'lazy'], context)
 
       case 'template':
         return parseTemplate(
@@ -541,10 +551,15 @@ const parseStep = (
         )
 
       case 'map':
-        return parseFunction('map', expression, [...rejects, 'optional', 'filter'], context)
+        return parseFunction('map', expression, [...rejects, 'optional', 'filter', 'lazy'], context)
 
       case 'limit':
-        return parseFunction('limit', expression, [...rejects, 'optional', 'filter'], context)
+        return parseFunction(
+          'limit',
+          expression,
+          [...rejects, 'optional', 'filter', 'lazy'],
+          context
+        )
 
       case 'writable':
         return parseUnary('writable', expression, [...rejects, 'filter'], context)

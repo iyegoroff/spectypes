@@ -16,6 +16,8 @@ export const filter: <
     ? SpectypesError<'optional', 'filter'>
     : HasTag<ItemSpec, 'filter'> extends true
     ? SpectypesError<'filter', 'filter'>
+    : HasTag<ItemSpec, 'lazy'> extends true
+    ? SpectypesError<'lazy', 'filter'>
     : ItemSpec,
   predicate: Predicate
 ) => Spec<
