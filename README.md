@@ -1757,7 +1757,7 @@ type Value = Spectype<typeof check>
 
 ### How does the plugin understand what code to transform?
 
-Plugin searches for named imports like `import { ... } from 'spectypes'` or `const { ... } = require('spectypes')`, gets all imported identifiers (aliases also supported). All variable declarations which include these identifiers will be converted into validating functions.
+Plugin searches for named imports like `import { ... } from 'spectypes'` or `const { ... } = require('spectypes')`and gets all imported identifiers (aliases also supported). All variable declarations which include these identifiers will be converted into validating functions.
 
 ### Special cases
 

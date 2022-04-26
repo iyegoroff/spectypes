@@ -16,7 +16,13 @@ describe('index', () => {
       const expected = trim(fs.readFileSync(path.join(fixtureDir, 'expected.js')).toString())
       const actualPath = path.join(fixtureDir, 'actual.js')
       const actual = trim(
-        transformFileSync(actualPath, { plugins: [plugin], sourceType: 'module' })?.code ?? ''
+        transformFileSync(actualPath, {
+          plugins:
+            name === 'package-name-alias'
+              ? [[plugin, { packageName: 'spectypes-next' }]]
+              : [plugin],
+          sourceType: 'module'
+        })?.code ?? ''
       )
 
       try {

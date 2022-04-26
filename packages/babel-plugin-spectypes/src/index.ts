@@ -8,15 +8,18 @@ import { transform, createAddLocal } from './transform'
 type State = babelCore.PluginPass & {
   specNames?: Record<string, SpecName>
   spectypesImport?: babelCore.types.Identifier
+  opts: { readonly packageName?: string }
 }
 
-const packageName = 'spectypes'
+const defaultPackageName = 'spectypes'
 
 export default function plugin({ types: t }: typeof babelCore): babelCore.PluginObj<State> {
   return {
-    name: packageName,
+    name: 'spectypes',
     visitor: {
       VariableDeclarator(path, state) {
+        const { packageName = defaultPackageName } = state.opts
+
         if (
           t.isCallExpression(path.node.init) &&
           t.isIdentifier(path.node.init.callee) &&
@@ -49,6 +52,8 @@ export default function plugin({ types: t }: typeof babelCore): babelCore.Plugin
         }
       },
       ImportDeclaration(path, state) {
+        const { packageName = defaultPackageName } = state.opts
+
         if (path.node.source.value === packageName) {
           state.specNames ??= {}
 

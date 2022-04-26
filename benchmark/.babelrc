@@ -1,6 +1,6 @@
 {
   "presets": ["@babel/preset-env", "@babel/preset-typescript"],
-  "plugins": ["babel-plugin-spectypes"],
+  "plugins": [["babel-plugin-spectypes", { "packageName": "spectypes" }]],
   "targets": {
     "node": 12
   }
