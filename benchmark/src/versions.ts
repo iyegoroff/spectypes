@@ -3,12 +3,12 @@ import path from 'path'
 import { string, struct } from 'spectypes'
 import { Result } from 'ts-railway'
 
-const versionCheck = struct({ version: string })
+const versionCheck = struct({ version: string, name: string })
 
 const version = (packagePath: string) =>
   Result.match(
     {
-      success: (pack) => `${String(packagePath.split('/').reverse()[1])}@${pack.version}`,
+      success: (pack) => `${pack.name}@${pack.version}`,
       failure: (fail) => {
         throw new Error(JSON.stringify(fail))
       }
