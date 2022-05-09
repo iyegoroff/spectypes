@@ -15,7 +15,7 @@ Fast, compiled, eval-free data validator/transformer
 ## Features
 
 - <b>really fast</b>, can be even [faster](/benchmark) than `ajv`
-- <b>detailed errors</b>, failure will result into explicit error message(s) and path to invalid data
+- <b>detailed errors</b>, failure will result into explicit error messages and path to invalid data
 - <b>extensively tested</b>, each release undergoes more than 900 `fast-check` powered [tests](#how-is-it-tested)
 - <b>precise types</b>, accurately infers all types and provides readable compile-time error messages
 - <b>browser friendly</b>, uses `babel` to compile validators, so no `eval` or `new Function` involved
@@ -70,7 +70,7 @@ expect(check([1, 2, '3', false])).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -105,7 +105,7 @@ const check = (value) => {
 ...
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -168,7 +168,7 @@ expect(check('false')).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -190,7 +190,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -217,7 +217,7 @@ expect(check('temp')).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -239,7 +239,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -272,7 +272,7 @@ expect(check(123)).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -294,7 +294,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -321,7 +321,7 @@ expect(check({})).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -343,7 +343,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -370,7 +370,7 @@ expect(check(null)).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -392,7 +392,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -411,7 +411,7 @@ expect(check('anything')).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -425,7 +425,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -462,7 +462,7 @@ expect(check([1, 2, null])).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -504,7 +504,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 Type predicate will be taken into account if provided
 
@@ -552,7 +552,7 @@ expect(check('5')).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -581,7 +581,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 Type predicate will be taken into account if provided
 
@@ -621,7 +621,7 @@ expect(check(undefined)).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -647,7 +647,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -682,7 +682,7 @@ expect(check(['hello'])).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -738,7 +738,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ```ts
 import { object, record, number, string, boolean, merge } from 'spectypes'
@@ -762,7 +762,7 @@ expect(check({ x: true, y: 123 })).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -817,7 +817,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -864,7 +864,7 @@ expect(check([])).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -922,7 +922,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -959,7 +959,7 @@ expect(check({ x: 'x' })).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -997,7 +997,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -1032,7 +1032,7 @@ expect(check({ toString: true })).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -1076,7 +1076,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -1120,7 +1120,7 @@ expect(check([])).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -1174,7 +1174,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -1201,7 +1201,7 @@ expect(check('test___false')).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -1237,7 +1237,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -1283,7 +1283,7 @@ expect(check(['1', '2', 'false'])).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -1337,7 +1337,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -1373,7 +1373,7 @@ expect(check(null)).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -1411,7 +1411,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -1445,7 +1445,7 @@ expect(check([1, 2, 'abc'])).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -1506,7 +1506,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -1542,7 +1542,7 @@ expect(check([-1, -2, -3])).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -1600,7 +1600,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -1635,7 +1635,7 @@ expect(person({ name: 'Alice', likes: [{ name: 'Bob', likes: 'cats' }] })).toEqu
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -1698,7 +1698,7 @@ const person = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ---
 
@@ -1743,6 +1743,97 @@ Plugin searches for named imports like `import { ... } from 'spectypes'` or `con
 - When `literal(undefined)` or `unknown` is used as a property validator inside `object` or `struct` and that property is not present in the validated object the validation will fail.
 - When `nullish` is used as a property validator inside `object` or `struct` and that property is not present in the validated object the result will still contain that property set to `undefined`.
 
+```ts
+import { struct, nullish, literal, unknown } from 'spectypes'
+
+const check = struct({ nullish, unknown, literal: literal(undefined) })
+
+expect(check({ unknown: 1, literal: undefined })).toEqual({
+  tag: 'success',
+  success: { nullish: undefined, unknown: 1, literal: undefined }
+})
+
+expect(check({ literal: undefined })).toEqual({
+  tag: 'failure',
+  failure: {
+    value: { literal: undefined },
+    errors: [{ issue: 'missing key - unknown', path: [] }]
+  }
+})
+
+expect(check({ unknown: undefined })).toEqual({
+  tag: 'failure',
+  failure: {
+    value: { unknown: undefined },
+    errors: [{ issue: 'missing key - literal', path: [] }]
+  }
+})
+```
+
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
+  <summary>Transformed code</summary>
+
+```js
+import * as _spectypes from 'spectypes'
+
+const check = (value) => {
+  let err, result
+  result = {}
+
+  if (!(typeof value === 'object' && value !== null && !Array.isArray(value))) {
+    ;(err = err || []).push({
+      issue: 'not an object',
+      path: []
+    })
+  } else {
+    let result_nullish
+    const value_nullish = value.nullish
+
+    if (value_nullish !== null && value_nullish !== undefined) {
+      ;(err = err || []).push({
+        issue: "not 'null' or 'undefined'",
+        path: ['nullish']
+      })
+    }
+
+    result.nullish = result_nullish
+    const value_unknown = value.unknown
+
+    if (!('unknown' in value)) {
+      ;(err = err || []).push({
+        issue: 'missing key - unknown',
+        path: []
+      })
+    }
+
+    result.unknown = value_unknown
+    const value_literal = value.literal
+
+    if (!('literal' in value)) {
+      ;(err = err || []).push({
+        issue: 'missing key - literal',
+        path: []
+      })
+    }
+
+    if (value_literal !== undefined) {
+      ;(err = err || []).push({
+        issue: "not a '" + undefined + "' literal",
+        path: ['literal']
+      })
+    }
+
+    result.literal = value_literal
+  }
+
+  return err
+    ? { tag: 'failure', failure: { value, errors: err } }
+    : { tag: 'success', success: result }
+}
+```
+
+</details></td></table>
+
 ### Result handling
 
 Validators return their results as 'success or failure' wrapped values and does not throw any exceptions (other than those thrown by the functions passed to `map`, `limit` or `filter`). This library does not include any functions to process validation results, but a compatible handy package exists - [ts-railway](https://github.com/iyegoroff/ts-railway)
@@ -1775,7 +1866,7 @@ expect(check([1, 2, 'abc'])).toEqual({
 })
 ```
 
-<details>
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
   <summary>Transformed code</summary>
 
 ```js
@@ -1803,7 +1894,7 @@ const check = (value) => {
 }
 ```
 
-</details>
+</details></td></table>
 
 ### How is it tested?
 
