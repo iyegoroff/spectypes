@@ -164,10 +164,10 @@ importers:
 
   packages/spectypes:
     specifiers:
-      build-for-cjs: ^0.0.5
+      build-for-cjs: ^0.0.6
       spectypes-configs: workspace:*
     devDependencies:
-      build-for-cjs: 0.0.5_typescript@4.6.3
+      build-for-cjs: 0.0.6_typescript@4.6.3
       spectypes-configs: link:../../configs
 
 packages:
@@ -3535,8 +3535,8 @@ packages:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
     dev: true
 
-  /build-for-cjs/0.0.5_typescript@4.6.3:
-    resolution: {integrity: sha512-Z5kjIqbTCl99d5P3AISnuben2MZWAd9FAdErPNJPQ5sMZ5/ct8AWVswSRNvDJBdcbs74BZcRDoeKqTg+EZwhUA==}
+  /build-for-cjs/0.0.6_typescript@4.6.3:
+    resolution: {integrity: sha512-IWDGZb6s5FuwpXIqm11h34+wMCCaszsG+kkHfq7HkynLhvtvOjwmoXk1cP+91lyyUZzO6aDtKWiQggWWaIqGTg==}
     hasBin: true
     peerDependencies:
       typescript: '*'
