@@ -1,7 +1,7 @@
 {
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "preset-version": "pnpm type-check -r && pnpm build -r && pnpm lint -r -- --fix && pnpm t && pnpm type-coverage",
+    "preset-version": "pnpm build -r && pnpm type-check -r && pnpm lint -r -- --fix && pnpm t && pnpm type-coverage",
     "set-version": "git add -u && git commit -am lint || : && pnpm -r update-version",
     "postset-version": "tag=v\"$(dot-json packages/spectypes/package.json version)\" && git commit -am \"$tag [skip build]\" && git tag $tag && git push && git push --tags",
     "lint": "eslint .",
