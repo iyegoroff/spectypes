@@ -1,5 +1,5 @@
-import { HasTag, SomeSpec, Spec, SpecSuccess, SpecTag, SpectypesError } from './types'
-import { error } from './error'
+import { HasTag, SomeSpec, Spec, SpecSuccess, SpecTag, SpectypesError } from './types.js'
+import { error } from './error.js'
 
 /**
  * Can be used only as an argument for `array` and `record` to create filtered transformer specs.

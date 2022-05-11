@@ -1,5 +1,5 @@
-import { LiteralBase, Spec } from './types'
-import { error } from './error'
+import { LiteralBase, Spec } from './types.js'
+import { error } from './error.js'
 
 /**
  * Creates a literal validator spec. When `literal(undefined)` is used as a property validator

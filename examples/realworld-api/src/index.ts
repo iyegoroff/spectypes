@@ -41,10 +41,10 @@ articles
   .then(
     Result.match({
       success: (arts) => {
-        console.log('getArticles success:', inspect(arts, true, null))
+        console.log('getArticles success:', inspect(arts, true))
       },
       failure: (err) => {
-        console.log('getArticles failure:', inspect(err, true, null))
+        console.log('getArticles failure:', inspect(err, true))
       }
     })
   )
