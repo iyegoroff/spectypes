@@ -41,7 +41,7 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "build-for-cjs": "^0.0.4",
+    "build-for-cjs": "^0.0.5",
     "spectypes-configs": "workspace:*"
   }
 }

@@ -164,10 +164,10 @@ importers:
 
   packages/spectypes:
     specifiers:
-      build-for-cjs: ^0.0.4
+      build-for-cjs: ^0.0.5
       spectypes-configs: workspace:*
     devDependencies:
-      build-for-cjs: 0.0.4
+      build-for-cjs: 0.0.5_typescript@4.6.3
       spectypes-configs: link:../../configs
 
 packages:
@@ -3535,13 +3535,14 @@ packages:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
     dev: true
 
-  /build-for-cjs/0.0.4:
-    resolution: {integrity: sha512-0Xl6OEnpRyiCMIXwSIocAid8MTv/aHSf8HgwqL/y9EEY5eQysiQ/Xa2Qk5jLsW0BvO197Z+eRz+OeGHkVDMU+g==}
+  /build-for-cjs/0.0.5_typescript@4.6.3:
+    resolution: {integrity: sha512-Z5kjIqbTCl99d5P3AISnuben2MZWAd9FAdErPNJPQ5sMZ5/ct8AWVswSRNvDJBdcbs74BZcRDoeKqTg+EZwhUA==}
     hasBin: true
     peerDependencies:
       typescript: '*'
     dependencies:
       ts-morph: 14.0.0
+      typescript: 4.6.3
     dev: true
 
   /call-bind/1.0.2:
