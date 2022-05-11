@@ -14,6 +14,7 @@
     },
     "./package.json": "./package.json"
   },
+  "type": "module",
   "scripts": {
     "update-version": "npm version",
     "build:dts": "tsc -p node_modules/spectypes-configs/tsconfig.dts.json",
