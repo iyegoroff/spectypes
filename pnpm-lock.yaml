@@ -94,7 +94,7 @@ importers:
       '@babel/preset-typescript': ^7.16.7
       babel-plugin-spectypes: workspace:*
       fetch-ponyfill: ^7.1.0
-      fetchmap: ^0.0.10
+      fetchmap: ^0.0.11
       node-fetch: ^3.2.4
       pipe-ts: ^0.0.9
       spectypes: workspace:*
@@ -102,7 +102,7 @@ importers:
       ts-railway: ^6.0.0
     dependencies:
       fetch-ponyfill: 7.1.0
-      fetchmap: 0.0.10
+      fetchmap: 0.0.11
       node-fetch: 3.2.4
       pipe-ts: 0.0.9
       spectypes: link:../../packages/spectypes
@@ -164,10 +164,10 @@ importers:
 
   packages/spectypes:
     specifiers:
-      build-for-cjs: ^0.0.6
+      build-for-cjs: ^0.0.8
       spectypes-configs: workspace:*
     devDependencies:
-      build-for-cjs: 0.0.6_typescript@4.6.3
+      build-for-cjs: 0.0.8_typescript@4.6.3
       spectypes-configs: link:../../configs
 
 packages:
@@ -3535,8 +3535,8 @@ packages:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
     dev: true
 
-  /build-for-cjs/0.0.6_typescript@4.6.3:
-    resolution: {integrity: sha512-IWDGZb6s5FuwpXIqm11h34+wMCCaszsG+kkHfq7HkynLhvtvOjwmoXk1cP+91lyyUZzO6aDtKWiQggWWaIqGTg==}
+  /build-for-cjs/0.0.8_typescript@4.6.3:
+    resolution: {integrity: sha512-sUv+koH9Wm1YF0baKUcpp0MNWKzfh8GJQOeH/WzUh4PhIoR11OswJB06ydM20tnV3Tlg1i4ka27tfzHE++59Tg==}
     hasBin: true
     peerDependencies:
       typescript: '*'
@@ -4344,8 +4344,8 @@ packages:
       - encoding
     dev: false
 
-  /fetchmap/0.0.10:
-    resolution: {integrity: sha512-3+dbzyeMbhcXfNKwzYPtuZenQI12XOb61kObBHzBX5YppIWcJqR1JpcU3XbT8bcuERJeX0ELYqhIvaS/sTSmyg==}
+  /fetchmap/0.0.11:
+    resolution: {integrity: sha512-49sQuVzAKUNsyr7z8w87CdIrqTcV+u3u/dR0qF02aGMLcJosSJm0Z2QB7r4wmX0EODwwFnzvMGUZHmYmO/P4pA==}
     dev: false
 
   /file-entry-cache/6.0.1:

@@ -48,4 +48,4 @@ articles
       }
     })
   )
-  .catch((x) => console.log('should never happen', x))
+  .catch((x: unknown) => console.log('should never happen', x))
