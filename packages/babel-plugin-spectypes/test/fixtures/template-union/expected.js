@@ -1,6 +1,6 @@
 import * as _spectypes from 'spectypes';
 
-const _template = new RegExp('^' + _spectypes.escape('test') + '(?:' + _spectypes.escape('foo') + '|' + _spectypes.numberTest + '|' + '123' + ')' + _spectypes.booleanTest + '$');
+const _template = new RegExp('^' + _spectypes.escapeRegexp('test') + '(?:' + _spectypes.escapeRegexp('foo') + '|' + _spectypes.numberTest + '|' + '123' + ')' + _spectypes.booleanTest + '$');
 
 const check = value => {
   let err;

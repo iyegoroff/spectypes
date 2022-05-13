@@ -1209,7 +1209,7 @@ import * as _spectypes from 'spectypes'
 
 const _template = new RegExp(
   '^' +
-    _spectypes.escape('test') +
+    _spectypes.escapeRegexp('test') +
     _spectypes.stringTest +
     _spectypes.numberTest +
     _spectypes.booleanTest +

@@ -310,11 +310,11 @@ const templateName = (
       : val[0] === 'string'
       ? `${js}.stringTest`
       : val[1][0] === 'string'
-      ? `${js}.escape('${val[1][1]}')`
+      ? `${js}.escapeRegexp('${val[1][1]}')`
       : val[1][0] === 'identifier'
       ? val[1][1] === 'undefined'
         ? val[1][1]
-        : `${js}.escape(${val[1][1]})`
+        : `${js}.escapeRegexp(${val[1][1]})`
       : val[1][0] === 'null'
       ? 'null'
       : `'${String(val[1][1])}'`

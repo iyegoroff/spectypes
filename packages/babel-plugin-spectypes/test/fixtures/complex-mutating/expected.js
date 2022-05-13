@@ -6,7 +6,7 @@ const _map = name => name.toUpperCase();
 
 const _limit2 = price => price > 0;
 
-const _template = new RegExp('^' + _spectypes.stringTest + _spectypes.escape('-') + _spectypes.stringTest + _spectypes.escape('-') + _spectypes.numberTest + '$');
+const _template = new RegExp('^' + _spectypes.stringTest + _spectypes.escapeRegexp('-') + _spectypes.stringTest + _spectypes.escapeRegexp('-') + _spectypes.numberTest + '$');
 
 const product = value => {
   let err, result;

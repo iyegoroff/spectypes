@@ -6,8 +6,9 @@ import { types as t, traverse } from '@babel/core'
 import * as fc from 'fast-check'
 import { Result } from 'ts-railway'
 import { Dict } from 'ts-micro-dict'
-import escapeStringRegexp from 'escape-string-regexp'
 import { assertDefined, isDefined } from 'ts-is-defined'
+import { stringify } from 'stringify-parse'
+import * as spectypes from '../../spectypes'
 import { createAddLocal, transform } from '../src/transform'
 import { Spec } from '../src/spec'
 import { createInvalidProperty, createValidProperty, injectError } from './property'
@@ -30,13 +31,7 @@ const prefix = `
   const hash = require('hash-sum');
   const isEven = (x) => x % 2 === 0;
   const str = 'STRING';
-  const _js = {
-    numberTest: '(?:(?:[+-]?(?:\\\\d*\\\\.\\\\d+|\\\\d+\\\\.\\\\d*|\\\\d+)(?:[Ee][+-]?\\\\d+)?)|(?:0[Bb][01]+)|(?:0[Oo][0-7]+)|(?:0[Xx][0-9A-Fa-f]+))',
-    stringTest: '.*',
-    booleanTest: '(?:true|false)',
-    bannedKeys: Object.getOwnPropertyNames(Object.prototype),
-    escape: ${String(escapeStringRegexp)}
-  };
+  const _js = ${stringify(spectypes)};
 `
 
 const compareObjects = (x: unknown, y: unknown) =>
