@@ -4,17 +4,17 @@
 
 ## Benchmarking with benchmark.js
 <b>object with constraints</b>:</br>
-ajv@8.11.0 x 4,753,413 ops/sec ±0.08% (95 runs sampled)</br>
-spectypes@2.0.2 x 6,783,685 ops/sec ±0.28% (89 runs sampled)</br>
+ajv@8.11.0 x 5,191,337 ops/sec ±1.30% (86 runs sampled)</br>
+spectypes@2.0.4 x 7,383,857 ops/sec ±2.24% (94 runs sampled)</br>
 Fastest is <b>spectypes</b>
 
 <b>nested object</b>:</br>
-ajv@8.11.0 x 13,898,149 ops/sec ±0.27% (97 runs sampled)</br>
-spectypes@2.0.2 x 17,516,120 ops/sec ±0.29% (92 runs sampled)</br>
+ajv@8.11.0 x 14,786,284 ops/sec ±1.16% (90 runs sampled)</br>
+spectypes@2.0.4 x 18,604,288 ops/sec ±1.50% (90 runs sampled)</br>
 Fastest is <b>spectypes</b>
 
 <b>array of unions</b>:</br>
-ajv@8.11.0 x 189,139 ops/sec ±2.23% (89 runs sampled)</br>
-spectypes@2.0.2 x 764,953 ops/sec ±0.08% (96 runs sampled)</br>
+ajv@8.11.0 x 179,179 ops/sec ±0.74% (87 runs sampled)</br>
+spectypes@2.0.4 x 756,457 ops/sec ±0.08% (93 runs sampled)</br>
 Fastest is <b>spectypes</b>
 
