@@ -1,5 +1,3 @@
-import * as _spectypes from 'spectypes';
-
 const _map = x => new Date(x);
 
 const _limit = x => !isNaN(Date.parse(x));

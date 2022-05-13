@@ -40,42 +40,19 @@ Fast, compiled, eval-free data validator/transformer
 
 ## Example
 
+Original code:
+
 ```ts
 import { array, number } from 'spectypes'
 
 const check = array(number)
-
-expect(check([1, 2, 3])).toEqual({
-  tag: 'success',
-  success: [1, 2, 3] // readonly number[]
-})
-
-expect(check({ 0: 1 })).toEqual({
-  tag: 'failure',
-  failure: {
-    value: { 0: 1 }, // unknown
-    errors: [{ issue: 'not an array', path: [] }]
-  }
-})
-
-expect(check([1, 2, '3', false])).toEqual({
-  tag: 'failure',
-  failure: {
-    value: [1, 2, '3', false], // unknown
-    errors: [
-      { issue: 'not a number', path: [2] },
-      { issue: 'not a number', path: [3] }
-    ]
-  }
-})
 ```
 
-<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
-  <summary>Transformed code</summary>
+The plugin will search for named imports like `import { ... } from 'spectypes'` or `const { ... } = require('spectypes')` and get all imported identifiers (aliases also supported). All variable declarations which include these identifiers will be converted into validating functions.
+
+Transformed code:
 
 ```js
-import * as _spectypes from 'spectypes';
-
 const check = (value) => {
   let err
 
@@ -101,11 +78,7 @@ const check = (value) => {
     ? { tag: 'failure', failure: { value, errors: err } }
     : { tag: 'success', success: value }
 }
-
-...
 ```
-
-</details></td></table>
 
 ---
 
@@ -172,8 +145,6 @@ expect(check('false')).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err
 
@@ -221,8 +192,6 @@ expect(check('temp')).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err
 
@@ -276,8 +245,6 @@ expect(check(123)).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err, result
 
@@ -325,8 +292,6 @@ expect(check({})).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err
 
@@ -374,8 +339,6 @@ expect(check(null)).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err
 
@@ -415,8 +378,6 @@ expect(check('anything')).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err
   return err
@@ -435,7 +396,68 @@ const check = (value) => {
 
 Creates an array validator spec. Takes a spec to validate each item of an array.
 
-See [example](#example)
+```ts
+import { array, number } from 'spectypes'
+
+const check = array(number)
+
+expect(check([1, 2, 3])).toEqual({
+  tag: 'success',
+  success: [1, 2, 3]
+})
+
+expect(check({ 0: 1 })).toEqual({
+  tag: 'failure',
+  failure: {
+    value: { 0: 1 },
+    errors: [{ issue: 'not an array', path: [] }]
+  }
+})
+
+expect(check([1, 2, '3', false])).toEqual({
+  tag: 'failure',
+  failure: {
+    value: [1, 2, '3', false],
+    errors: [
+      { issue: 'not a number', path: [2] },
+      { issue: 'not a number', path: [3] }
+    ]
+  }
+})
+```
+
+<table><td><details style="border: 1px solid; border-radius: 5px; padding: 5px">
+  <summary>Transformed code</summary>
+
+```js
+const check = (value) => {
+  let err
+
+  if (!Array.isArray(value)) {
+    ;(err = err || []).push({
+      issue: 'not an array',
+      path: []
+    })
+  } else {
+    for (let index = 0; index < value.length; index++) {
+      const value_index = value[index]
+
+      if (typeof value_index !== 'number') {
+        ;(err = err || []).push({
+          issue: 'not a number',
+          path: [index]
+        })
+      }
+    }
+  }
+
+  return err
+    ? { tag: 'failure', failure: { value, errors: err } }
+    : { tag: 'success', success: value }
+}
+```
+
+</details></td></table>
 
 ---
 
@@ -466,8 +488,6 @@ expect(check([1, 2, null])).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const _filter = (x) => x > 1
 
 const check = (value) => {
@@ -556,8 +576,6 @@ expect(check('5')).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const _limit = (x) => x > 1
 
 const check = (value) => {
@@ -625,8 +643,6 @@ expect(check(undefined)).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const _map = (x) => x + 1
 
 const check = (value) => {
@@ -686,8 +702,6 @@ expect(check(['hello'])).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err
 
@@ -868,8 +882,6 @@ expect(check([])).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err
 
@@ -963,8 +975,6 @@ expect(check({ x: 'x' })).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err, result
   result = {}
@@ -1124,8 +1134,6 @@ expect(check([])).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err, result
   result = {}
@@ -1287,8 +1295,6 @@ expect(check(['1', '2', 'false'])).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err
 
@@ -1377,8 +1383,6 @@ expect(check(null)).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err
 
@@ -1449,8 +1453,6 @@ expect(check([1, 2, 'abc'])).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const _map = (x) => -x
 
 const negated = (value) => {
@@ -1546,8 +1548,6 @@ expect(check([-1, -2, -3])).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const _limit = (x) => x >= 0
 
 const positive = (value) => {
@@ -1639,8 +1639,6 @@ expect(person({ name: 'Alice', likes: [{ name: 'Bob', likes: 'cats' }] })).toEqu
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const person = (value) => {
   let err
 
@@ -1734,10 +1732,6 @@ type Value = Spectype<typeof check>
 
 ## Misc
 
-### How does the plugin understand what code to transform?
-
-Plugin searches for named imports like `import { ... } from 'spectypes'` or `const { ... } = require('spectypes')`and gets all imported identifiers (aliases also supported). All variable declarations which include these identifiers will be converted into validating functions.
-
 ### Special cases
 
 - When `literal(undefined)` or `unknown` is used as a property validator inside `object` or `struct` and that property is not present in the validated object the validation will fail.
@@ -1774,8 +1768,6 @@ expect(check({ unknown: undefined })).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const check = (value) => {
   let err, result
   result = {}
@@ -1870,8 +1862,6 @@ expect(check([1, 2, 'abc'])).toEqual({
   <summary>Transformed code</summary>
 
 ```js
-import * as _spectypes from 'spectypes'
-
 const _map = (x) => new Date(x)
 
 const _limit = (x) => !isNaN(Date.parse(x))

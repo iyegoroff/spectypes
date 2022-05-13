@@ -1,5 +1,3 @@
-import * as _spectypes from 'spectypes';
-
 const _filter = x => x;
 
 const check = value => {

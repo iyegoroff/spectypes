@@ -1,4 +1,4 @@
 const { boolean } = require('spectypes')
-const { array } = require('spectypes')
+const { record } = require('spectypes')
 
-const check = array(boolean)
+const check = record(boolean)

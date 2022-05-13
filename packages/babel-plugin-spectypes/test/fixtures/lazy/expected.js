@@ -1,5 +1,3 @@
-import * as _spectypes from 'spectypes';
-
 const person = value => {
   let err;
 

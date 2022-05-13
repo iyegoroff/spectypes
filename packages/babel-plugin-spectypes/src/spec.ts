@@ -230,3 +230,6 @@ export const isMutating = (spec: Spec): boolean => {
       )
   }
 }
+
+export const requiresRuntime = (specName: SpecName) =>
+  specName === 'record' || specName === 'template'

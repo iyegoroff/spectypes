@@ -1,5 +1,3 @@
-import * as _spectypes from 'spectypes';
-
 const check = value => {
   let err;
 

@@ -2,12 +2,13 @@ import type babelCore from '@babel/core'
 import { parseExpression } from '@babel/parser'
 import { isDefined } from 'ts-is-defined'
 import { parse } from './parse'
-import { isSpecName, SpecName } from './spec'
+import { isSpecName, requiresRuntime, SpecName } from './spec'
 import { transform, createAddLocal } from './transform'
 
 type State = babelCore.PluginPass & {
   specNames?: Record<string, SpecName>
   spectypesImport?: babelCore.types.Identifier
+  runtimeAlreadyImported?: true
   opts: { readonly packageName?: string }
 }
 
@@ -45,7 +46,14 @@ export default function plugin({ types: t }: typeof babelCore): babelCore.Plugin
 
           if (!isDefined(state.spectypesImport)) {
             state.spectypesImport = path.scope.generateUidIdentifier(packageName)
+          }
+
+          if (
+            Object.values(state.specNames).some(requiresRuntime) &&
+            !isDefined(state.runtimeAlreadyImported)
+          ) {
             path.node.id = state.spectypesImport
+            state.runtimeAlreadyImported = true
           } else {
             path.remove()
           }
@@ -69,7 +77,14 @@ export default function plugin({ types: t }: typeof babelCore): babelCore.Plugin
 
           if (!isDefined(state.spectypesImport)) {
             state.spectypesImport = path.scope.generateUidIdentifier(packageName)
+          }
+
+          if (
+            Object.values(state.specNames).some(requiresRuntime) &&
+            !isDefined(state.runtimeAlreadyImported)
+          ) {
             path.node.specifiers = [t.importNamespaceSpecifier(state.spectypesImport)]
+            state.runtimeAlreadyImported = true
           } else {
             path.remove()
           }

@@ -3,19 +3,30 @@ const _spectypes = require('spectypes');
 const check = value => {
   let err;
 
-  if (!Array.isArray(value)) {
+  if (!(typeof value === 'object' && value !== null && !Array.isArray(value))) {
     (err = err || []).push({
-      issue: 'not an array',
+      issue: 'not an object',
       path: []
     });
   } else {
-    for (let index = 0; index < value.length; index++) {
-      const value_index = value[index];
+    for (let i = 0; i < _spectypes.bannedKeys.length; i++) {
+      const ban = _spectypes.bannedKeys[i];
 
-      if (typeof value_index !== 'boolean') {
+      if (Object.prototype.hasOwnProperty.call(value, ban)) {
+        (err = err || []).push({
+          issue: "includes banned '" + ban + "' key",
+          path: []
+        });
+      }
+    }
+
+    for (const key in value) {
+      const value_key = value[key];
+
+      if (typeof value_key !== 'boolean') {
         (err = err || []).push({
           issue: 'not a boolean',
-          path: [index]
+          path: [key]
         });
       }
     }

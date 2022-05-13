@@ -1,4 +1,3 @@
-import * as _spectypes from 'spectypes';
 import { int } from './num';
 
 const check = value => {

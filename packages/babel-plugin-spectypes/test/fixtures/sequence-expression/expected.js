@@ -1,4 +1,3 @@
-import * as _spectypes from 'spectypes';
 let cov = 1;
 const check = (cov++, value => {
   let err;

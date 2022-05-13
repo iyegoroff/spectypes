@@ -1,5 +1,3 @@
-import * as _spectypes from 'spectypes';
-
 const _map = x => x + 1;
 
 const check = value => {

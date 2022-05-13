@@ -1,5 +1,3 @@
-import * as _spectypesNext from 'spectypes-next';
-
 const check = value => {
   let err;
 

@@ -1,5 +1,3 @@
-import * as _spectypes from 'spectypes';
-
 const _limit = age => age >= 0;
 
 const persons = value => {
