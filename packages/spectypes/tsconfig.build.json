@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "tmp",
+    "stripInternal": true,
+    "types": []
+  },
+  "include": ["./src"]
+}

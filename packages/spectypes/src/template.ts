@@ -1,5 +1,5 @@
-import { HasTag, LiteralBase, SomeSpec, Spec, SpecSuccess, SpectypesError } from './types.js'
-import { error } from './error.js'
+import { HasTag, LiteralBase, SomeSpec, Spec, SpecSuccess, SpectypesError } from './types'
+import { error } from './error'
 
 type Template<Specs extends readonly Spec[]> = Specs extends readonly [infer First, ...infer Rest]
   ? First extends Spec

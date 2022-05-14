@@ -981,10 +981,6 @@ const unionTransform = (
     ? `!(${subSpecs.map((subSpec) => inlineUnionCheck(val, subSpec, context)).join(' || ')})`
     : unmatched
 
-  // if (isInlined) {
-  //   console.log(secondPassCheck)
-  // }
-
   return `${
     isInlined
       ? assignValue(path, isDirect)

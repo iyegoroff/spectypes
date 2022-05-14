@@ -17,7 +17,7 @@
     "ajv-formats": "^2.1.1",
     "benchmark": "^2.1.4",
     "spectypes": "workspace:*",
-    "ts-railway": "^6.0.1"
+    "ts-railway": "^6.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",

@@ -4,24 +4,21 @@
   "private": false,
   "description": "Fast, compiled, eval-free data validator/transformer",
   "sideEffects": false,
-  "main": "./dist/cjs/index.cjs",
-  "module": "./dist/esm/index.js",
-  "react-native": "./dist/esm/index.js",
-  "types": "./dist/dts/index.d.ts",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "react-native": "./dist/index.js",
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.cjs",
-      "import": "./dist/esm/index.js"
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
   "type": "module",
   "scripts": {
     "update-version": "npm version",
-    "build:dts": "tsc -p node_modules/spectypes-configs/tsconfig.dts.json",
-    "build:esm": "tsc -p node_modules/spectypes-configs/tsconfig.esm.json",
-    "build:cjs": "build-for-cjs node_modules/spectypes-configs/tsconfig.cjs.json",
-    "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:esm && npm run build:cjs"
+    "build": "rm -rf dist && rollup -c rollup.config.ts --configPlugin typescript && rm -rf tmp"
   },
   "keywords": [
     "validation",
@@ -40,9 +37,5 @@
     "url": "git+https://github.com/iyegoroff/spectypes.git"
   },
   "author": "iyegoroff <iegoroff@gmail.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "build-for-cjs": "^0.0.8",
-    "spectypes-configs": "workspace:*"
-  }
+  "license": "MIT"
 }

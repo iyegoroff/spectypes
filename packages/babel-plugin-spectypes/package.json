@@ -4,13 +4,11 @@
   "private": false,
   "description": "Babel plugin that compiles spectypes validators",
   "sideEffects": false,
-  "main": "./dist/cjs/index.js",
-  "types": "./dist/dts/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "update-version": "npm version",
-    "build:dts": "tsc -p node_modules/spectypes-configs/tsconfig.dts.json",
-    "build:cjs": "tsc -p node_modules/spectypes-configs/tsconfig.cjs.json",
-    "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:cjs"
+    "build": "rm -rf dist && tsc -p tsconfig.build.json"
   },
   "keywords": [
     "babel-plugin",
@@ -45,18 +43,17 @@
     "chance": "^1.1.8",
     "fast-check": "^2.22.0",
     "hash-sum": "^2.0.0",
-    "spectypes-configs": "workspace:*",
     "string-hash": "^1.1.3",
     "stringify-parse": "^1.0.6",
     "ts-assert-unreachable": "^0.0.9",
-    "ts-is-record": "^3.0.2",
-    "ts-micro-dict": "^9.0.0",
-    "ts-tiny-invariant": "^2.0.1"
+    "ts-is-record": "^3.0.4",
+    "ts-micro-dict": "^9.0.2",
+    "ts-tiny-invariant": "^2.0.3"
   },
   "dependencies": {
     "js-name-escape": "^1.0.1",
     "pipe-ts": "^0.0.9",
-    "ts-is-defined": "^3.0.1",
-    "ts-railway": "^6.0.1"
+    "ts-is-defined": "^3.0.3",
+    "ts-railway": "^6.0.4"
   }
 }

@@ -1,13 +1,5 @@
-import {
-  HasTag,
-  InferKind,
-  SomeSpec,
-  Spec,
-  SpecsTags,
-  SpecSuccess,
-  SpectypesError
-} from './types.js'
-import { error } from './error.js'
+import { HasTag, InferKind, SomeSpec, Spec, SpecsTags, SpecSuccess, SpectypesError } from './types'
+import { error } from './error'
 
 /**
  * Creates a union validator spec.

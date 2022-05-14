@@ -1,5 +1,5 @@
-import { HasTag, SomeSpec, Spec, SpecSuccess, SpecTag, SpectypesError } from './types.js'
-import { error } from './error.js'
+import { HasTag, SomeSpec, Spec, SpecSuccess, SpecTag, SpectypesError } from './types'
+import { error } from './error'
 
 /**
  * Creates a spec that transforms the result of successful validation.

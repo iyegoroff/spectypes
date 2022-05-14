@@ -1,5 +1,5 @@
-import { HasTag, SomeSpec, Spec, SpecKind, SpecSuccess, SpectypesError } from './types.js'
-import { error } from './error.js'
+import { HasTag, SomeSpec, Spec, SpecKind, SpecSuccess, SpectypesError } from './types'
+import { error } from './error'
 
 /**
  * Creates a spec to validate a value with recursive type.

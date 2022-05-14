@@ -12,12 +12,13 @@
     "start": "npm run build && node ./build/index.js"
   },
   "dependencies": {
-    "fetchmap": "^0.0.12",
+    "fetchmap": "^0.0.14",
+    "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^3.2.4",
     "pipe-ts": "^0.0.9",
     "spectypes": "workspace:*",
-    "ts-micro-dict": "^9.0.0",
-    "ts-railway": "^6.0.1"
+    "ts-micro-dict": "^9.0.2",
+    "ts-railway": "^6.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",

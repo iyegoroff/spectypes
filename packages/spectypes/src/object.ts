@@ -1,5 +1,5 @@
-import { HasTag, ObjectValue, SomeSpec, Spec, SpecKind, SpectypesError } from './types.js'
-import { error } from './error.js'
+import { HasTag, ObjectValue, SomeSpec, Spec, SpecKind, SpectypesError } from './types'
+import { error } from './error'
 
 type InferKindObject<Specs extends Record<string, Spec>> = 'transformer' extends {
   readonly [Key in keyof Specs]: Specs[Key] extends Spec ? SpecKind<Specs[Key]> : never

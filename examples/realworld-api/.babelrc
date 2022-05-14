@@ -1,7 +1,5 @@
 {
   "presets": ["@babel/preset-typescript"],
   "plugins": ["babel-plugin-spectypes"],
-  "targets": {
-    "node": 16
-  }
+  "targets": { "node": 16 }
 }

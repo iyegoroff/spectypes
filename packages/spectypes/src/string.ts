@@ -1,5 +1,5 @@
-import { Spec } from './types.js'
-import { error } from './error.js'
+import { Spec } from './types'
+import { error } from './error'
 
 /** String validator spec. */
 export const string: Spec<['string'], 'validator', string> = error
