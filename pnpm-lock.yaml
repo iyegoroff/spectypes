@@ -91,9 +91,6 @@ importers:
       '@types/benchmark': 2.1.1
       babel-plugin-spectypes: link:../packages/babel-plugin-spectypes
 
-  configs:
-    specifiers: {}
-
   examples/realworld-api:
     specifiers:
       '@babel/cli': ^7.17.10
