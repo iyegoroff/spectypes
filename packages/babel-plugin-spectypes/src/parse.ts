@@ -16,7 +16,7 @@ const fail = (x: string, y: string, suf = '') =>
 
 const invalidLoc = { line: NaN, column: NaN }
 
-const locInfo = ({ loc }: { loc: t.Expression['loc'] }) => {
+const locInfo = ({ loc }: { loc?: t.Expression['loc'] }) => {
   const { start = invalidLoc, end = invalidLoc } = loc ?? {}
 
   return `starts at ln:${String(start.line)} col:${String(start.column + 1)}, ends at ln:${String(
