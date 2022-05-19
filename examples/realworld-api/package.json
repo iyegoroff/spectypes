@@ -15,7 +15,7 @@
     "fetchmap": "^0.0.14",
     "node-fetch": "^3.2.4",
     "pipe-ts": "^0.0.9",
-    "spectypes": "workspace:*",
+    "spectypes": "file:packages/spectypes",
     "ts-micro-dict": "^9.0.2",
     "ts-railway": "^6.0.4"
   },
@@ -24,6 +24,6 @@
     "@babel/core": "^7.17.10",
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-typescript": "^7.16.7",
-    "babel-plugin-spectypes": "workspace:*"
+    "babel-plugin-spectypes": "file:packages/babel-plugin-spectypes"
   }
 }

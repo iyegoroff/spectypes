@@ -18,4 +18,4 @@ const version = (packagePath: string) =>
 
 export const spectypesVersion = version('../../packages/spectypes/package.json')
 
-export const ajvVersion = version('../node_modules/ajv/package.json')
+export const ajvVersion = version('../../node_modules/ajv/package.json')

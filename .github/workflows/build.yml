@@ -7,13 +7,12 @@ jobs:
     if: ${{ github.workflow == 'publish' || !contains(github.event.head_commit.message, '[skip build]') }}
     steps:
       - uses: actions/checkout@v3
-      - run: sudo npm i -g pnpm@6.32.9
-      - run: pnpm i --frozen-lockfile
-      - run: pnpm build -r
-      - run: pnpm lint
-      - run: pnpm t
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lint
+      - run: npm t
       - uses: codecov/codecov-action@v2
-      - run: pnpm type-coverage
+      - run: npm run type-coverage
       - uses: actions/upload-artifact@v3
         with:
           name: packages

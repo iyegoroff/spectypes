@@ -1,10 +1,14 @@
 {
+  "name": "spectypes-root",
+  "version": "2.0.7",
+  "private": true,
+  "files": [],
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
-    "preset-version": "pnpm build -r && pnpm type-check -r && pnpm lint -r -- --fix && pnpm t && pnpm type-coverage",
-    "set-version": "git add -u && git commit -am lint || : && pnpm -r update-version",
-    "postset-version": "tag=v\"$(dot-json packages/spectypes/package.json version)\" && git commit -am \"$tag [skip build]\" && git tag $tag && git push && git push --tags",
-    "lint": "eslint .",
+    "preversion": "npm version $npm_new_version -ws && git commit -am up && npm run build && npm run type-check && npm run lint && npm t && npm run type-coverage",
+    "postversion": "git push && git push --tags",
+    "lint": "eslint . && npm run lint -ws --if-present",
+    "build": "npm run build -ws --if-present",
+    "type-check": "npm run type-check -ws --if-present",
     "test": "jest",
     "coverage": "codecov",
     "type-coverage": "type-coverage --strict --detail --ignore-files **/dist/** --ignore-files **/blueprint-templates/**/* --ignore-catch"
@@ -42,5 +46,10 @@
     "tslib": "^2.4.0",
     "type-coverage": "^2.21.1",
     "typescript": "^4.6.3"
-  }
+  },
+  "workspaces": [
+    "./packages/*",
+    "./examples/*",
+    "./benchmark"
+  ]
 }

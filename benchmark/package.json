@@ -16,7 +16,7 @@
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "benchmark": "^2.1.4",
-    "spectypes": "workspace:*",
+    "spectypes": "file:packages/spectypes",
     "ts-railway": "^6.0.4"
   },
   "devDependencies": {
@@ -25,6 +25,6 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
     "@types/benchmark": "^2.1.1",
-    "babel-plugin-spectypes": "workspace:*"
+    "babel-plugin-spectypes": "file:packages/babel-plugin-spectypes"
   }
 }
