@@ -1,5 +1,5 @@
-import { HasTag, SomeSpec, Spec, SpecKind, SpecSuccess, SpecTag, SpectypesError } from './types'
-import { error } from './error'
+import { HasTag, SomeSpec, Spec, SpecKind, SpecSuccess, SpecTag, SpectypesError } from './types.js'
+import { error } from './error.js'
 
 /**
  * Creates a spec with custom constraint.

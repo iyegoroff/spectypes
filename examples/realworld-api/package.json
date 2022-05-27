@@ -7,23 +7,25 @@
   "scripts": {
     "type-check": "tsc -p ./src --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
-    "build": "rm -rf ./build && npm run type-check && npm run build:js",
+    "build": "rm -rf ./build && npm run build:js",
     "build:js": "babel src --out-dir build --extensions \".ts,.tsx\"",
-    "start": "npm run build && node ./build/index.js"
+    "start": "npm run type-check && npm run build && node ./build/index.js"
   },
   "dependencies": {
-    "fetchmap": "^0.0.14",
+    "fetchmap": "^0.1.1",
+    "inquirer": "^8.2.4",
     "node-fetch": "^3.2.4",
     "pipe-ts": "^0.0.9",
     "spectypes": "file:packages/spectypes",
     "ts-micro-dict": "^9.0.2",
-    "ts-railway": "^6.0.4"
+    "ts-railway": "^6.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.17.10",
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-typescript": "^7.16.7",
+    "@types/inquirer": "^8.2.1",
     "babel-plugin-spectypes": "file:packages/babel-plugin-spectypes"
   }
 }

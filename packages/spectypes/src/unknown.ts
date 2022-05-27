@@ -1,5 +1,5 @@
-import { Spec } from './types'
-import { error } from './error'
+import { Spec } from './types.js'
+import { error } from './error.js'
 
 /**
  * Empty validator spec. When `unknown` is used as a property validator

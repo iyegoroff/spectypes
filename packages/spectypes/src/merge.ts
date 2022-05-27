@@ -1,5 +1,5 @@
-import { InferKind, PrettyType, Spec, SpecSuccess } from './types'
-import { error } from './error'
+import { InferKind, PrettyType, Spec, SpecSuccess } from './types.js'
+import { error } from './error.js'
 
 export const merge: {
   /**

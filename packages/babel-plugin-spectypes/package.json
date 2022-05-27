@@ -54,6 +54,6 @@
     "js-name-escape": "^1.0.1",
     "pipe-ts": "^0.0.9",
     "ts-is-defined": "^3.0.3",
-    "ts-railway": "^6.0.4"
+    "ts-railway": "^6.0.5"
   }
 }

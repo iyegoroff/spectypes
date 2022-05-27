@@ -3,10 +3,11 @@ import invariant from 'ts-tiny-invariant'
 import stringHash from 'string-hash'
 import fc from 'fast-check'
 import { unreachableCase } from 'ts-assert-unreachable'
-import escapeStringRegexp from 'escape-string-regexp'
 import { assertRecord, isRecord } from 'ts-is-record'
 import { assertDefined, isDefined } from 'ts-is-defined'
 import { Result } from 'ts-railway'
+import { Dict } from 'ts-micro-dict'
+import { escapeRegexp } from '../../../spectypes/src'
 import { isTemplateItem, OptionalSpec, Spec, TemplateItemArray } from '../../src/spec'
 import {
   allSpecs,
@@ -20,7 +21,6 @@ import {
   terminalSpecs
 } from './common'
 import { weights } from './weights'
-import { Dict } from 'ts-micro-dict'
 
 const numberTest =
   '(?:(?:[+-]?(?:\\d*\\.\\d+|\\d+\\.\\d*|\\d+)(?:[Ee][+-]?\\d+)?)|(?:0[Bb][01]+)|(?:0[Oo][0-7]+)|(?:0[Xx][0-9A-Fa-f]+))'
@@ -557,7 +557,7 @@ export const createInvalidProperty = (depth: number) => {
                   : val[0] === 'string'
                   ? stringTest
                   : val[1][0] === 'string'
-                  ? escapeStringRegexp(val[1][1])
+                  ? escapeRegexp(val[1][1])
                   : val[1][0] === 'null'
                   ? 'null'
                   : String(val[1][1])

@@ -1,5 +1,13 @@
-import { HasTag, InferKind, SomeSpec, Spec, SpecKind, SpecSuccess, SpectypesError } from './types'
-import { error } from './error'
+import {
+  HasTag,
+  InferKind,
+  SomeSpec,
+  Spec,
+  SpecKind,
+  SpecSuccess,
+  SpectypesError
+} from './types.js'
+import { error } from './error.js'
 
 type SpectypesRecordKeyError<T extends string> = SpectypesError<T, 'record', ' key'>
 type SpectypesRecordItemError<T extends string> = SpectypesError<T, 'record', ' item'>

@@ -4,7 +4,7 @@
     "target": "es2018",
     "strict": true,
     "moduleResolution": "node",
-    "declaration": true,
+    "removeComments": true,
     "esModuleInterop": true,
     "noEmitOnError": true,
     "noImplicitReturns": true,

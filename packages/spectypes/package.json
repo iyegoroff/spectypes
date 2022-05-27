@@ -4,21 +4,22 @@
   "private": false,
   "description": "Fast, compiled, eval-free data validator/transformer",
   "sideEffects": false,
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "react-native": "./dist/index.js",
+  "types": "./dist/dts/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/mjs/index.js",
+  "react-native": "./dist/mjs/index.js",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/mjs/index.js"
     },
     "./package.json": "./package.json"
   },
   "type": "module",
   "scripts": {
     "update-version": "npm version",
-    "build": "rm -rf dist && rollup -c rollup.config.ts --configPlugin typescript && rm -rf tmp"
+    "build:ts": "tsc -p configs/tsconfig.cjs.json && tsc -p configs/tsconfig.mjs.json && tsc -p configs/tsconfig.dts.json",
+    "build": "rm -rf dist && npm run build:ts && echo '{ \"type\": \"commonjs\" }' >> dist/cjs/package.json"
   },
   "keywords": [
     "validation",

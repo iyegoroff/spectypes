@@ -1,5 +1,5 @@
-import { HasTag, ObjectValue, SomeSpec, Spec, SpectypesError } from './types'
-import { error } from './error'
+import { HasTag, ObjectValue, SomeSpec, Spec, SpectypesError } from './types.js'
+import { error } from './error.js'
 /**
  * Creates an object transformer spec.
  * All properties of validated object that are not present in `specs` param will be removed from

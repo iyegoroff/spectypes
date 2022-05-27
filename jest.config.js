@@ -7,7 +7,10 @@ const config = {
   testRegex: '\\.spec\\.ts$',
   transform: {
     '^.+\\.[t|j]s$': process.env.CI ? 'ts-jest' : '@swc/jest'
-  }
+  },
+  moduleNameMapper: {
+    '(.*)\\.js$': '$1'
+  },
 }
 
 module.exports = {
