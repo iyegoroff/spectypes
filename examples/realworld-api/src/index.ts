@@ -8,6 +8,7 @@ import { pipe } from 'pipe-ts'
 import { AsyncResult, Result } from 'ts-railway'
 import { assert, deepInspect } from './util.js'
 import { createUser } from './users.js'
+import { createSpinner } from 'nanospinner'
 // import { getArticles } from './articles.js'
 // import { createUser } from './users.js'
 
@@ -133,7 +134,9 @@ const main = async () => {
       const merged = params.reduce((acc, val) => ({ ...acc, ...val }))
 
       if (request?.request !== undefined) {
+        const spinner = createSpinner().start()
         console.log(deepInspect(await request.request(merged)))
+        spinner.stop({ mark: ' ' })
       }
     } while (
       (

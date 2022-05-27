@@ -14,6 +14,7 @@
   "dependencies": {
     "fetchmap": "^0.1.1",
     "inquirer": "^8.2.4",
+    "nanospinner": "^1.1.0",
     "node-fetch": "^3.2.4",
     "pipe-ts": "^0.0.9",
     "spectypes": "file:packages/spectypes",

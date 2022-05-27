@@ -1,4 +1,4 @@
-import { array, boolean, limit, number, string, struct } from 'spectypes'
+import { array, boolean, limit, nullish, number, string, struct, union } from 'spectypes'
 import { checkGenericError, fetchmap, isDateFormat, query, unauthorizedError, url } from './util.js'
 
 type ArticlesParams = {
@@ -14,9 +14,9 @@ const checkMultipleArticlesResponse = struct({
   articles: array(
     struct({
       author: struct({
-        bio: string,
+        bio: union(string, nullish),
         following: boolean,
-        image: string,
+        image: union(string, nullish),
         username: string
       }),
       body: string,
