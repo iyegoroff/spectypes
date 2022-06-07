@@ -1,6 +1,6 @@
 {
   "name": "spectypes",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "private": false,
   "description": "Fast, compiled, eval-free data validator/transformer",
   "sideEffects": false,
