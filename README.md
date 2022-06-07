@@ -17,7 +17,7 @@ Fast, compiled, eval-free data validator/transformer
 - <b>really fast</b>, can be even [faster](/benchmark) than `ajv`
 - <b>detailed errors</b>, failure will result into explicit error messages and path to invalid data
 - <b>extensively tested</b>, each release undergoes more than 900 `fast-check` powered [tests](#how-is-it-tested)
-- <b>precise types</b>, accurately infers all types and provides readable compile-time error messages
+- <b>precise types</b>, accurately [infers](https://www.typescriptlang.org/play?#code/JYWwDg9gTgLgBAbzgQylZBPANHAdgVxACMBTKHCIgKxIGMYcBnGKYXAcx312AlxwA2wGGWQDBoYRTAxeuMXAC+cAGZQIIOAHJGYOjAx7GWgFAnafZnFoALOgGs4AXhRpMAChNw4lGvXcIXt54yCAkAFxwzKwcWEHeyOwRcEIgwu4ExGQ4iSTOAHwoSXD5LgAMAJRxwXA2lEQYkRAycmLu3HLuQiLoAu5aFgAmbOxaVSnCon1akCQsGGMSPW1aIPiMwLRjFVXxcGDqerDAJIyRqOgYnjXeHXzXN96++gFwMImR3VP9deskiyhBoMoKczlEWCMlLtHk9qC8kO92J9Jr1+rRUACQBBBiQBJFopDFBU9t5iTUyVCTMTzJZ4LYHCRBs5rHZaPZ+gB3GzIEQANzIYyAA) all types and provides readable compile-time error messages
 - <b>browser friendly</b>, uses `babel` to compile validators, so no `eval` or `new Function` involved
 - <b>easily extensible</b>, [custom validators](#custom-validators) are created by mixing existing ones
 
