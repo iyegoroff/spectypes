@@ -210,7 +210,7 @@ export const createValidProperty = (depth: number) => {
       (obj: unknown) => {
         assertRecord(obj, `'object' should be a record`)
 
-        return Dict.map((v, k) => genConverts[k]?.(v), obj)
+        return Dict.map((v, k) => genConverts[String(k)]?.(v), obj)
       }
     ] as const
   }
@@ -510,7 +510,7 @@ export const createValidProperty = (depth: number) => {
             return pipeWith(
               struct,
               Dict.filter((_, k) => k in genConverts),
-              Dict.map((v, k) => genConverts[k]?.(v))
+              Dict.map((v, k) => genConverts[String(k)]?.(v))
             )
           }
         ]
