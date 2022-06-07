@@ -17,7 +17,7 @@
     "ajv-formats": "^2.1.1",
     "benchmark": "^2.1.4",
     "spectypes": "file:packages/spectypes",
-    "ts-railway": "^6.0.5"
+    "ts-railway": "^6.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",

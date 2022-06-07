@@ -796,10 +796,6 @@ const findElem = (elems: ReadonlyArray<ArbValue<Elem>>, path: Path) => {
   return idx >= 0 ? Result.success(elems[idx]?.val) : Result.failure(undefined)
 }
 
-// const inspectLog = (v: unknown) => {
-//   console.log(inspect(v, { showHidden: false, colors: true, depth: null }))
-// }
-
 export const injectError = (
   value: unknown,
   { error, path }: ArbValue<Error>,

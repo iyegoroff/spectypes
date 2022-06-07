@@ -79,9 +79,6 @@ const fixtureFailureTest = (fixture: string, expected: string) =>
 const astTest = (name: string, expression: t.Expression, expected: Result<Spec, string>) =>
   test(`should parse ${name}`, () => expect(parse(expression, { specNames })).toEqual(expected))
 
-// const astSuccessTest = (name: string, expression: t.Expression, expected: Spec) =>
-//   astTest(name, expression, Result.success(expected))
-
 const astFailureTest = (name: string, expression: t.Expression, expected: string) =>
   astTest(name, expression, Result.failure(expected))
 

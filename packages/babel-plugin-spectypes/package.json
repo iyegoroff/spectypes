@@ -47,13 +47,13 @@
     "stringify-parse": "^1.0.6",
     "ts-assert-unreachable": "^0.0.9",
     "ts-is-record": "^3.0.4",
-    "ts-micro-dict": "^9.0.2",
+    "ts-micro-dict": "^10.0.2",
     "ts-tiny-invariant": "^2.0.3"
   },
   "dependencies": {
     "js-name-escape": "^1.0.1",
     "pipe-ts": "^0.0.9",
     "ts-is-defined": "^3.0.3",
-    "ts-railway": "^6.0.5"
+    "ts-railway": "^6.1.0"
   }
 }
