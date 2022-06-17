@@ -12,21 +12,21 @@
     "start": "npm run type-check && npm run build && node ./build/index.js"
   },
   "dependencies": {
-    "fetchmap": "^0.1.1",
+    "fetchmap": "^0.1.2",
     "inquirer": "^8.2.4",
     "nanospinner": "^1.1.0",
     "no-case": "^3.0.4",
-    "node-fetch": "^3.2.4",
+    "node-fetch": "^3.2.6",
     "pipe-ts": "^0.0.9",
     "spectypes": "file:packages/spectypes",
-    "ts-micro-dict": "^10.0.2",
-    "ts-railway": "^6.1.0"
+    "ts-micro-dict": "^10.0.4",
+    "ts-railway": "^6.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
-    "@babel/core": "^7.17.10",
-    "@babel/preset-env": "^7.17.10",
-    "@babel/preset-typescript": "^7.16.7",
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-typescript": "^7.17.12",
     "@types/inquirer": "^8.2.1",
     "babel-plugin-spectypes": "file:packages/babel-plugin-spectypes"
   }
