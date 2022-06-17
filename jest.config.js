@@ -6,7 +6,7 @@ const config = {
   testPathIgnorePatterns: ['blueprint-templates'],
   testRegex: '\\.spec\\.ts$',
   transform: {
-    '^.+\\.[t|j]s$': process.env.CI ? 'ts-jest' : '@swc/jest'
+    '^.+\\.ts$': process.env.CI ? 'ts-jest' : '@swc/jest'
   },
   moduleNameMapper: {
     '(.*)\\.js$': '$1'
