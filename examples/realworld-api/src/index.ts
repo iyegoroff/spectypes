@@ -320,8 +320,8 @@ const main = async () => {
       const requests = pipeWith(
         availableMethods,
         Dict.filter((_, k) => k === path),
-        (x) => Object.values(x)[0],
-        (x) => (x === undefined ? Result.failure(undefined) : Result.success(x))
+        Dict.toArray((item) => item),
+        ([x]) => (x === undefined ? Result.failure(undefined) : Result.success(x))
       )
 
       if (requests.tag === 'failure') {
@@ -341,8 +341,8 @@ const main = async () => {
       const request = pipeWith(
         requests.success,
         Dict.filter((_, k) => k === method),
-        (x) => Object.values(x)[0],
-        (x) => (x === undefined ? Result.failure(undefined) : Result.success(x))
+        Dict.toArray((item) => item),
+        ([x]) => (x === undefined ? Result.failure(undefined) : Result.success(x))
       )
 
       if (request.tag === 'failure') {
