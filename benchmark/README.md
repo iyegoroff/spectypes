@@ -1,20 +1,20 @@
 
-> spectypes-benchmark@2.1.3 bench
+> spectypes-benchmark@2.1.4 bench
 > node ./build/index.js
 
 ## Benchmarking with benchmark.js
 <b>object with constraints</b>:</br>
-ajv@8.11.0 x 4,279,764 ops/sec ±0.82% (88 runs sampled)</br>
-spectypes@2.1.3 x 6,151,334 ops/sec ±1.30% (86 runs sampled)</br>
+ajv@8.11.0 x 4,378,328 ops/sec ±1.38% (80 runs sampled)</br>
+spectypes@2.1.4 x 6,336,369 ops/sec ±2.16% (76 runs sampled)</br>
 Fastest is <b>spectypes</b>
 
 <b>nested object</b>:</br>
-ajv@8.11.0 x 12,317,500 ops/sec ±0.79% (87 runs sampled)</br>
-spectypes@2.1.3 x 15,282,969 ops/sec ±0.74% (90 runs sampled)</br>
+ajv@8.11.0 x 11,869,576 ops/sec ±2.02% (74 runs sampled)</br>
+spectypes@2.1.4 x 17,154,917 ops/sec ±1.47% (82 runs sampled)</br>
 Fastest is <b>spectypes</b>
 
 <b>array of unions</b>:</br>
-ajv@8.11.0 x 176,787 ops/sec ±2.60% (87 runs sampled)</br>
-spectypes@2.1.3 x 683,437 ops/sec ±0.91% (82 runs sampled)</br>
+ajv@8.11.0 x 130,392 ops/sec ±3.31% (77 runs sampled)</br>
+spectypes@2.1.4 x 624,022 ops/sec ±1.51% (82 runs sampled)</br>
 Fastest is <b>spectypes</b>
 
