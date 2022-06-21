@@ -13,7 +13,7 @@ import {
   TemplateItemArray,
   UnionSpec,
   UnknownSpec
-} from '../../src/spec'
+} from '../../src'
 import {
   allSpecs,
   Arb,

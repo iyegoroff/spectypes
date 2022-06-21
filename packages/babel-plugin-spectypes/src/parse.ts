@@ -2,7 +2,13 @@ import { types as t } from '@babel/core'
 import generate from '@babel/generator'
 import { Result } from 'ts-railway'
 import { pipeWith } from 'pipe-ts'
-import { ArrowFunction, Identifier, isTemplateItemArray, Spec, SpecName } from './spec'
+import {
+  ArrowFunction,
+  Identifier,
+  isTemplateItemArray,
+  Spec,
+  SpecName
+} from 'spectypes-plugin-core'
 import { assertDefined } from 'ts-is-defined'
 
 type ParseContext = {

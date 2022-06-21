@@ -1,11 +1,14 @@
 {
-  "name": "babel-plugin-spectypes",
+  "name": "spectypes-plugin-core",
   "version": "2.1.4",
   "private": false,
-  "description": "Babel plugin that compiles spectypes validators",
+  "description": "Spectypes plugin shared code",
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
   "scripts": {
     "update-version": "npm version",
     "build": "rm -rf dist && tsc -p tsconfig.build.json"
@@ -29,13 +32,8 @@
   },
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
-  "peerDependencies": {
-    "@babel/core": "*"
-  },
   "dependencies": {
-    "spectypes-plugin-core": "file:packages/spectypes-plugin-core",
-    "pipe-ts": "^0.0.9",
-    "ts-is-defined": "^3.0.4",
-    "ts-railway": "^6.1.1"
+    "js-name-escape": "^1.0.1",
+    "ts-is-defined": "^3.0.4"
   }
 }

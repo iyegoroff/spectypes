@@ -5,7 +5,7 @@ import { Result } from 'ts-railway'
 import { parse as babelParse } from '@babel/parser'
 import { types as t } from '@babel/core'
 import { parse, parseTemplate } from '../src/parse'
-import { Spec, SpecName } from '../src/spec'
+import { Spec, SpecName } from 'spectypes-plugin-core'
 import { isDefined } from 'ts-is-defined'
 
 const readFile = promisify(fs.readFile)
