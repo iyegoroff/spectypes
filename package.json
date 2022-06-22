@@ -10,7 +10,7 @@
     "build": "npm run build -w packages/spectypes-plugin-core && npm run build -ws --if-present",
     "type-check": "npm run type-check -ws --if-present",
     "test": "jest",
-    "patch-manifests": "glob-json 'packages/*/package.json' merge '' publishConfig && glob-json 'packages/*/package.json' del publishConfig && glob-json 'packages/*/package.json' set '+(devDependencies|dependencies|peerDependencies)/spectypes-plugin-core' $npm_package_version",
+    "patch-manifests": "glob-json 'packages/*/package.json' merge '' publishConfig && glob-json 'packages/*/package.json' del publishConfig && glob-json 'packages/*/package.json' set '+(devDependencies|dependencies|peerDependencies)/@ts-elmish/*' $npm_package_version",
     "type-coverage": "type-coverage --strict --detail --ignore-files **/dist/** --ignore-files **/blueprint-templates/**/* --ignore-catch"
   },
   "typeCoverage": {
