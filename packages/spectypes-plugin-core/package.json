@@ -4,8 +4,11 @@
   "private": false,
   "description": "Spectypes plugin shared code",
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
   "scripts": {
     "update-version": "npm version",
     "build": "rm -rf dist && tsc -p tsconfig.build.json"
