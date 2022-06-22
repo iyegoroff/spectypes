@@ -8,7 +8,7 @@ import { assertDefined, isDefined } from 'ts-is-defined'
 import { Result } from 'ts-railway'
 import { Dict } from 'ts-micro-dict'
 import { escapeRegexp } from '../../../spectypes/src'
-import { isTemplateItem, OptionalSpec, Spec, TemplateItemArray } from '../../src'
+import { isTemplateItem, OptionalSpec, Spec, TemplateItemArray } from '../../src/spec'
 import {
   allSpecs,
   Arb,

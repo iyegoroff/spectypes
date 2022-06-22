@@ -1,11 +1,4 @@
-import {
-  canAppendElseBlock,
-  canBeInlined,
-  isMutating,
-  isSpecName,
-  isTemplateItemArray,
-  requiresRuntime
-} from '../src'
+import { canBeInlined, isMutating, isSpecName, isTemplateItemArray } from '../src/spec'
 
 describe('spec', () => {
   test('isTemplateItem', () => {
@@ -49,26 +42,6 @@ describe('spec', () => {
 
   test('object should not be inlined inside union check', () => {
     expect(canBeInlined(['object', {}])).toBeFalsy()
-  })
-
-  test('writable should be inlined if its contents can be inlined inside union check', () => {
-    expect(canBeInlined(['writable', ['boolean']])).toBeTruthy()
-  })
-
-  test('limit should be inlined if its contents can be inlined inside union check', () => {
-    expect(canBeInlined(['limit', ['boolean'], ['identifier', 'foo']])).toBeTruthy()
-  })
-
-  test('tuple should be inlined if its contents can be inlined inside union check', () => {
-    expect(canBeInlined(['tuple', [['boolean'], ['number']]])).toBeTruthy()
-  })
-
-  test('number can be appended with else block', () => {
-    expect(canAppendElseBlock(['number'])).toBeTruthy()
-  })
-
-  test('object cannot be appended with else block', () => {
-    expect(canAppendElseBlock(['object', {}])).toBeFalsy()
   })
 
   test('template should not be mutating', () => {
@@ -218,13 +191,5 @@ describe('spec', () => {
 
   test('array(foo) should not be mutating when foo is wrapped with validator', () => {
     expect(isMutating(['array', ['validator', ['external', ['identifier', 'foo']]]])).toBeFalsy()
-  })
-
-  test('record should require runtime', () => {
-    expect(requiresRuntime('record')).toBeTruthy()
-  })
-
-  test('template should require runtime', () => {
-    expect(requiresRuntime('template')).toBeTruthy()
   })
 })

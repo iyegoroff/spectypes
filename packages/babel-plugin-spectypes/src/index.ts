@@ -2,13 +2,8 @@ import type babelCore from '@babel/core'
 import { parseExpression } from '@babel/parser'
 import { isDefined } from 'ts-is-defined'
 import { parse } from './parse'
-import {
-  isSpecName,
-  requiresRuntime,
-  SpecName,
-  transform,
-  createAddLocal
-} from 'spectypes-plugin-core'
+import { isSpecName, requiresRuntime, SpecName } from './spec'
+import { transform, createAddLocal } from './transform'
 
 type State = babelCore.PluginPass & {
   specNames?: Record<string, SpecName>

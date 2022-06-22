@@ -1,4 +1,4 @@
-const projects = ['packages/babel-plugin-spectypes', 'packages/spectypes-plugin-core']
+const projects = [/*'packages/spectypes',*/ 'packages/babel-plugin-spectypes']
 
 const config = {
   moduleFileExtensions: ['js', 'ts'],
