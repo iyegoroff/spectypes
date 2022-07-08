@@ -29,6 +29,7 @@ import {
 } from './common'
 import { weights } from './weights'
 import { pipeWith } from 'pipe-ts'
+import { templateFloatConfig } from '../common'
 
 const unionCaseMarker = '1501dbd7-b866-465f-8abd-e7c6b111632f'
 
@@ -305,7 +306,7 @@ export const createValidProperty = (depth: number) => {
         return [['literal', ['identifier', 'undefined']], fc.constant(undefined), identity]
 
       case 'number':
-        return [['number'], fc.float(), identity]
+        return [['number'], fc.float(templateFloatConfig), identity]
 
       case 'string':
         return [['string'], fc.string(), identity]

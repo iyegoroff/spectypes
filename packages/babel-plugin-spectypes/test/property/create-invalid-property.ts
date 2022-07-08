@@ -21,6 +21,7 @@ import {
   terminalSpecs
 } from './common'
 import { weights } from './weights'
+import { templateFloatConfig } from '../common'
 
 const numberTest =
   '(?:(?:[+-]?(?:\\d*\\.\\d+|\\d+\\.\\d*|\\d+)(?:[Ee][+-]?\\d+)?)|(?:0[Bb][01]+)|(?:0[Oo][0-7]+)|(?:0[Xx][0-9A-Fa-f]+))'
@@ -434,7 +435,7 @@ export const createInvalidProperty = (depth: number) => {
       case 'number':
         return [
           ['number'],
-          fc.float(),
+          fc.float(templateFloatConfig),
           [
             err(
               fc.anything().filter((x) => typeof x !== 'number'),
@@ -543,7 +544,7 @@ export const createInvalidProperty = (depth: number) => {
 
         if (subSpecs.every(([tag]) => tag === 'string')) {
           subSpecs.push(['number'])
-          subArbs.push(fc.float())
+          subArbs.push(fc.float(templateFloatConfig))
         }
 
         const templateTest = new RegExp(

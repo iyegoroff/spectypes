@@ -12,7 +12,7 @@ import * as spectypes from '../../spectypes'
 import { createAddLocal, transform } from '../src/transform'
 import { Spec } from '../src/spec'
 import { createInvalidProperty, createValidProperty, injectError } from './property'
-import { Error, Path } from './common'
+import { Error, Path, templateFloatConfig } from './common'
 import { pipeWith } from 'pipe-ts'
 
 const isCI = isDefined(process.env.CI) && process.env.CI !== ''
@@ -242,7 +242,7 @@ describe('transform - success', () => {
           .tuple(
             fc.string(),
             fc.constant('-'),
-            fc.oneof(fc.float(), fc.integer()),
+            fc.oneof(fc.float(templateFloatConfig), fc.integer()),
             fc.constant(null),
             fc.boolean(),
             fc.constant(5),
@@ -1085,7 +1085,7 @@ describe('transform - failure', () => {
           .tuple(
             fc.string(),
             fc.constant('-'),
-            fc.oneof(fc.float(), fc.integer()),
+            fc.oneof(fc.float(templateFloatConfig), fc.integer()),
             fc.string().filter((x) => x !== 'null'),
             fc.boolean(),
             fc.string().filter((x) => x !== '5'),

@@ -11,6 +11,7 @@
     "standard-with-typescript",
     "prettier",
     "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
@@ -25,7 +26,8 @@
       }
     ],
     "no-param-reassign": "error",
-    "no-shadow": "error",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
     "prettier/prettier": "warn",
     "no-null/no-null": "error",
     "@typescript-eslint/ban-types": [
@@ -33,16 +35,14 @@
       {
         "types": {
           "null": null
-        }
+        },
+        "extendDefaults": true
       }
     ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/prefer-includes": "off",
     "@typescript-eslint/promise-function-async": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-non-null-assertion": "error",
-    "@typescript-eslint/ban-ts-comment": "error",
-    "@typescript-eslint/no-redeclare": "off",
     "@typescript-eslint/switch-exhaustiveness-check": "error",
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     "@typescript-eslint/explicit-function-return-type": "off"
