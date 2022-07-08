@@ -9,6 +9,8 @@ import { error } from './error.js'
 export const validator: <ItemSpec extends Spec = SomeSpec>(
   spec: HasTag<ItemSpec, 'filter'> extends true
     ? SpectypesError<'filter', 'validator'>
+    : HasTag<ItemSpec, 'optional'> extends true
+    ? SpectypesError<'optional', 'validator'>
     : ItemSpec extends Spec<readonly string[], 'transformer', unknown>
     ? { readonly "spectypes error: transformer can't be wrapped with 'validator'": never }
     : ItemSpec

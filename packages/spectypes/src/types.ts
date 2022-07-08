@@ -1,6 +1,10 @@
-export type SpectypesError<X extends string, Y extends string, Suf extends string = ''> = {
+export type SpectypesError<
+  X extends string,
+  Y extends string,
+  Suf extends string = ''
+> = PrettyType<{
   readonly [key in `spectypes error: '${X}' can't appear directly inside '${Y}'${Suf}`]: never
-}
+}>
 
 export type SuccessResult<Value> = {
   readonly tag: 'success'
