@@ -590,9 +590,9 @@ const parseStep = (
 export const parse = (expression: t.Expression, context: ParseContext): Result<Spec, string> =>
   Result.flatMap(
     (spec) =>
-      spec[0] === 'validator' || spec[0] === 'transformer'
+      spec[0] === 'validator' || spec[0] === 'transformer' || spec[0] === 'optional'
         ? Result.failure(
-            `${pref}'validator' or 'transformer' should be used only inside inside another spec ${locInfo(
+            `${pref}'optional', 'validator' or 'transformer' should be used only inside inside another spec ${locInfo(
               expression
             )}`
           )

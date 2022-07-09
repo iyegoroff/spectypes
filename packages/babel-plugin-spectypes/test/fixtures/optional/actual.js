@@ -1,3 +1,5 @@
-import { optional, number } from 'spectypes'
+import { optional, number, object } from 'spectypes'
 
-const check = optional(number)
+const check = object({
+  x: optional(number)
+})

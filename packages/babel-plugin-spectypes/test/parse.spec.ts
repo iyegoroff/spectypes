@@ -93,7 +93,7 @@ describe('parse', () => {
 
   fixtureSuccessTest('unknown', ['unknown'])
 
-  fixtureSuccessTest('optional', ['optional', ['number']])
+  fixtureSuccessTest('optional', ['object', { x: ['optional', ['number']] }])
 
   fixtureSuccessTest('array-filter', ['array', ['number'], ['function', 'x => x > 1']])
 
@@ -311,12 +311,12 @@ describe('parse', () => {
 
   fixtureFailureTest(
     'validator-error',
-    "'validator' or 'transformer' should be used only inside inside another spec starts at ln:4 col:15, ends at ln:4 col:29"
+    "'optional', 'validator' or 'transformer' should be used only inside inside another spec starts at ln:4 col:15, ends at ln:4 col:29"
   )
 
   fixtureFailureTest(
     'transformer-error',
-    "'validator' or 'transformer' should be used only inside inside another spec starts at ln:4 col:15, ends at ln:4 col:31"
+    "'optional', 'validator' or 'transformer' should be used only inside inside another spec starts at ln:4 col:15, ends at ln:4 col:31"
   )
 
   fixtureFailureTest(
@@ -400,6 +400,16 @@ describe('parse', () => {
   fixtureFailureTest('optional-nested-error', "'optional' can't appear directly inside 'optional'")
 
   fixtureFailureTest('optional-filter-error', "'filter' can't appear directly inside 'optional'")
+
+  fixtureFailureTest(
+    'optional-standalone-error',
+    "'optional', 'validator' or 'transformer' should be used only inside inside another spec starts at ln:3 col:15, ends at ln:3 col:31"
+  )
+
+  fixtureFailureTest(
+    'filter-standalone-error',
+    "call expression 'filter' that starts at ln:3 col:15, ends at ln:3 col:41 should be an identifier"
+  )
 
   fixtureFailureTest('tuple-optional-error', "'optional' can't appear directly inside 'tuple'")
 
