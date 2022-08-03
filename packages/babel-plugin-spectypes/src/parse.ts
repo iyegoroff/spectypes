@@ -527,7 +527,6 @@ const parseStep = (
         return parseTemplate(
           expression,
           [
-            ...rejects,
             'optional',
             'filter',
             'unknown',
