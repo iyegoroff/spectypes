@@ -29,7 +29,7 @@ import {
 } from './common'
 import { weights } from './weights'
 import { pipeWith } from 'pipe-ts'
-import { templateFloatConfig } from '../common'
+import { skipPrototypeMethods, templateFloatConfig } from '../common'
 
 const unionCaseMarker = '1501dbd7-b866-465f-8abd-e7c6b111632f'
 
@@ -123,7 +123,7 @@ export const createValidProperty = (depth: number) => {
     return [
       ['record', keySpec, valueSpec],
       fc.dictionary(
-        keyArb.map((x) => (typeof x === 'string' ? x : 'INVALID_KEY')),
+        keyArb.map((x) => (typeof x === 'string' ? x : 'INVALID_KEY')).filter(skipPrototypeMethods),
         valueArb
       ),
       (rec: unknown) => {
@@ -167,7 +167,7 @@ export const createValidProperty = (depth: number) => {
         ['function', '(x) => String(JSON.stringify(x)).length > 25']
       ],
       fc.dictionary(
-        keyArb.map((x) => (typeof x === 'string' ? x : 'INVALID_KEY')),
+        keyArb.map((x) => (typeof x === 'string' ? x : 'INVALID_KEY')).filter(skipPrototypeMethods),
         valueArb
       ),
       (rec: unknown) => {

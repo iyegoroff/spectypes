@@ -12,7 +12,7 @@ import * as spectypes from '../../spectypes'
 import { createAddLocal, transform } from '../src/transform'
 import { Spec } from '../src/spec'
 import { createInvalidProperty, createValidProperty, injectError } from './property'
-import { Error, Path, templateFloatConfig } from './common'
+import { Error, Path, stringWithoutProtypeMethods, templateFloatConfig } from './common'
 import { pipeWith } from 'pipe-ts'
 
 const isCI = isDefined(process.env.CI) && process.env.CI !== ''
@@ -312,7 +312,7 @@ describe('transform - success', () => {
     const check = generateCheck(['record', ['string'], ['unknown']])
 
     fc.assert(
-      fc.property(fc.dictionary(fc.string(), fc.anything()), (val) => {
+      fc.property(fc.dictionary(stringWithoutProtypeMethods, fc.anything()), (val) => {
         expect(check(val)).toEqual(Result.success(val))
       }),
       { numRuns }
@@ -360,7 +360,7 @@ describe('transform - success', () => {
     const check = generateCheck(['objectRecord', {}, ['string'], ['unknown']])
 
     fc.assert(
-      fc.property(fc.dictionary(fc.string(), fc.anything()), (val) => {
+      fc.property(fc.dictionary(stringWithoutProtypeMethods, fc.anything()), (val) => {
         expect(check(val)).toEqual(Result.success(val))
       }),
       { numRuns }
@@ -507,7 +507,7 @@ describe('transform - success', () => {
     const check = generateCheck(['record', ['string'], ['number']])
 
     fc.assert(
-      fc.property(fc.dictionary(fc.string(), fc.integer()), (val) => {
+      fc.property(fc.dictionary(stringWithoutProtypeMethods, fc.integer()), (val) => {
         expect(check(val)).toEqual(Result.success(val))
       }),
       { numRuns }
@@ -524,7 +524,7 @@ describe('transform - success', () => {
     ])
 
     fc.assert(
-      fc.property(fc.dictionary(fc.string(), fc.integer()), (val) => {
+      fc.property(fc.dictionary(stringWithoutProtypeMethods, fc.integer()), (val) => {
         expect(check(val)).toEqual(Result.success(Dict.filter((x) => x % 2 === 0, val)))
       }),
       { numRuns }
@@ -540,7 +540,7 @@ describe('transform - success', () => {
     ])
 
     fc.assert(
-      fc.property(fc.dictionary(fc.string(), fc.integer()), (val) => {
+      fc.property(fc.dictionary(stringWithoutProtypeMethods, fc.integer()), (val) => {
         expect(check(val)).toEqual(Result.success(Dict.filter((_, x) => x.length < 5, val)))
       }),
       { numRuns }
@@ -557,7 +557,7 @@ describe('transform - success', () => {
     ])
 
     fc.assert(
-      fc.property(fc.dictionary(fc.string(), fc.integer()), (val) => {
+      fc.property(fc.dictionary(stringWithoutProtypeMethods, fc.integer()), (val) => {
         expect(check(val)).toEqual(
           Result.success(Dict.filter((v, k) => k.length < 5 && v % 2 === 0, val))
         )
@@ -617,7 +617,7 @@ describe('transform - success', () => {
     fc.assert(
       fc.property(
         fc.record({ x: fc.boolean(), y: fc.string() }),
-        fc.dictionary(fc.string(), fc.nat()),
+        fc.dictionary(stringWithoutProtypeMethods, fc.nat()),
         (obj, rec) => {
           const val = { ...rec, ...obj }
           expect(check(val)).toEqual(Result.success(val))
@@ -641,7 +641,7 @@ describe('transform - success', () => {
       fc.property(
         fc.record({ x: fc.boolean(), y: fc.string() }),
         fc.dictionary(
-          fc.string(),
+          stringWithoutProtypeMethods,
           fc.nat().filter((x) => x % 2 === 0)
         ),
         (obj, rec) => {
@@ -666,7 +666,7 @@ describe('transform - success', () => {
       fc.property(
         fc.record({ x: fc.boolean(), y: fc.string() }),
         fc.dictionary(
-          fc.string().filter((x) => x.length > 4),
+          stringWithoutProtypeMethods.filter((x) => x.length > 4),
           fc.nat()
         ),
         (obj, rec) => {
@@ -1167,7 +1167,7 @@ describe('transform - failure', () => {
       fc.property(
         fc
           .dictionary(
-            fc.string().filter((x) => x !== 'foo' && x !== 'bar'),
+            stringWithoutProtypeMethods.filter((x) => x !== 'foo' && x !== 'bar'),
             fc.float()
           )
           .filter((x) => Object.keys(x).length > 0),
@@ -1512,7 +1512,7 @@ describe('transform - failure', () => {
       fc.property(
         fc
           .dictionary(
-            fc.string(),
+            stringWithoutProtypeMethods,
             fc.anything().filter((x) => typeof x !== 'number')
           )
           .filter((x) => Object.keys(x).length !== 0),
@@ -1710,7 +1710,7 @@ describe('transform - failure', () => {
           x: fc.anything().filter((x) => typeof x !== 'boolean'),
           y: fc.anything().filter((x) => typeof x !== 'string')
         }),
-        fc.dictionary(fc.string(), fc.nat()),
+        fc.dictionary(stringWithoutProtypeMethods, fc.nat()),
         (obj, rec) => {
           const val = { ...rec, ...obj }
           expect(check(val)).toEqual(
@@ -1732,7 +1732,7 @@ describe('transform - failure', () => {
         fc.record({ x: fc.boolean(), y: fc.string() }),
         fc
           .dictionary(
-            fc.string(),
+            stringWithoutProtypeMethods,
             fc.anything().filter((x) => typeof x !== 'number')
           )
           .filter((x) => {
