@@ -1,5 +1,6 @@
 /* eslint-disable no-null/no-null */
 import { inspect } from 'util'
+import hash from 'hash-sum'
 import { parse } from '@babel/parser'
 import { Scope } from '@babel/traverse'
 import { types as t, traverse } from '@babel/core'
@@ -590,6 +591,22 @@ describe('transform - success', () => {
           expect(check(val)).toEqual(Result.success(val + val))
         }
       ),
+      { numRuns }
+    )
+  })
+
+  test('map(unknown, hash)', () => {
+    const check = generateCheck(['map', ['unknown'], ['identifier', 'hash']])
+
+    fc.assert(
+      fc.property(fc.record({ toString: fc.constant(0) }), (val) => {
+        try {
+          expect(check(val)).toEqual(Result.success(hash(val)))
+        } catch (e) {
+          console.log(val, check(val), hash(val))
+          throw e
+        }
+      }),
       { numRuns }
     )
   })
