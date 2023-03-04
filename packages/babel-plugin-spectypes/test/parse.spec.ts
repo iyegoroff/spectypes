@@ -149,6 +149,24 @@ describe('parse', () => {
 
   fixtureSuccessTest('record', ['record', ['string'], ['boolean']])
 
+  fixtureSuccessTest('record-external-key', [
+    'record',
+    ['external', ['identifier', 'Key']],
+    ['string']
+  ])
+
+  fixtureSuccessTest('record-external-value', [
+    'record',
+    ['string'],
+    ['external', ['identifier', 'Key']]
+  ])
+
+  fixtureSuccessTest('record-external-key-value', [
+    'record',
+    ['external', ['identifier', 'Key']],
+    ['external', ['identifier', 'Value']]
+  ])
+
   fixtureSuccessTest('unsafe-record', ['UNSAFE_record', ['string'], ['boolean']])
 
   fixtureSuccessTest('record-without-key', ['record', ['string'], ['boolean']])

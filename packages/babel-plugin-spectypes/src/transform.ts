@@ -386,17 +386,19 @@ const externalTransform = (
     issuePrefix,
     resultPart,
     mutatingExternal,
-    limitErrorNames
+    limitErrorNames,
+    directValueName
   }: TransformConfig,
   { addLocal }: TransformContext
 ) => {
   const mut = mutatingExternal ?? isMutating(spec)
-  const val = valueName(path)
+  const val = directValueName ?? valueName(path)
+  const pref = isDefined(directValueName) ? 'key' : ''
   const ext = addLocal(`ext_${val}`)
 
-  return `${mut ? declareResult(path, skipDeclareResult) : ''}${assignValue(
+  return `${mut ? declareResult(path, skipDeclareResult, pref) : ''}${assignValue(
     path,
-    skipAssign
+    isDefined(directValueName) || skipAssign
   )}const ${ext} = ${spec[1][1]}(${val});if (${ext}.tag === 'failure') {${
     error ??
     `${limitErrors(
@@ -406,7 +408,9 @@ const externalTransform = (
     }' + fail.issue, path: ${
       path.length > 0 ? `[${pathArray(path).replace(/\[(.*)\]/, '$1')}, ...fail.path]` : 'fail.path'
     } })))`
-  }} ${skipResult ?? !mut ? '' : `else {${resultName(path)} = ${ext}.success;}`}${resultPart ?? ''}`
+  }} ${skipResult ?? !mut ? '' : `else {${pref}${resultName(path)} = ${ext}.success;}`}${
+    resultPart ?? ''
+  }`
 }
 
 const optionalTransform = (

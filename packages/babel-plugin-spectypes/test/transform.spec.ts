@@ -320,6 +320,67 @@ describe('transform - success', () => {
     )
   })
 
+  test('record(validator(check1), validator(check2))', () => {
+    const check = generateCheck(
+      [
+        'record',
+        ['validator', ['external', ['identifier', 'check1']]],
+        ['validator', ['external', ['identifier', 'check2']]]
+      ],
+      ['string'],
+      ['number']
+    )
+
+    fc.assert(
+      fc.property(fc.dictionary(stringWithoutProtypeMethods, fc.float()), (val) => {
+        expect(check(val)).toEqual(Result.success(val))
+      }),
+      { numRuns }
+    )
+  })
+
+  test('record(transformer(check1), validator(check2))', () => {
+    const check = generateCheck(
+      [
+        'record',
+        ['transformer', ['external', ['identifier', 'check1']]],
+        ['validator', ['external', ['identifier', 'check2']]]
+      ],
+      ['map', ['string'], ['function', 'x => "#" + x']],
+      ['number']
+    )
+
+    fc.assert(
+      fc.property(fc.dictionary(stringWithoutProtypeMethods, fc.float()), (val) => {
+        expect(check(val)).toEqual(
+          Result.success(Object.fromEntries(Object.entries(val).map(([k, v]) => [`#${k}`, v])))
+        )
+      }),
+      { numRuns }
+    )
+  })
+
+  test('record(transformer(check1), transformer(check2))', () => {
+    const check = generateCheck(
+      [
+        'record',
+        ['transformer', ['external', ['identifier', 'check1']]],
+        ['transformer', ['external', ['identifier', 'check2']]]
+      ],
+      ['map', ['string'], ['function', 'x => "#" + x']],
+      ['map', ['number'], ['function', 'x => x + 1']]
+    )
+
+    fc.assert(
+      fc.property(fc.dictionary(stringWithoutProtypeMethods, fc.float()), (val) => {
+        expect(check(val)).toEqual(
+          Result.success(Object.fromEntries(Object.entries(val).map(([k, v]) => [`#${k}`, v + 1])))
+        )
+      }),
+      { numRuns }
+    )
+  })
+
   test("UNSAFE_record(literal('toString'), unknown)", () => {
     const check = generateCheck(['UNSAFE_record', ['literal', ['string', 'toString']], ['unknown']])
 
