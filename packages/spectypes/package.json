@@ -10,6 +10,7 @@
   "react-native": "./dist/mjs/index.js",
   "exports": {
     ".": {
+      "types": "./dist/dts/index.d.ts",
       "require": "./dist/cjs/index.js",
       "default": "./dist/mjs/index.js"
     },
