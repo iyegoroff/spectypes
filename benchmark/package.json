@@ -1,6 +1,6 @@
 {
   "name": "spectypes-benchmark",
-  "version": "2.1.8",
+  "version": "2.1.9",
   "license": "MIT",
   "private": true,
   "scripts": {
